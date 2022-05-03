@@ -1,7 +1,6 @@
 package com.internship.HRapp.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,10 +23,12 @@ public class Users {
             generator = "users_sequence"
     )
     private Long userId;
+    @Column(unique = true)
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private LocalDate DOB;
     private Integer leaveDays;

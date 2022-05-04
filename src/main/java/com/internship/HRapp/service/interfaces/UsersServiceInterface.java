@@ -1,13 +1,19 @@
 package com.internship.HRapp.service.interfaces;
 
 import com.internship.HRapp.entity.Users;
+import com.internship.HRapp.repository.UsersRepo;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface UsersServiceInterface {
-    Users create(Users users);
-    Collection<Users> list(int limit);
-    Users get(Long userId);
-    Users update(Users users);
-    Boolean delete(Long userId);
+
+    void getUser(Users users);
+
+    List<Users> getUsers();
+
+    void addNewUsers(Users users);
+
+    void deleteUsers(Long usersId);
+
+    void updateUsers(Long usersId, String firstName, String email);
 }

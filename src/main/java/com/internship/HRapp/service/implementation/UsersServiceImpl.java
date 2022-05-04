@@ -1,33 +1,40 @@
 package com.internship.HRapp.service.implementation;
 
 import com.internship.HRapp.entity.Users;
+import com.internship.HRapp.repository.UsersRepo;
 import com.internship.HRapp.service.interfaces.UsersServiceInterface;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersServiceInterface {
+
+    private final UsersRepo usersRepo;
+
     @Override
-    public Users create(Users users) {
+    public void getUser(Users users) {
+    }
+
+    @Override
+    public List<Users> getUsers() {
         return null;
     }
 
     @Override
-    public Collection<Users> list(int limit) {
-        return null;
+    public void addNewUsers(Users users) {
+
     }
 
     @Override
-    public Users get(Long userId) {
-        return null;
+    public void deleteUsers(Long usersId) {
+
     }
 
     @Override
-    public Users update(Users users) {
-        return null;
-    }
+    public void updateUsers(Long usersId, String firstName, String email) {
 
-    @Override
-    public Boolean delete(Long userId) {
-        return null;
     }
 }

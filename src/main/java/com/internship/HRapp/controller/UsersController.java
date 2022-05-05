@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1/hr_management_system")
+@RequestMapping(path = "api/v1/hr_management_system/users")
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersServiceImpl usersServiceImpl;

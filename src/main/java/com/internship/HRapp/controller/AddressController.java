@@ -1,6 +1,6 @@
 package com.internship.HRapp.controller;
 
-public class UsersController {
+public class AddressController {
     public void get(){
 
     }

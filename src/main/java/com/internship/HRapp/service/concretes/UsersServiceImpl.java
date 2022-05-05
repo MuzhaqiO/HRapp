@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +30,12 @@ public class UsersServiceImpl implements UsersServiceInterface {
     }
 
     @Override
-    public void deleteUsers(Long usersId) {
+    public void deleteUsers(UUID usersId) {
 
     }
 
     @Override
-    public void updateUsers(Long usersId, String firstName, String email) {
+    public void updateUsers(UUID usersId, String firstName, String email) {
 
     }
 }

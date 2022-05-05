@@ -3,6 +3,7 @@ package com.internship.HRapp.service.interfaces;
 import com.internship.HRapp.entity.Users;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UsersServiceInterface {
 
@@ -12,7 +13,7 @@ public interface UsersServiceInterface {
 
     void addNewUsers(Users users);
 
-    void deleteUsers(Long usersId);
+    void deleteUsers(UUID usersId);
 
-    void updateUsers(Long usersId, String firstName, String email);
+    void updateUsers(UUID usersId, String firstName, String email);
 }

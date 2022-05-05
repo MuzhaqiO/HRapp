@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/hr_management_system")
@@ -25,12 +26,12 @@ public class UsersController {
         usersServiceImpl.addNewUsers(users);
     }
     @DeleteMapping(path = "{userId}")
-    public void deleteUsers(@PathVariable("userId") Long userId){
+    public void deleteUsers(@PathVariable("userId") UUID userId){
         usersServiceImpl.deleteUsers(userId);
     }
     @PutMapping()
     public void updateUsers(
-            @RequestParam Long userId,
+            @RequestParam UUID userId,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String email){
         usersServiceImpl.updateUsers(userId, firstName, email);

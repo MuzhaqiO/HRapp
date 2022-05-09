@@ -2,18 +2,21 @@ package com.internship.HRapp.service.interfaces;
 
 import com.internship.HRapp.entity.Roles;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.UUID;
 
 public interface RolesServiceInterface {
 
-    void getRole(Roles roles);
+    Roles getRoleById(UUID roleId);
+
+    Roles getRoleByRoleName(String roleName);
 
     List<Roles> getRoles();
 
-    void updateRoles(UUID roleId, String roleName);
+    Roles updateRoles(Roles roles);
 
-    void addNewRoles(Roles roles);
+    Roles addNewRoles(Roles roles);
 
-    void deleteRoles(UUID roleId);
+    String deleteRolesById(UUID roleId);
 }

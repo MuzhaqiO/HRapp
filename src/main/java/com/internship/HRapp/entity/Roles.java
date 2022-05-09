@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 @Entity
 @Table
@@ -18,8 +20,14 @@ public class Roles {
     @Id
     @GeneratedValue( generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "roleid", columnDefinition = "VARCHAR(255)")
     private UUID roleId;
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "userId")
+    )
+    private Set<Users> theUsers = new HashSet<>();
 
     private String roleName;
 }

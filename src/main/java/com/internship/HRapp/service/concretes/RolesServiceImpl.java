@@ -6,6 +6,7 @@ import com.internship.HRapp.service.interfaces.RolesServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,27 +17,34 @@ public class RolesServiceImpl implements RolesServiceInterface {
     private final RolesRepo rolesRepo;
 
     @Override
-    public void getRole(Roles roles) {
-
+    public Roles getRoleById(UUID roleId) {
+    return rolesRepo.findById(roleId).orElse(null);
+    }
+    @Override
+    public Roles getRoleByRoleName(String roleName) {
+        return rolesRepo.findByRoleName(roleName);
     }
 
     @Override
     public List<Roles> getRoles() {
-        return null;
+        return rolesRepo.findAll();
     }
 
     @Override
-    public void updateRoles(UUID roleId, String roleName) {
-
+    public Roles updateRoles(Roles roles) {
+    Roles existingRole = rolesRepo.findById(roles.getRoleId()).orElse(null);
+    existingRole.setRoleName(roles.getRoleName());
+    return rolesRepo.save(existingRole);
     }
 
     @Override
-    public void addNewRoles(Roles roles) {
-
+    public Roles addNewRoles(Roles roles) {
+    return rolesRepo.save(roles);
     }
 
     @Override
-    public void deleteRoles(UUID roleId) {
-
+    public String deleteRolesById(UUID roleId) {
+    rolesRepo.deleteById(roleId);
+    return "role removed {}" + roleId;
     }
 }

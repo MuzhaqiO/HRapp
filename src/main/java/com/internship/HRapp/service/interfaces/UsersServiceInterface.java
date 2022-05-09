@@ -7,13 +7,18 @@ import java.util.UUID;
 
 public interface UsersServiceInterface {
 
-    void getUser(Users users);
+
+    Users getUserById(UUID userId);
+
+    Users getUserByUsername(String username);
 
     List<Users> getUsers();
 
-    void addNewUsers(Users users);
+    Users addNewUsers(Users users);
 
-    void deleteUsers(UUID usersId);
+    String deleteUsersById(UUID userId);
 
-    void updateUsers(UUID usersId, String firstName, String email);
+    String deleteUsersByUsername(String username);
+
+    Users updateUsers(Users users);
 }

@@ -5,12 +5,14 @@ import com.internship.HRapp.service.concretes.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/hr_management_system/users")
 @RequiredArgsConstructor
+@Transactional
 public class UsersController {
     private final UsersServiceImpl usersServiceImpl;
 
@@ -18,22 +20,28 @@ public class UsersController {
     public List<Users> getUsers() {
         return usersServiceImpl.getUsers();
         }
-        public void getUser(Users user){
-        usersServiceImpl.getUser(user);
+        @GetMapping("id/{userId}")
+    public Users getUserById(@PathVariable UUID userId){
+        return usersServiceImpl.getUserById(userId);
         }
+        @GetMapping("username/{username}")
+    public Users getUserByUsername(@PathVariable String username){
+        return usersServiceImpl.getUserByUsername(username);
+    }
     @PostMapping
-    public void registerNewUsers(@RequestBody Users users){
-        usersServiceImpl.addNewUsers(users);
+    public Users registerNewUsers(@RequestBody Users users){
+        return usersServiceImpl.addNewUsers(users);
     }
-    @DeleteMapping(path = "{userId}")
-    public void deleteUsers(@PathVariable("userId") UUID userId){
-        usersServiceImpl.deleteUsers(userId);
+    @DeleteMapping("del_id/{userId}")
+    public String deleteUsersById(@PathVariable UUID userId){
+        return usersServiceImpl.deleteUsersById(userId);
     }
-    @PutMapping()
-    public void updateUsers(
-            @RequestParam UUID userId,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String email){
-        usersServiceImpl.updateUsers(userId, firstName, email);
+    @DeleteMapping("del_username/{username}")
+    public String deleteUsersByUsername(@PathVariable String username){
+        return usersServiceImpl.deleteUsersByUsername(username);
+    }
+    @PutMapping("update/{userId}")
+    public Users updateUsers(Users users){
+        return usersServiceImpl.updateUsers(users);
     }
 }

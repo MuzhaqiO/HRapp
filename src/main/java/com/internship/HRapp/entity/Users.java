@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +18,12 @@ import java.util.UUID;
 public class Users {
 
     @Id
-    @GeneratedValue( generator = "uuid2")
+    @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "userid", columnDefinition = "VARCHAR(255)")
     private UUID userId;
+    @ManyToMany(mappedBy = "theUsers")
+    private Set<Roles> theRoles = new HashSet<>();
+
     @Column(unique = true)
     private String username;
     private String password;
@@ -29,7 +33,5 @@ public class Users {
     private String email;
     private LocalDate DOB;
     private Integer leaveDays;
-
-    @Transient
-    private Integer age;
+    private String mobile;
 }

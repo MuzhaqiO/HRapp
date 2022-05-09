@@ -5,7 +5,10 @@ import com.internship.HRapp.service.concretes.RolesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "api/v1/hr_management_system/roles")
 @RequiredArgsConstructor
@@ -16,11 +19,23 @@ public class RolesController {
     public List<Roles> getRoles() {
         return rolesServiceImpl.getRoles();
     }
-    public void getRole(Roles role){
-        rolesServiceImpl.getRole(role);
+    @GetMapping("id/{roleId}")
+    public Roles getRoleById(@PathVariable UUID roleId){
+        return rolesServiceImpl.getRoleById(roleId);
+    }
+    @GetMapping("name/{roleName}")
+    public Roles getRoleByRoleName(@PathVariable String roleName){
+        return rolesServiceImpl.getRoleByRoleName(roleName);
     }
     @PostMapping
-    public void registerNewRoles(@RequestBody Roles roles){
-        rolesServiceImpl.addNewRoles(roles);
+    public Roles registerNewRoles(@RequestBody Roles roles){
+        return rolesServiceImpl.addNewRoles(roles);
     }
+    @DeleteMapping("delete/{roleId}")
+    public String deleteRolesById(@PathVariable UUID roleId){
+        return rolesServiceImpl.deleteRolesById(roleId);
+    }
+    @PutMapping("update/{roleId}")
+    public Roles updateRoles(Roles roles){
+        return rolesServiceImpl.updateRoles(roles);}
 }

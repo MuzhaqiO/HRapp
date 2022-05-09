@@ -16,26 +16,40 @@ public class UsersServiceImpl implements UsersServiceInterface {
     private final UsersRepo usersRepo;
 
     @Override
-    public void getUser(Users users) {
+    public Users getUserById(UUID userId) {
+        return usersRepo.findById(userId).orElse(null);
+    }
+    @Override
+    public Users getUserByUsername(String username) {
+        return usersRepo.findByUsername(username);
     }
 
     @Override
     public List<Users> getUsers() {
-        return null;
+        return usersRepo.findAll();
     }
 
     @Override
-    public void addNewUsers(Users users) {
-
+    public Users addNewUsers(Users users) {
+    return usersRepo.save(users);
     }
 
     @Override
-    public void deleteUsers(UUID usersId) {
-
+    public String deleteUsersById(UUID userId) {
+        usersRepo.deleteById(userId);
+        return "user removed {}" + userId;
+    }
+    @Override
+    public String deleteUsersByUsername(String username) {
+        usersRepo.deleteByUsername(username);
+        return "user removed {}" + username;
     }
 
     @Override
-    public void updateUsers(UUID usersId, String firstName, String email) {
-
+    public Users updateUsers(Users users) {
+        Users existingUser = usersRepo.findById(users.getUserId()).orElse(null);
+        existingUser.setUsername(users.getUsername());
+        existingUser.setEmail(users.getEmail());
+        return usersRepo.save(existingUser);
     }
 }

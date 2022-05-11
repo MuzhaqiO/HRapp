@@ -5,9 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
+
 
 
 @Entity
@@ -20,13 +19,7 @@ public class Experiences {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID expId;
-    private Long userId;
-
- /*   public Set<Users> getUsersExperience() {
-        return usersExperience;
-    }*/
-
-  //  public Set<Users> usersExperience = new HashSet<>();
+    private UUID userId;
     private String company;
     private String positions;
     private LocalDate startTime;
@@ -34,5 +27,14 @@ public class Experiences {
     private String description;
     private TrustLevel trustLevel;
 
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
+    @JoinColumn(name="user_exp_id")
+    private Users users;
 
+
+    public void setStartTime(int i, int i1, int i2) {
+    }
+
+    public void setEndTime(int i, int i1, int i2) {
+    }
 }

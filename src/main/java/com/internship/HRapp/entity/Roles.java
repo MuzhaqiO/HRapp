@@ -21,13 +21,10 @@ public class Roles {
     @GeneratedValue( generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID roleId;
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "roleId"),
-            inverseJoinColumns = @JoinColumn(name = "userId")
-    )
+
+    @ManyToMany(mappedBy = "theRoles")
     private Set<Users> theUsers = new HashSet<>();
 
     private String roleName;
+
 }

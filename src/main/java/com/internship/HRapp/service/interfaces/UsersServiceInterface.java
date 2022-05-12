@@ -1,5 +1,6 @@
 package com.internship.HRapp.service.interfaces;
 
+import com.internship.HRapp.dto.UsersDTO;
 import com.internship.HRapp.entity.Users;
 
 import java.util.List;
@@ -17,8 +18,6 @@ public interface UsersServiceInterface {
     Users addNewUsers(Users users);
 
     String deleteUsersById(UUID userId);
-
-    String deleteUsersByUsername(String username);
 
     Users updateUsers(Users users);
 }

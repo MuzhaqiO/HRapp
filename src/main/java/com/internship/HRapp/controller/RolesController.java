@@ -5,7 +5,6 @@ import com.internship.HRapp.service.concretes.RolesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class RolesController {
     public Roles getRoleByRoleName(@PathVariable String roleName){
         return rolesServiceImpl.getRoleByRoleName(roleName);
     }
-    @PostMapping
+    @PostMapping("addRole")
     public Roles registerNewRoles(@RequestBody Roles roles){
         return rolesServiceImpl.addNewRoles(roles);
     }

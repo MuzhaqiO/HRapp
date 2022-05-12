@@ -33,13 +33,14 @@ public class RolesServiceImpl implements RolesServiceInterface {
     @Override
     public Roles updateRoles(Roles roles) {
     Roles existingRole = rolesRepo.findById(roles.getRoleId()).orElse(null);
-    existingRole.setRoleName(roles.getRoleName());
+        assert existingRole != null;
+        existingRole.setRoleName(roles.getRoleName());
     return rolesRepo.save(existingRole);
     }
 
     @Override
     public Roles addNewRoles(Roles roles) {
-    return rolesRepo.save(roles);
+        return rolesRepo.save(roles);
     }
 
     @Override

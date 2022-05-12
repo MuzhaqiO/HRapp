@@ -1,6 +1,9 @@
 package com.internship.HRapp.service.concretes;
 
+import com.internship.HRapp.dto.UsersDTO;
 import com.internship.HRapp.entity.Users;
+import com.internship.HRapp.mapper.UsersMapper;
+import com.internship.HRapp.repository.RolesRepo;
 import com.internship.HRapp.repository.UsersRepo;
 import com.internship.HRapp.service.interfaces.UsersServiceInterface;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +17,8 @@ import java.util.UUID;
 public class UsersServiceImpl implements UsersServiceInterface {
 
     private final UsersRepo usersRepo;
-
+    private final RolesRepo rolesRepo;
+    private final UsersMapper usersMapper;
     @Override
     public Users getUserById(UUID userId) {
         return usersRepo.findById(userId).orElse(null);
@@ -31,7 +35,7 @@ public class UsersServiceImpl implements UsersServiceInterface {
 
     @Override
     public Users addNewUsers(Users users) {
-    return usersRepo.save(users);
+        return usersRepo.save(users);
     }
 
     @Override
@@ -39,17 +43,14 @@ public class UsersServiceImpl implements UsersServiceInterface {
         usersRepo.deleteById(userId);
         return "user removed {}" + userId;
     }
-    @Override
-    public String deleteUsersByUsername(String username) {
-        usersRepo.deleteByUsername(username);
-        return "user removed {}" + username;
-    }
 
     @Override
     public Users updateUsers(Users users) {
         Users existingUser = usersRepo.findById(users.getUserId()).orElse(null);
+        assert existingUser != null;
         existingUser.setUsername(users.getUsername());
         existingUser.setEmail(users.getEmail());
         return usersRepo.save(existingUser);
     }
+
 }

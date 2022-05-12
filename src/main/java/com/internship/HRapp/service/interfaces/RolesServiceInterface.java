@@ -2,7 +2,6 @@ package com.internship.HRapp.service.interfaces;
 
 import com.internship.HRapp.entity.Roles;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.UUID;
 

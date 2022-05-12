@@ -21,7 +21,12 @@ public class Users {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID userId;
-    @ManyToMany(mappedBy = "theUsers")
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Roles> theRoles = new HashSet<>();
 
     @Column(unique = true)
@@ -34,4 +39,5 @@ public class Users {
     private LocalDate DOB;
     private Integer leaveDays;
     private String mobile;
+
 }

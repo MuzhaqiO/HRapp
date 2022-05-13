@@ -2,24 +2,25 @@ package com.internship.HRapp.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
 @Entity
-@Table
-@Getter
-@Setter
+@Table(name = "users")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "user_id")
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
     @ManyToMany
@@ -27,7 +28,7 @@ public class Users {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Roles> theRoles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @Column(unique = true)
     private String username;

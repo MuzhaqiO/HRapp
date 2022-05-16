@@ -2,32 +2,39 @@ package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.UserExperienceDTO;
 import com.internship.HRapp.entity.Experiences;
-import com.internship.HRapp.entity.Users;
-import com.internship.HRapp.enumeration.TrustLevel;
+import com.internship.HRapp.mapper.ExperiencesMapper;
 import com.internship.HRapp.repository.ExperiencesRepo;
-import com.internship.HRapp.service.interfaces.ExperiencesServiceInterface;
+import com.internship.HRapp.service.interfaces.ExperiencesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ExperiencesServiceImpl implements ExperiencesServiceInterface {
+public class ExperiencesServiceImpl implements ExperiencesService {
 
-    @Autowired
     private final ExperiencesRepo experiencesRepo;
 
-   /* public List<UserExperienceDTO> getAllUsersExperiences(){
-      return experiencesRepo.findAll()
-              .stream()
-              .map(this::convertEntityToDTO)
-              .collect(Collectors.toList());
-    }*/
+    private final ExperiencesMapper experiencesMapper;
+
+    @Override
+    public Experiences getExperienceById(UUID expId) {
+        return experiencesRepo.findById(expId).orElse(null);
+    }
+
+    @Override
+    public List<UserExperienceDTO> getExperiencesByUserId(UUID userId) {
+        return experiencesMapper.entitiesToDtos(experiencesRepo.findByUsersUserId(userId));
+    }
+
+    /*  public List<UserExperienceDTO> getAllUsersExperiences(){
+            return experiencesRepo.findAll()
+                    .stream()
+                    .map(this::entitiesToDtos)
+                    .collect(Collectors.toList());
+          }*/
    /* private UserExperienceDTO convertEntityToDTO(Experiences experiences){
         UserExperienceDTO userExperienceDTO = new UserExperienceDTO();
         userExperienceDTO.setUserId(experiences.getUsers().getUserId());
@@ -38,23 +45,23 @@ public class ExperiencesServiceImpl implements ExperiencesServiceInterface {
         userExperienceDTO.setTrustLevel(experiences.getTrustLevel());
         return userExperienceDTO;
     }*/
+
     @Override
-    public void getExperience(Experiences experiences) {
+    public Experiences addNewExperiences(UserExperienceDTO experiences) {
+        return experiencesRepo.save( experiencesMapper.dtoToEntity(experiences));
+    }
+
+    @Override
+    public String deleteExperiences(UUID expId) { //kontrollo nese ekziston si fillim pastaj te fshihet
+        /*if (experiencesRepo.getById(expId)) {
+            experiencesRepo.deleteById(expId);
+        }*/
+            return "Experience {} removed " + expId;
 
     }
 
     @Override
-    public void addNewExperiences(Experiences experiences) {
-
-    }
-
-    @Override
-    public void deleteExperiences(UUID expId) {
-
-    }
-
-    @Override
-    public void updateExperiences(UUID expId, String company, String positions, LocalDate startTime, LocalDate endTime, String description, TrustLevel trustLevel) {
-
+    public Experiences updateExperiences(Experiences experiences) {
+        return experiencesRepo.save(experiences);
     }
 }

@@ -2,6 +2,8 @@ package com.internship.HRapp.entity;
 
 import com.internship.HRapp.enumeration.TrustLevel;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +19,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Experiences {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id")
+    @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID expId;
     private UUID userId;
     private String company;

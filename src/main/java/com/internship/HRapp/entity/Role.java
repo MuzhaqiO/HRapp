@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,7 +10,8 @@ import java.util.Set;
 import java.util.UUID;
 @Entity
 @Table(name = "roles")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
@@ -19,7 +21,7 @@ public class Role {
     private UUID roleId;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> theUsers = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     private String roleName;
 

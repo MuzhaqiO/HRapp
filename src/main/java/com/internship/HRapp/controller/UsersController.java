@@ -30,7 +30,19 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
     @PostMapping("addNewUser")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userServiceInterface.addNewUsers(userDTO));
+    public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+        return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
+    @PutMapping("updateUser/{userId}")
+    public void updateUser(@RequestParam UserCreateDTO userCreateDTO){
+        userServiceInterface.updateUser(userCreateDTO);
+    }
+    @PatchMapping("updateUsersStatus/{userId}")
+    public void updateUsersStatus(@RequestParam UserCreateDTO userCreateDTO){
+        userServiceInterface.updateUsersStatus(userCreateDTO);
+    }
+    /*@PutMapping("updateUser/{userId}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userServiceInterface.updateUser(userId, userDTO));
+    }*/
 }

@@ -2,24 +2,32 @@ package com.internship.HRapp.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
-
 @Entity
-@Table
-@Getter
-@Setter
+@Table(name = "users")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
 
     @Id
-    @GeneratedValue( generator = "uuid2")
+    @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "userid", columnDefinition = "VARCHAR(255)")
+    @Column(name = "user_id")
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private Set<Role> roles = new HashSet<>();
+
     @Column(unique = true)
     private String username;
     private String password;
@@ -29,7 +37,6 @@ public class Users {
     private String email;
     private LocalDate DOB;
     private Integer leaveDays;
+    private String mobile;
 
-    @Transient
-    private Integer age;
 }

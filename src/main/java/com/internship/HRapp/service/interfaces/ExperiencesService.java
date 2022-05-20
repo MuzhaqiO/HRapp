@@ -9,15 +9,15 @@ import java.util.UUID;
 public interface ExperiencesService {
     Experiences getExperienceById(UUID expId);
 
-    List<UserExperienceDTO> getExperiencesByUserId(UUID userId);
-
    // List<UserExperienceDTO> getExperiences(UUID expId);
 
-    Experiences addNewExperiences(UserExperienceDTO experiences);
+    List<UserExperienceDTO> getExperiences();
+
+    UserExperienceDTO addNewExperiences(UserExperienceDTO experienceDTO);
 
 //    UserExperienceDTO getExperienceByName(String experienceName);
 
-    String deleteExperiences(UUID expId);
+   // String deleteExperiences(UUID expId);
 
-    Experiences updateExperiences(Experiences experiences);
+    void updateExperiences(UserExperienceDTO experienceDTO);
 }

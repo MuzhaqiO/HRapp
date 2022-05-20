@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface ExperiencesRepo extends JpaRepository<Experiences, UUID> {
 
     List<Experiences> findByUsersUserId(UUID userId);
+    Experiences getExperiencesByExpId(UUID expId);
 }

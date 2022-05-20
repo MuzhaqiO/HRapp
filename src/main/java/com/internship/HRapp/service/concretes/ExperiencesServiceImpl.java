@@ -8,6 +8,7 @@ import com.internship.HRapp.service.interfaces.ExperiencesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,8 +26,8 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     }
 
     @Override
-    public List<UserExperienceDTO> getExperiencesByUserId(UUID userId) {
-        return experiencesMapper.entitiesToDtos(experiencesRepo.findByUsersUserId(userId));
+    public List<UserExperienceDTO> getExperiences() {
+        return experiencesMapper.entitiesToDtos(experiencesRepo.findAll());
     }
 
     /*  public List<UserExperienceDTO> getAllUsersExperiences(){
@@ -47,21 +48,31 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     }*/
 
     @Override
-    public Experiences addNewExperiences(UserExperienceDTO experiences) {
-        return experiencesRepo.save( experiencesMapper.dtoToEntity(experiences));
+    public UserExperienceDTO addNewExperiences(UserExperienceDTO experiencesDTO) {
+        Experiences createdExperience = experiencesRepo.save(experiencesMapper.dtoToEntity(experiencesDTO));
+        return experiencesMapper.entityToDto(createdExperience);
     }
 
-    @Override
+  /*  @Override
     public String deleteExperiences(UUID expId) { //kontrollo nese ekziston si fillim pastaj te fshihet
-        /*if (experiencesRepo.getById(expId)) {
-            experiencesRepo.deleteById(expId);
-        }*/
+        boolean exists = experiencesRepo.existsById(expId);
+        if(!exists){
+            throw new IllegalStateException("Experience with id {} does not exist"+expId);
+        }
+        experiencesRepo.deleteById(expId);
             return "Experience {} removed " + expId;
 
-    }
+    }*/
 
     @Override
-    public Experiences updateExperiences(Experiences experiences) {
-        return experiencesRepo.save(experiences);
+    public void updateExperiences(UserExperienceDTO userExperienceDTO) {
+        Experiences experiences = experiencesRepo.getExperiencesByExpId(userExperienceDTO.getExpId());
+        experiences.setCompany(userExperienceDTO.getCompany());
+        experiences.setPositions(userExperienceDTO.getPositions());
+        experiences.setStartTime(userExperienceDTO.getStartTime());
+        experiences.setEndTime(userExperienceDTO.getEndTime());
+        experiences.setDescription(userExperienceDTO.getDescription());
+        experiences.setTrustLevel(userExperienceDTO.getTrustLevel());
+        experiencesRepo.save(experiences);
     }
 }

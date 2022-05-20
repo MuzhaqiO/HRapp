@@ -22,20 +22,24 @@ public class ExperiencesController {
     private final ExperiencesService experiencesService;
 
 
-    @PostMapping("/experiences")
-    public ResponseEntity<Experiences> save(@RequestBody UserExperienceDTO userExperienceDTO){
+    @PostMapping("/addExperiences")
+    public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO){
         return  ResponseEntity.ok(experiencesService.addNewExperiences(userExperienceDTO));
     }
 
-    @GetMapping("/experiences/{userId}")
-    public ResponseEntity<List<UserExperienceDTO>>getExperiences(@PathVariable UUID userId){
-        return ResponseEntity.ok(experiencesService.getExperiencesByUserId(userId));
+    @GetMapping("/experiences")
+    public ResponseEntity<List<UserExperienceDTO>>getExperiences(){
+        return ResponseEntity.ok(experiencesService.getExperiences());
+    }
+    @PutMapping("/experiences/updateExperience/{expId}")
+    public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO){
+        experiencesService.updateExperiences(userExperienceDTO);
     }
 
-    @GetMapping("/experiences/id/{expId}")
+   /* @GetMapping("/experiences/id/{expId}")
     public ResponseEntity<List<UserExperienceDTO>> findExperienceById(@PathVariable UUID expId){
         return ResponseEntity.ok(experiencesService.getExperiencesByUserId(expId));
-    }
+    }*/
 /*
     @GetMapping("/experiences/{id}")
     public ResponseEntity<UserExperienceDTO>findById(@PathVariable("id") UUID id){

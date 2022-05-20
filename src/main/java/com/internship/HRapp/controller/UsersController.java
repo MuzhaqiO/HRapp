@@ -1,54 +1,36 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.entity.Experiences;
-import com.internship.HRapp.entity.Users;
-import com.internship.HRapp.service.concretes.UsersServiceImpl;
+import com.internship.HRapp.dto.userDTO.UserCreateDTO;
+import com.internship.HRapp.dto.userDTO.UserDTO;
+import com.internship.HRapp.entity.User;
+import com.internship.HRapp.mapper.UserMapper;
+import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1/hr_management_system")
+@RequestMapping(path = "api/v1/hr_management_system/users")
 @RequiredArgsConstructor
 public class UsersController {
-    private final UsersServiceImpl usersServiceImpl;
-
-    @GetMapping
-    public List<Users> getUsers() {
-        return usersServiceImpl.getUsers();
+    private final UserServiceInterface userServiceInterface;
+    @GetMapping("getAll")
+    public ResponseEntity<List<UserDTO>> findAllUsers() {
+        return ResponseEntity.ok(userServiceInterface.getUsers());
     }
-    public void getUser(Users user){
-        usersServiceImpl.getUser(user);
+    @GetMapping("username/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username){
+        return ResponseEntity.ok(userServiceInterface.getUserByUsername(username));
     }
-    @PostMapping
-    public void registerNewUsers(@RequestBody Users users){
-        usersServiceImpl.addNewUsers(users);
+    @GetMapping("userId/{userId}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId){
+        return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
-    @DeleteMapping(path = "{userId}")
-    public void deleteUsers(@PathVariable("userId") UUID userId){
-        usersServiceImpl.deleteUsers(userId);
+    @PostMapping("addNewUser")
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userServiceInterface.addNewUsers(userDTO));
     }
-    @PutMapping()
-    public void updateUsers(
-            @RequestParam UUID userId,
-            @RequestParam String firstName,
-            @RequestParam(required = false) String email){
-        usersServiceImpl.updateUsers(userId, firstName, email);
-    }
-
-    @GetMapping("/users")
-    public List<Users>findAll(){
-        return usersServiceImpl.findAll();
-    }
-    @GetMapping("/users/{id}")
-    public Optional<Users> findById(@PathVariable("id") UUID id){
-        return usersServiceImpl.findById(id);
-    }
-   /* @GetMapping("/users/{id}/experiences")
-    public List<Experiences> getExperiencesByUsers(@PathVariable("id") UUID id){
-        return usersServiceImpl.getExperiencesByUsers(id);
-    }*/
 }

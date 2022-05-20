@@ -1,6 +1,6 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.UserProjectsDTO;
+import com.internship.HRapp.dto.ProjectsDTO;
 import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.repository.ProjectsRepo;
@@ -20,19 +20,31 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     private final ProjectsMapper projectsMapper;
 
     @Override
-    public Projects getProjectsById(UUID projectsId) {
-        return projectsRepo.findById(projectsId).orElse(null);
+    public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
+        var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
+        return  test;
+    }
+
+   /* @Override
+    public void addProjectToNewUser() {
+        User user = new User();
+        user.setUsername("adushi");
+        user.setPassword("123");
+        user.setFirstName("arian");
+        user.setLastName("dushi");
+        user.setEmail("adushi@gmail.com");
+
+        Projects projects =projectsRepo.findByName();
+    }*/
+
+    public ProjectsDTO getProjectById(UUID projectId) {
+        return projectsMapper.entityToDto((projectsRepo.getProjectsByProjectId(projectId)));
     }
 
     @Override
-    public List<UserProjectsDTO> getProjectsByUserId(UUID userId) {
-        return projectsMapper.entitiesToDtos((projectsRepo.findByUserId(userId)));
-    }
-
-    @Override
-    public Projects addNewProjects(UserProjectsDTO projects) {
-
-        return projectsRepo.save(projectsMapper.dtoToEntity(projects));
+    public ProjectsDTO addNewProjects(ProjectsDTO projectsDTO) {
+        Projects createdProject = projectsRepo.save(projectsMapper.dtoToEntity(projectsDTO));
+        return projectsMapper.entityToDto(createdProject);
     }
 
     @Override
@@ -42,7 +54,17 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }
 
     @Override
-    public Projects updateProject(Projects projects) {
-        return projectsRepo.save(projects);
+    public void updateProject(ProjectsDTO projectsDTO) {
+        Projects projects = projectsRepo.getProjectsByProjectId(projectsDTO.getProjectId());
+        projects.setProjectName(projectsDTO.getProjectName());
+        projects.setStartTime(projectsDTO.getStartTime());
+        projects.setEndTime(projectsDTO.getEndTime());
+        projects.setDescription(projectsDTO.getDescription());
+        projectsRepo.save(projects);
+
+    }
+    @Override
+    public List<ProjectsDTO> getProjects() {
+        return projectsMapper.entitiesToDtos(projectsRepo.findAll());
     }
 }

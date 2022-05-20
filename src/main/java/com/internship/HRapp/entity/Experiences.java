@@ -34,7 +34,7 @@ public class Experiences {
 
     @ManyToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name="user_exp_id")
-    private Users users;
+    private User users;
 
 
     public void setStartTime(int i, int i1, int i2) {

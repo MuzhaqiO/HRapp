@@ -1,21 +1,23 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.UserProjectsDTO;
-import com.internship.HRapp.entity.Projects;
+import com.internship.HRapp.dto.ProjectsDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ProjectsServiceInterface {
-    Projects getProjectsById(UUID expId);
 
-    List<UserProjectsDTO> getProjectsByUserId(UUID userId);
+    List<ProjectsDTO> getProjectsByUserId(UUID userId);
+   // void addProjectToNewUser();
+    List<ProjectsDTO> getProjects();
+    ProjectsDTO getProjectById(UUID projectId);
+
 
     // List<UserProjectsDTO> getProjects(UUID expId);
 
-    Projects addNewProjects(UserProjectsDTO projects);
+    ProjectsDTO addNewProjects(ProjectsDTO projectsDTO);
 
     String deleteProject(UUID expId);
 
-    Projects updateProject(Projects projects);
+    void updateProject(ProjectsDTO projectsDTO);
 }

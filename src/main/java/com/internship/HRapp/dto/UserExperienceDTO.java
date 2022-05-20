@@ -11,9 +11,11 @@ import java.util.UUID;
 @Setter
 public class UserExperienceDTO {
     private UUID userId;
+    private UUID expId;
     private String company;
     private String positions;
     private LocalDate startTime;
     private LocalDate endTime;
+    private String description;
     private TrustLevel trustLevel;
 }

@@ -1,11 +1,11 @@
 package com.internship.HRapp;
 
 import com.internship.HRapp.entity.Experiences;
-import com.internship.HRapp.entity.Users;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enumeration.TrustLevel;
 import com.internship.HRapp.repository.ExperiencesRepo;
-import com.internship.HRapp.repository.UsersRepo;
-import org.apache.catalina.User;
+import com.internship.HRapp.repository.UserRepo;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

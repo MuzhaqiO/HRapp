@@ -2,8 +2,7 @@ package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
-import com.internship.HRapp.entity.User;
-import com.internship.HRapp.mapper.UserMapper;
+import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +37,8 @@ public class UsersController {
         userServiceInterface.updateUser(userCreateDTO);
     }
     @PatchMapping("updateUsersStatus/{userId}")
-    public void updateUsersStatus(@RequestParam UserCreateDTO userCreateDTO){
-        userServiceInterface.updateUsersStatus(userCreateDTO);
+    public void updateUsersStatus(@RequestParam UsersStatusDTO usersStatusDTO){
+        userServiceInterface.updateUsersStatus(usersStatusDTO);
     }
     /*@PutMapping("updateUser/{userId}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {

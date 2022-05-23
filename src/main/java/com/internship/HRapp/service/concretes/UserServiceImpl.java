@@ -1,19 +1,16 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
+import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,9 +50,9 @@ public class UserServiceImpl implements UserServiceInterface {
         usersRepo.save(user);
     }
     @Override
-    public void updateUsersStatus(UserCreateDTO userCreateDTO) {
-     User user = usersRepo.findUserByUserId(userCreateDTO.getUserId());
-     user.setUsersStatus(userCreateDTO.getUsersStatus());
+    public void updateUsersStatus(UsersStatusDTO usersStatusDTO) {
+     User user = usersRepo.findUserByUserId(usersStatusDTO.getUserId());
+     user.setUsersStatus(usersStatusDTO.getUsersStatus());
      usersRepo.save(user);
     }
 

@@ -1,8 +1,6 @@
 package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
-import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.service.interfaces.RoleServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

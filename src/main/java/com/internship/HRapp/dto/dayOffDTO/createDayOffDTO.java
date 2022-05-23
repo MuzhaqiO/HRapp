@@ -1,7 +1,8 @@
-package com.internship.HRapp.dto;
+package com.internship.HRapp.dto.dayOffDTO;
 
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 
@@ -14,4 +15,5 @@ public class createDayOffDTO {
     private String permissionType;
     private String report;
     private Long dayOffAmount;
+    private UUID userId;
 }

@@ -1,8 +1,8 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.StatusDTO;
-import com.internship.HRapp.dto.UserDayOffDTO;
-import com.internship.HRapp.dto.createDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
+import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.enums.DayOffStatus;
 import com.internship.HRapp.mapper.DayOffMapper;

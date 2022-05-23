@@ -1,43 +1,59 @@
 package com.internship.HRapp.service.implementation;
 
+import com.internship.HRapp.dto.certificationDto.CertificationDto;
 import com.internship.HRapp.entity.Certification;
+import com.internship.HRapp.mapper.CertificationMapper;
+import com.internship.HRapp.repository.CertificationRepo;
 import com.internship.HRapp.service.interfaces.CertificationServiceInterface;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public  class CertificationServiceImpl implements CertificationServiceInterface {
 
+    private final CertificationRepo certificationRepo;
+    private final CertificationMapper certificationMapper;
 
     @Override
-    public void getCertification(Certification certification){
-
+    public CertificationDto getCertificationById(UUID certificationID){
+    return certificationMapper.modeltoDto(certificationRepo.getById(certificationID));
     }
 
     @Override
-    public List<Certification> getCertification(){
-        return null;
+    public List<CertificationDto> getCertifications(){
+        return certificationMapper.toDto(certificationRepo.findAll());
     }
 
     @Override
-    public void addNewCertification(Certification certification){
-
-    }
-    @Override
-    public void deleteCertification(UUID certificationId){
-
+    public CertificationDto addNewCertification(CertificationDto certificationDto){
+    Certification createdCertification = certificationRepo.save(certificationMapper.dtotoModel(certificationDto));
+        return certificationMapper.modeltoDto(createdCertification);
     }
 
     @Override
-    public void updateCertification(UUID certificationId, String certification_name, Date expiration_year, URL link_of_certification) {
+    public String deleteCertificationById(UUID certificationId){
+        certificationRepo.deleteById(certificationId);
+        return "certification removed {}" + certificationId;
+    }
 
+    @Override
+    public void editCertification(CertificationDto certificationDto) {
+    Certification certification =certificationRepo.findCertificationByCertificationID(certificationDto.getCertificationID());
+    certification.setCertification_name(certificationDto.getCertification_name());
+    certification.setCertification_year(certificationDto.getCertification_year());
+    certification.setExpiration_date(certificationDto.getExpiration_date());
+    certification.setReleasing_authority(certificationDto.getReleasing_authority());
+    certification.setLink_of_certification(certificationDto.getLink_of_certification());
+    certificationRepo.save(certification);
     }
 
 }

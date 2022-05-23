@@ -21,4 +21,5 @@ public interface UserServiceInterface {
     void updateUser (UserCreateDTO userCreateDTO);
 
     void updateUsersStatus (UserCreateDTO userCreateDTO);
+
 }

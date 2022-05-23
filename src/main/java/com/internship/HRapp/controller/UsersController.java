@@ -30,7 +30,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
     @PostMapping("addNewUser")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userServiceInterface.addNewUsers(userDTO));
+    public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+        return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
 }

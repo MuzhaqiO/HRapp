@@ -1,48 +1,38 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.entity.Certification;
-import com.internship.HRapp.service.implementation.CertificationServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.internship.HRapp.dto.certificationDto.CertificationDto;
+import com.internship.HRapp.service.interfaces.CertificationServiceInterface;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 
 @RestController
-@RequestMapping(path ="api/v1/hr/menagment_system")
-@NoArgsConstructor
+@RequiredArgsConstructor
+@RequestMapping(path ="api/v1/hr_menagement_system/certifications")
 public class CertificationController {
 
-    private CertificationServiceImpl certificationServiceImpl;
+    private final CertificationServiceInterface certificationServiceInterface;
 
-    @GetMapping("/{certificationid}")
-    public List<Certification> getCertification(){
-        return certificationServiceImpl.getCertification();
+    @GetMapping("getAll")
+    public ResponseEntity<List<CertificationDto>> findCertifications() {  return ResponseEntity.ok(certificationServiceInterface.getCertifications());}
+    @GetMapping("id/{certificationID}")
+    public ResponseEntity<CertificationDto> findCertificationById(@PathVariable UUID certificationID){
+        return ResponseEntity.ok(certificationServiceInterface.getCertificationById(certificationID));
     }
-    public void getCertification(Certification certification){
-        certificationServiceImpl.getCertification(certification);
+    @PostMapping("addNewCertification")
+    public ResponseEntity<CertificationDto> createCertification(@RequestBody CertificationDto certificationDto){
+        return ResponseEntity.ok(certificationServiceInterface.addNewCertification(certificationDto));
     }
-    @PostMapping
-    public void registerNewCertification(@RequestBody Certification certification){
-        certificationServiceImpl.addNewCertification(certification);
-    }
-    @DeleteMapping(path = "{certifiactionid}")
-    public void deleteCertification(@PathVariable ("certificationid") UUID certifiactionid){
-        certificationServiceImpl.deleteCertification(certifiactionid);
-    }
-    @PutMapping()
-    public void updateCertification(
-            @RequestParam UUID certificationId,
-            @RequestParam(required = false) String certification_name,
-            @RequestParam(required = false) Date expiration_year,
-            @RequestParam(required = false) URL link_of_certification){
-                certificationServiceImpl.updateCertification( certificationId,certification_name,expiration_year,link_of_certification);
+    @PutMapping("edit/{certificationid}")
+    public void editCertification(@RequestBody CertificationDto certificationDto){
+        certificationServiceInterface.editCertification(certificationDto); }
+
+    @DeleteMapping("delete/{certificationID}")
+    public String deleteRolesById(@PathVariable UUID certificationID) {
+        return certificationServiceInterface.deleteCertificationById(certificationID);
     }
 }

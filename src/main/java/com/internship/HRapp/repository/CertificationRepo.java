@@ -1,8 +1,10 @@
 package com.internship.HRapp.repository;
 
 import com.internship.HRapp.entity.Certification;
+import com.internship.HRapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,15 +13,9 @@ import java.util.UUID;
 @Repository
 public interface CertificationRepo extends JpaRepository<Certification, UUID> {
 
-    @Override
-    List<Certification> findAll();
-
-    @Query("SELECT CertificationID FROM Certification ")
-    Certification findbyCertificationId(UUID Certification);
-
-    @Query("SELECT releasing_authority FROM Certification")
-    Certification findByReleasing_authority(String releasing_authority);
-
-
-
+    //@Query(value = "select certificationID from Certification ")
+    Certification findCertificationByCertificationID(UUID certificationID);
+//    @Query(value = "select certificationID from Certifications c" +
+//        "left join Users_Certifications up on c.id= up.certificationID"+
+//        "where up.user_id=:userId", nativeQuery = true)
 }

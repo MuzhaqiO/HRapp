@@ -1,7 +1,7 @@
 package com.internship.HRapp.entity;
 import lombok.*;
-import org.apache.tomcat.jni.User;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Address")
+@Table(name = "Addresses")
 @Getter
 @Setter
 public class Address {
@@ -18,14 +18,17 @@ public class Address {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "Id", columnDefinition = "BINARY(16),updatable=false,nullable=false")
+    @Column(name = "ID")
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
 
-    private UUID AddressID;
+    private UUID addressID;
     private String state;
     private String city;
     private String street;
     private String postalCode;
 
-    /* @OneToOne(mappedBy = "address")
-    private User user;*/
+   @OneToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
+
 }

@@ -1,6 +1,6 @@
 package com.internship.HRapp.dto.userDTO;
 
-import com.internship.HRapp.entity.Role;
+import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import lombok.Data;
 
 import java.util.Set;
@@ -13,5 +13,6 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<Role> roles;
+    private String mobile;
+    private Set<RoleDTO> roles;
 }

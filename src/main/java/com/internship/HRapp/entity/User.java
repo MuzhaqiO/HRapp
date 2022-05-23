@@ -11,7 +11,8 @@ import java.util.Set;
 import java.util.UUID;
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -38,7 +39,10 @@ public class User {
     @Column(unique = true)
     private String email;
     private LocalDate DOB;
-    private Integer leaveDays;
+    private Integer leaveDaysLeft;
     private String mobile;
-
+    private LocalDate startingDay;
+    private LocalDate terminationDay;
+    private String secondContact;
+    private Boolean usersStatus;
 }

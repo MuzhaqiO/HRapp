@@ -33,7 +33,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
     @PutMapping("updateUser/{userId}")
-    public void updateUser(@RequestParam UserCreateDTO userCreateDTO){
+    public void updateUser(@RequestBody UserCreateDTO userCreateDTO){
         userServiceInterface.updateUser(userCreateDTO);
     }
     @PatchMapping("updateUsersStatus/{userId}")

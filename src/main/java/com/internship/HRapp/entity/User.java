@@ -6,9 +6,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -34,7 +33,7 @@ public class User {
             name = "user_projects",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "projectId"))
-    private Set<Projects> projects = new HashSet<>();
+    private List<Projects> projects = new ArrayList<>();
 
     @Column(unique = true)
     private String username;

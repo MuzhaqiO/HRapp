@@ -24,5 +24,4 @@ public class UserCreateDTO {
     private String secondContact;
     private Boolean usersStatus;
     private Set<RoleDTO> roles;
-    private Set<ProjectsDTO> projects;
 }

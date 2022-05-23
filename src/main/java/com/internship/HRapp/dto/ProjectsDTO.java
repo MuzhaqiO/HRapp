@@ -16,5 +16,5 @@ public class ProjectsDTO {
     private LocalDate startTime;
     private LocalDate endTime;
     private String description;
-  //  private List<ProjectsUsersDTO> users;
+    private List<ProjectsUsersDTO> users;
 }

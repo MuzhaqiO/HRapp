@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface ProjectsMapper {
@@ -17,4 +18,5 @@ public interface ProjectsMapper {
 
     //@Mapping(source ="userId", target = "users.userId")
     Projects dtoToEntity(ProjectsDTO projectsDTO);
+    Set<Projects> toEntities(Set<ProjectsDTO> projectsDTOS);
 }

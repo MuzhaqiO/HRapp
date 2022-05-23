@@ -3,7 +3,9 @@ package com.internship.HRapp.service.concretes;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.entity.User;
+import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
+    private final ProjectsMapper projectsMapper;
     @Override
     public UserDTO getUserById(UUID userId) {
         return usersMapper.entityToDTO(usersRepo.getById(userId));
@@ -47,9 +50,10 @@ public class UserServiceImpl implements UserServiceInterface {
     user.setSecondContact(userCreateDTO.getSecondContact());
     user.setMobile(userCreateDTO.getMobile());
     user.setMobile(userCreateDTO.getMobile());
-    //user.setProjects(userCreateDTO.getProjects());
+    //user.setProjects(projectsMapper.toEntities(userCreateDTO.getProjects()));
         usersRepo.save(user);
     }
+
     @Override
     public void updateUsersStatus(UsersStatusDTO usersStatusDTO) {
      User user = usersRepo.findUserByUserId(usersStatusDTO.getUserId());

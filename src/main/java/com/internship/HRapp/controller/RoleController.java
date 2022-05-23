@@ -1,7 +1,6 @@
 package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
-import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.service.interfaces.RoleServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +30,13 @@ public class RoleController {
     @PostMapping("addRole")
     public ResponseEntity<RoleDTO> createNewRole(@RequestBody RoleDTO roleDTO){
         return ResponseEntity.ok(roleServiceInterface.addNewRoles(roleDTO));
+    }
+    @DeleteMapping("delete/{roleId}")
+    public String deleteRolesById(@PathVariable UUID roleId){
+        return roleServiceInterface.deleteRolesById(roleId);
+    }
+    @PutMapping("updateRole/{roleId}")
+    public void updateRole(@RequestParam RoleDTO roleDTO){
+        roleServiceInterface.updateRole(roleDTO);
     }
 }

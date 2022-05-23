@@ -6,12 +6,12 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -22,6 +22,14 @@ public class User {
     @Column(name = "user_id")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private Set<Role> roles = new HashSet<>();
+
     @Column(unique = true)
     private String username;
     private String password;
@@ -33,20 +41,4 @@ public class User {
     private Integer leaveDays;
     private String mobile;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Role> roles = new HashSet<>();
-    @OneToMany(mappedBy="users")
-    private List<Experiences> experiences;
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_projects",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "projectId"))
-    private List<Projects> projects = new ArrayList<>();
 }

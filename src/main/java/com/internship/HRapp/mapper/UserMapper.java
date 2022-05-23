@@ -1,13 +1,11 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.ProjectsUsersDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.entity.User;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -19,5 +17,4 @@ public interface UserMapper {
     List<UserCreateDTO> oDTOs(List<User> users);
     User toEntity(UserCreateDTO userCreateDTO);
     List<User> toEntities(List<UserCreateDTO> userCreateDTOs);
-    Set<User> toEntitiesProject(List<ProjectsUsersDTO> dtos);
 }

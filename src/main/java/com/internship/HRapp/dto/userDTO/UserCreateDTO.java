@@ -4,6 +4,7 @@ import com.internship.HRapp.dto.ProjectsDTO;
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,6 +16,13 @@ public class UserCreateDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private LocalDate DOB;
+    private Integer leaveDaysLeft;
+    private String mobile;
+    private LocalDate startingDay;
+    private LocalDate terminationDay;
+    private String secondContact;
+    private Boolean usersStatus;
     private Set<RoleDTO> roles;
     private Set<ProjectsDTO> projects;
 }

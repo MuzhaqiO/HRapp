@@ -1,5 +1,8 @@
 package com.internship.HRapp.dto.userDTO;
 
+import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.roleDTO.RoleDTO;
+import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.entity.Role;
 import lombok.Data;
 
@@ -13,5 +16,6 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<Role> roles;
+    private Set<RoleDTO> roles;
+    private Set<ProjectsDTO> projects;
 }

@@ -42,6 +42,11 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }
 
     @Override
+    public ProjectsDTO getProjectByProjectName(String projectName) {
+        return projectsMapper.entityToDto(projectsRepo.findByProjectsName(projectName));
+    }
+
+    @Override
     public ProjectsDTO addNewProjects(ProjectsDTO projectsDTO) {
         Projects createdProject = projectsRepo.save(projectsMapper.dtoToEntity(projectsDTO));
         return projectsMapper.entityToDto(createdProject);

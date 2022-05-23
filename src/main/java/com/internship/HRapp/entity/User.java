@@ -29,6 +29,12 @@ public class User {
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "user_projects",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "projectId"))
+    private Set<Projects> projects = new HashSet<>();
 
     @Column(unique = true)
     private String username;
@@ -40,5 +46,8 @@ public class User {
     private LocalDate DOB;
     private Integer leaveDays;
     private String mobile;
-
+    private LocalDate startingDay;
+    private LocalDate terminationDay;
+    private String secondContact;
+    private Boolean usersStatus;
 }

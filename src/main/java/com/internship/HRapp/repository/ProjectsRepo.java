@@ -22,5 +22,5 @@ public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
     List<Projects> getProjectsByUserId(@Param("userId") UUID userId);
 
     @Query("SELECT p FROM Projects p WHERE p.projectName=?1")
-     Projects findByName(String projectName);
+     Projects findByProjectsName(String projectName);
 }

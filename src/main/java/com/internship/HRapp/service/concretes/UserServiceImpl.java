@@ -44,9 +44,10 @@ public class UserServiceImpl implements UserServiceInterface {
     user.setFirstName(userCreateDTO.getFirstName());
     user.setLastName(userCreateDTO.getLastName());
     user.setEmail(userCreateDTO.getEmail());
-    user.setMobile(userCreateDTO.getMobile());
     user.setSecondContact(userCreateDTO.getSecondContact());
     user.setMobile(userCreateDTO.getMobile());
+    user.setMobile(userCreateDTO.getMobile());
+    //user.setProjects(userCreateDTO.getProjects());
         usersRepo.save(user);
     }
     @Override

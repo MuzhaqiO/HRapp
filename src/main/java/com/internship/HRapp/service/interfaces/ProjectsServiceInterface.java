@@ -12,6 +12,8 @@ public interface ProjectsServiceInterface {
     List<ProjectsDTO> getProjects();
     ProjectsDTO getProjectById(UUID projectId);
 
+    ProjectsDTO getProjectByProjectName(String projectName);
+
 
     // List<UserProjectsDTO> getProjects(UUID expId);
 

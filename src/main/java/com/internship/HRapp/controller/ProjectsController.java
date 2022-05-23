@@ -26,12 +26,16 @@ public class ProjectsController {
     public ResponseEntity<ProjectsDTO> getProjectById(@PathVariable UUID projectsId){
         return ResponseEntity.ok(projectsServiceInterface.getProjectById(projectsId));
     }
+    @GetMapping("name/{projectsName}")
+    public ResponseEntity<ProjectsDTO> findProjectByName(@PathVariable String projectsName){
+        return ResponseEntity.ok(projectsServiceInterface.getProjectByProjectName(projectsName));
+    }
     @GetMapping("/projects")
     public ResponseEntity<List<ProjectsDTO>>getProjects(){
         return ResponseEntity.ok(projectsServiceInterface.getProjects());
     }
-    @PutMapping("/experiences/updateProject/{projectId}")
-    public void updateProject(@RequestBody ProjectsDTO projectsDTO){
+    @PutMapping("/projects/updateProject/{projectId}")
+    public void updateProject(@RequestParam ProjectsDTO projectsDTO){
         projectsServiceInterface.updateProject(projectsDTO);
     }
 }

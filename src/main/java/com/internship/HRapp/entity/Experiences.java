@@ -24,7 +24,6 @@ public class Experiences {
     @Column(name = "id")
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID expId;
-    private UUID userId;
     private String company;
     private String positions;
     private LocalDate startTime;

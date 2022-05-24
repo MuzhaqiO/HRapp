@@ -39,7 +39,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private LocalDate DOB;
-    private Double leaveDaysLeft;
+    private Integer leaveDaysLeft;
     private String mobile;
     private LocalDate startingDay;
     private LocalDate terminationDay;

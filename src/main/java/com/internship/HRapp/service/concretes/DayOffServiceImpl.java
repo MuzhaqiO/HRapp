@@ -4,6 +4,7 @@ import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
 import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
 import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.DayOffStatus;
 import com.internship.HRapp.mapper.DayOffMapper;
 import com.internship.HRapp.repository.DayOffRepository;
@@ -68,13 +69,12 @@ public class DayOffServiceImpl implements DayOffService {
     public UserDayOffDTO placeDayOffRequest(createDayOffDTO requestDTO) {
 
         DayOff created = dayOffRepo.save(dayOffMapper.toEntity(requestDTO));
-        var users = userRepo.findAll();
-        if (created.getRequestStatus().equals(DayOffStatus.APPROVED)) {
+        List<User> users = userRepo.findAllByDaysOffDayOffId(created.getDayOffId());
+        if (created.getRequestStatus().equals(DayOffStatus.PENDING)) {
             for (var user2 : users) {
                 user2.setLeaveDaysLeft(user2.getLeaveDaysLeft() - created.getDayOffAmount());
                 userRepo.save(user2);
             }
-
         }
 
 

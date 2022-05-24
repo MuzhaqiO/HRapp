@@ -51,4 +51,8 @@ public class User {
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
+
+    @OneToMany(mappedBy = "users")
+    private List<DayOff> daysOff;
+
 }

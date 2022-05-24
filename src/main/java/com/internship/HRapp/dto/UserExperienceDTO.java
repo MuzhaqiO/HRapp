@@ -1,6 +1,6 @@
 package com.internship.HRapp.dto;
 
-import com.internship.HRapp.enumeration.TrustLevel;
+import com.internship.HRapp.enums.TrustLevel;
 import lombok.Getter;
 import lombok.Setter;
 

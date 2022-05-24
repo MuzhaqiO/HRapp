@@ -20,7 +20,13 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
     @Override
     public RoleDTO getRoleById(UUID roleId) {
-    return roleMapper.toDTO(rolesRepo.getById(roleId));
+        boolean exists = rolesRepo.existsById(roleId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Role with id " + roleId + " does not exist!"
+            );
+        }
+        return roleMapper.toDTO(rolesRepo.getById(roleId));
     }
     @Override
     public RoleDTO getRoleByRoleName(String roleName) {
@@ -36,5 +42,22 @@ public class RoleServiceImpl implements RoleServiceInterface {
     public RoleDTO addNewRoles(RoleDTO roleDTO) {
         Role createdRole = rolesRepo.save(roleMapper.toEntity(roleDTO));
         return roleMapper.toDTO(createdRole);
+    }
+    @Override
+    public String deleteRolesById(UUID roleId) {
+        boolean exists = rolesRepo.existsById(roleId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Role with id " + roleId + " does not exist!"
+            );
+        }
+        rolesRepo.deleteById(roleId);
+        return "role removed {}" + roleId;
+    }
+    @Override
+    public void updateRole(RoleDTO roleDTO) {
+        Role role = rolesRepo.findRoleByRoleId(roleDTO.getRoleId());
+        role.setRoleName(roleDTO.getRoleName());
+        rolesRepo.save(role);
     }
 }

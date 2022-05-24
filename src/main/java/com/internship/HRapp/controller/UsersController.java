@@ -37,7 +37,7 @@ public class UsersController {
         userServiceInterface.updateUser(userCreateDTO);
     }
     @PatchMapping("updateUsersStatus/{userId}")
-    public void updateUsersStatus(@RequestParam UsersStatusDTO usersStatusDTO){
+    public void updateUsersStatus(@RequestBody UsersStatusDTO usersStatusDTO){
         userServiceInterface.updateUsersStatus(usersStatusDTO);
     }
     /*@PutMapping("updateUser/{userId}")

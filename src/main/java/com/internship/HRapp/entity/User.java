@@ -33,6 +33,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Certification> certifications = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_projects",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "projectsId"))
+    private Set<Role> projects = new HashSet<>();
+
     @Column(unique = true)
     private String username;
     private String password;
@@ -41,7 +48,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private LocalDate DOB;
-    private Integer leaveDaysLeft;
+    private Double leaveDaysLeft;
     private String mobile;
     private LocalDate startingDay;
     private LocalDate terminationDay;

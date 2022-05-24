@@ -1,4 +1,4 @@
-package com.internship.HRapp.enumeration;
+package com.internship.HRapp.enums;
 
 public enum TrustLevel {
     LOW_TRUST("LOW_TRUST"),

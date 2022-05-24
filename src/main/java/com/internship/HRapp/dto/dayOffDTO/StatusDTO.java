@@ -7,7 +7,8 @@ import java.util.UUID;
 
 @Data
 public class StatusDTO {
-    UUID dayOffId;
-    DayOffStatus requestStatus;
-    UUID idOfApprove;
+    private UUID dayOffId;
+    private DayOffStatus requestStatus;
+    private UUID idOfApprove;
+    private String rejectReason;
 }

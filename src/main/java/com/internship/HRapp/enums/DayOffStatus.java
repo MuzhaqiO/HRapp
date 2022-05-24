@@ -4,5 +4,4 @@ public enum DayOffStatus {
     APPROVED,
     REJECTED,
     PENDING,
-
 }

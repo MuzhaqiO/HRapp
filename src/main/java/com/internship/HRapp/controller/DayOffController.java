@@ -19,9 +19,10 @@ public class DayOffController {
     private final DayOffService dayOffService;
 
     @PostMapping("api/test")
-    public ResponseEntity<UserDayOffDTO> placeDayOffRequest(@RequestBody createDayOffDTO requestDTO){
+    public ResponseEntity<UserDayOffDTO> placeDayOffRequest(@RequestBody createDayOffDTO requestDTO) {
         return ResponseEntity.ok(dayOffService.placeDayOffRequest(requestDTO));
     }
+
     @GetMapping("{id}")
     public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID id) {
         return ResponseEntity.ok(dayOffService.getUserDayOff(id));
@@ -29,12 +30,12 @@ public class DayOffController {
 //    @PatchMapping(path = "api/updateLeaveDays")
 //    public void updateLeaveDaysLeft(){
 //        dayOffService.updateLeaveDaysLeft();
- //   }
+    //   }
 
     @PatchMapping
-    public void updateDayOffRequest(
-            @RequestParam StatusDTO status) {
+    public ResponseEntity<StatusDTO> updateDayOffRequest(@RequestBody StatusDTO status) {
         dayOffService.updateDayOffRequest(status);
+        return ResponseEntity.ok(status);
     }
 
 

@@ -1,4 +1,4 @@
-package com.internship.HRapp.service.implementation;
+package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.certificationDto.CertificationDto;
 import com.internship.HRapp.entity.Certification;

@@ -40,6 +40,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "projectsId"))
     private Set<Role> projects = new HashSet<>();
 
+    @OneToMany(mappedBy = "users")
+    private List<DayOff> daysOff;
+
     @Column(unique = true)
     private String username;
     private String password;

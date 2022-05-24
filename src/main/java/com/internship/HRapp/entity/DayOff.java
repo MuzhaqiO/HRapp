@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.internship.HRapp.enums.DayOffReason;
 import com.internship.HRapp.enums.DayOffStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,8 @@ public class DayOff {
     private UUID dayOffId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String reason;
+    @Enumerated(EnumType.STRING)
+    private DayOffReason reason =  DayOffReason.DEFAULT;
     private String permissionType;
     private String report;
     @Enumerated(EnumType.STRING)

@@ -5,7 +5,7 @@ import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
 import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
-import com.internship.HRapp.enums.DayOffStatus;
+import com.internship.HRapp.enums.DayOffReason;
 import com.internship.HRapp.mapper.DayOffMapper;
 import com.internship.HRapp.repository.DayOffRepository;
 import com.internship.HRapp.repository.UserRepo;
@@ -33,7 +33,9 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public void updateDayOffRequest(StatusDTO status) {
         DayOff thisDayOff = dayOffRepo.findDayOffByDayOffId(status.getDayOffId());
+        User approver = userRepo.findByDaysOffDayOffId(status.getDayOffId());
         thisDayOff.setRequestStatus(status.getRequestStatus());
+        thisDayOff.setIdOfApprove(approver.getUserId());
         dayOffRepo.save(thisDayOff);
     }
 
@@ -67,20 +69,22 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     public UserDayOffDTO placeDayOffRequest(createDayOffDTO requestDTO) {
-
         DayOff created = dayOffRepo.save(dayOffMapper.toEntity(requestDTO));
         List<User> users = userRepo.findAllByDaysOffDayOffId(created.getDayOffId());
-        if (created.getRequestStatus().equals(DayOffStatus.PENDING)) {
+        {
+            for (var user1 : users) {
+                if (created.getDayOffAmount() > user1.getLeaveDaysLeft()) {
+                    throw new RuntimeException("Can't make request, not enough days left");
+                }
+            }
+        }
+        if (created.getReason().equals(DayOffReason.DEFAULT)) {
             for (var user2 : users) {
                 user2.setLeaveDaysLeft(user2.getLeaveDaysLeft() - created.getDayOffAmount());
                 userRepo.save(user2);
             }
         }
-
-
         return dayOffMapper.toDto(created);
-
-
     }
 
 

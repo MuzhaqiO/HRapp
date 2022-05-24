@@ -14,4 +14,5 @@ public interface UserRepo extends JpaRepository<User, UUID> {
     User getByUsername(String username);
     User findUserByUserId(UUID userId);
     List<User> findAllByDaysOffDayOffId(UUID dayOffId);
+    User findByDaysOffDayOffId(UUID dayOffId);
 }

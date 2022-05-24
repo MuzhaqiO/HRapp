@@ -1,8 +1,8 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.StatusDTO;
-import com.internship.HRapp.dto.UserDayOffDTO;
-import com.internship.HRapp.dto.createDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
+import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.service.interfaces.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

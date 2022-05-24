@@ -6,9 +6,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -20,16 +19,29 @@ public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "user_id")
+    @Column(name = "userId")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
     @ManyToMany
     @JoinTable(
             name = "users_roles",
-            joinColumns = @JoinColumn(name = "userId"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Certification> certifications = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_projects",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "projectsId"))
+    private Set<Role> projects = new HashSet<>();
+
+    @OneToMany(mappedBy = "users")
+    private List<DayOff> daysOff;
 
     @Column(unique = true)
     private String username;

@@ -1,4 +1,4 @@
-package com.internship.HRapp.dto;
+package com.internship.HRapp.dto.dayOffDTO;
 
 import lombok.Getter;
 import lombok.Setter;

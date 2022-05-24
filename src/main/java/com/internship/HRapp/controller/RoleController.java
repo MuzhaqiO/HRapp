@@ -36,7 +36,7 @@ public class RoleController {
         return roleServiceInterface.deleteRolesById(roleId);
     }
     @PutMapping("updateRole/{roleId}")
-    public void updateRole(@RequestParam RoleDTO roleDTO){
+    public void updateRole(@RequestBody RoleDTO roleDTO){
         roleServiceInterface.updateRole(roleDTO);
     }
 }

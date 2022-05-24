@@ -1,6 +1,7 @@
 package com.internship.HRapp.service.interfaces;
 
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -16,5 +17,5 @@ public interface RoleServiceInterface {
 
     String deleteRolesById(UUID roleId);
 
-    void updateRole (RoleDTO roleDTO);
+    void updateRole(RoleDTO roleDTO);
 }

@@ -1,8 +1,8 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.StatusDTO;
-import com.internship.HRapp.dto.UserDayOffDTO;
-import com.internship.HRapp.dto.createDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
+import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
 import org.mapstruct.Mapper;
@@ -18,7 +18,7 @@ public interface DayOffMapper {
 
     DayOff toModel(UserDayOffDTO userDayOffDTO);
 
-    //@Mapping(target = "users.userId", source = "userId")
+    @Mapping(target = "users.userId", source = "userId")
     DayOff toEntity(createDayOffDTO requestDTO);
 
     UserDayOffDTO userToDto(User user);

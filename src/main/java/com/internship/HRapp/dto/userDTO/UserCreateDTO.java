@@ -1,5 +1,6 @@
 package com.internship.HRapp.dto.userDTO;
 
+import com.internship.HRapp.dto.ProjectsDTO;
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import lombok.Data;
 

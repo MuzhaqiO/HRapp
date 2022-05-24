@@ -37,15 +37,4 @@ public class RoleServiceImpl implements RoleServiceInterface {
         Role createdRole = rolesRepo.save(roleMapper.toEntity(roleDTO));
         return roleMapper.toDTO(createdRole);
     }
-    @Override
-    public String deleteRolesById(UUID roleId) {
-        rolesRepo.deleteById(roleId);
-        return "role removed {}" + roleId;
-    }
-    @Override
-    public void updateRole(RoleDTO roleDTO) {
-        Role role = rolesRepo.findRoleByRoleId(roleDTO.getRoleId());
-        role.setRoleName(roleDTO.getRoleName());
-        rolesRepo.save(role);
-    }
 }

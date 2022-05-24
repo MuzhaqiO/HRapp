@@ -1,4 +1,4 @@
-package com.internship.HRapp.dto;
+package com.internship.HRapp.dto.dayOffDTO;
 
 import com.internship.HRapp.enums.DayOffStatus;
 import lombok.Data;

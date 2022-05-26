@@ -55,4 +55,7 @@ public class User {
     @OneToMany(mappedBy = "users")
     private List<DayOff> daysOff;
 
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
+
 }

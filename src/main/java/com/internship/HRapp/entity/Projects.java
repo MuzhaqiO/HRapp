@@ -28,4 +28,7 @@ public class Projects {
 
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 }

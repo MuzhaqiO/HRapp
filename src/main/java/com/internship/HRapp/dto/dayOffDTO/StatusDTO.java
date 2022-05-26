@@ -2,10 +2,13 @@ package com.internship.HRapp.dto.dayOffDTO;
 
 import com.internship.HRapp.enums.DayOffStatus;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 public class StatusDTO {
     private UUID dayOffId;
     private DayOffStatus requestStatus;

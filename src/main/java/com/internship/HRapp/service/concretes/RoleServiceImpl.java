@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
             );
         }
         rolesRepo.deleteById(roleId);
-        return "role removed {}" + roleId;
+        return "role removed {} " + roleId;
     }
     @Override
     public void updateRole(RoleDTO roleDTO) {

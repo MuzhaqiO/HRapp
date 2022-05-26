@@ -25,6 +25,12 @@ public  class CertificationServiceImpl implements CertificationServiceInterface 
 
     @Override
     public CertificationDto getCertificationById(UUID certificationID){
+        boolean exists = certificationRepo.existsById(certificationID);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Certification with id " + certificationID + " does not exist!"
+            );
+        }
     return certificationMapper.modeltoDto(certificationRepo.getById(certificationID));
     }
 
@@ -41,8 +47,14 @@ public  class CertificationServiceImpl implements CertificationServiceInterface 
 
     @Override
     public String deleteCertificationById(UUID certificationId){
+        boolean exists = certificationRepo.existsById(certificationId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Certification with id " + certificationId + " does not exist!"
+            );
+        }
         certificationRepo.deleteById(certificationId);
-        return "certification removed {}" + certificationId;
+        return "Certification removed {}" + certificationId;
     }
 
     @Override

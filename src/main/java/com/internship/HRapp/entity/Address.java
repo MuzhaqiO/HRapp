@@ -1,9 +1,12 @@
 package com.internship.HRapp.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Builder
@@ -27,8 +30,10 @@ public class Address {
     private String street;
     private String postalCode;
 
-   @OneToOne
+    @JsonIgnore
+    @OneToMany(mappedBy = "address")
+    private Set<User> users = new HashSet<>();
+    /*@OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private User user;
-
+    private User users;*/
 }

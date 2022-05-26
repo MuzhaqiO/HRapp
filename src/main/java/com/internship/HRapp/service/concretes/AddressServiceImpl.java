@@ -19,28 +19,35 @@ public class AddressServiceImpl implements AddressServiceInterface {
     private final AddressMapper addressMapper;
 
     @Override
-    public AddressDto getAddressById(UUID addressid){
-        return addressMapper.modeltoDto(addressRepo.getById(addressid));
+    public AddressDto getAddressById(UUID addressId){
+        boolean exists = addressRepo.existsById(addressId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Address with id " + addressId + " does not exist!"
+            );
+        }
+        return addressMapper.modeltoDto(addressRepo.getById(addressId));
     }
-
     @Override
     public List<AddressDto> getAddresses(){
         return addressMapper.toDto(addressRepo.findAll());
     }
     @Override
-    public String deleteAddressById(UUID addressID){
-        addressRepo.deleteById(addressID);
-        return "address removed {}" + addressID;
+    public String deleteAddressById(UUID addressId){
+        boolean exists = addressRepo.existsById(addressId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Address with id " + addressId + " does not exist!"
+            );
+        }
+        addressRepo.deleteById(addressId);
+        return "address removed {}" + addressId;
     }
-
-
-
     @Override
     public AddressDto addNewAddress(AddressDto addressDto) {
         Address createdAddress = addressRepo.save(addressMapper.dtotoModel(addressDto));
         return addressMapper.modeltoDto(createdAddress);
     }
-
     @Override
     public void  editAddress(@NotNull AddressDto addressDto) {
       Address address =addressRepo.getAddressByAddressID(addressDto.getAddressID());

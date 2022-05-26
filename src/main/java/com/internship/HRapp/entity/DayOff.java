@@ -37,7 +37,9 @@ public class DayOff {
         return (double)ChronoUnit.DAYS.between(startDate, endDate);
     }
 
-    @ManyToOne//(fetch = FetchType.EAGER,optional = false)
+    @ManyToOne
+    @JoinColumn(name = "user_dayOff_id", referencedColumnName = "userId")
+    //(fetch = FetchType.EAGER,optional = false)
 //    @JoinColumn(name = "user_dayOff_id")
     private User users;
 

@@ -25,6 +25,12 @@ public  class EducationServicelmpl implements EducationInterface {
 
     @Override
     public EducationDto getEducationById(UUID educationId){
+        boolean exists = educationRepository.existsById(educationId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Education with id " + educationId + " does not exist!"
+            );
+        }
         return educationMapper.modeltoDto(educationRepository.getById(educationId));
     }
 
@@ -41,8 +47,14 @@ public  class EducationServicelmpl implements EducationInterface {
 
     @Override
     public String deleteEducationById(UUID educationId){
+        boolean exists = educationRepository.existsById(educationId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Education with id " + educationId + " does not exist!"
+            );
+        }
         educationRepository.deleteById(educationId);
-        return "education removed {}" + educationId;
+        return "Education removed {} " + educationId;
     }
 
     @Override

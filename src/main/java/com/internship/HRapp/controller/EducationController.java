@@ -18,7 +18,9 @@ public class EducationController {
     private final EducationInterface educationInterface;
 
     @GetMapping("getAll")
-    public ResponseEntity<List<EducationDto>> findEducations() {  return ResponseEntity.ok(educationInterface.getEducations());}
+    public ResponseEntity<List<EducationDto>> findEducations() {
+        return ResponseEntity.ok(educationInterface.getEducations());
+    }
     @GetMapping("id/{educationId}")
     public ResponseEntity<EducationDto> findEducationById(@PathVariable UUID educationId){
         return ResponseEntity.ok(educationInterface.getEducationById(educationId));

@@ -8,7 +8,6 @@ import com.internship.HRapp.service.interfaces.ExperiencesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +20,13 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     private final ExperiencesMapper experiencesMapper;
 
     @Override
-    public Experiences getExperienceById(UUID expId) {
-        return experiencesRepo.findById(expId).orElse(null);
+    public UserExperienceDTO getExperienceById(UUID expId) {
+        boolean exists = experiencesRepo.existsById(expId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "Experience with id " + expId + " does not exist");
+        }
+        return experiencesMapper.entityToDto(experiencesRepo.findById(expId).orElse(null));
     }
 
     @Override
@@ -75,4 +79,15 @@ public class ExperiencesServiceImpl implements ExperiencesService {
         experiences.setTrustLevel(userExperienceDTO.getTrustLevel());
         experiencesRepo.save(experiences);
     }
+    @Override
+    public String deleteExperiencesById(UUID expId) {
+        boolean exists = experiencesRepo.existsById(expId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Experience with id " + expId + " does not exist!"
+            );
+        }
+        experiencesRepo.deleteById(expId);
+        return "Experience removed {} " + expId;
+}
 }

@@ -30,8 +30,8 @@ public class Experiences {
     private String description;
     private TrustLevel trustLevel;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false)
-    @JoinColumn(name="user_exp_id")
+    @ManyToOne
+    @JoinColumn(name="user_exp_id", referencedColumnName = "userId")
     private User users;
 
 

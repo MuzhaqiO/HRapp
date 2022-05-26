@@ -21,6 +21,11 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
+        boolean exists = projectsRepo.existsById(userId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "User with id " + userId + " does not exist");
+        }
         var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
         return  test;
     }
@@ -38,6 +43,11 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }*/
 
     public ProjectsDTO getProjectById(UUID projectId) {
+        boolean exists = projectsRepo.existsById(projectId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "Project with id " + projectId + " does not exist");
+        }
         return projectsMapper.entityToDto((projectsRepo.getProjectsByProjectId(projectId)));
     }
 
@@ -54,6 +64,12 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public String deleteProject(UUID projectsId) {
+        boolean exists = projectsRepo.existsById(projectsId);
+        if (!exists){
+            throw new IllegalStateException(
+                    "Project with id " + projectsId + " does not exist!"
+            );
+        }
        projectsRepo.deleteById(projectsId);
        return "Project {} was removed"+projectsId;
     }

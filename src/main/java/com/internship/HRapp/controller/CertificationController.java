@@ -18,7 +18,8 @@ public class CertificationController {
     private final CertificationServiceInterface certificationServiceInterface;
 
     @GetMapping("getAll")
-    public ResponseEntity<List<CertificationDto>> findCertifications() {  return ResponseEntity.ok(certificationServiceInterface.getCertifications());}
+    public ResponseEntity<List<CertificationDto>> findCertifications() {
+        return ResponseEntity.ok(certificationServiceInterface.getCertifications());}
     @GetMapping("id/{certificationID}")
     public ResponseEntity<CertificationDto> findCertificationById(@PathVariable UUID certificationID){
         return ResponseEntity.ok(certificationServiceInterface.getCertificationById(certificationID));

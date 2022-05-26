@@ -30,8 +30,8 @@ public class Education {
     private String active_status;
     private UUID userId;
 
-@ManyToOne(fetch = FetchType.EAGER, optional = false)
-@JoinColumn(name = "educationId")
-private User user;
+@ManyToOne
+@JoinColumn(name = "user_education_id", referencedColumnName = "userId")
+private User users;
 }
 

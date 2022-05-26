@@ -20,8 +20,12 @@ public class PersonalFileServicelmpl implements PersonalFileInterface {
 
     @Override
     public PersonalFileDto getPersonalFileById(UUID personalfileId) {
-        return
-        personalFileMapper.modeltoDto(personalFileRepository.getById(personalfileId));
+        boolean exists = personalFileRepository.existsById(personalfileId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "Personal file with id " + personalfileId + " does not exist");
+        }
+        return personalFileMapper.modeltoDto(personalFileRepository.getById(personalfileId));
     }
 
     @Override
@@ -31,7 +35,7 @@ public class PersonalFileServicelmpl implements PersonalFileInterface {
     @Override
     public String deletePersonalFileById(UUID personalfileId){
         personalFileRepository.deleteById(personalfileId);
-        return "personalfile removed {}" + personalfileId;
+        return "Personal file removed {} " + personalfileId;
     }
 
 

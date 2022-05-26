@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -30,18 +31,37 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Certification> certifications = new ArrayList<>();
-
     @ManyToMany
     @JoinTable(
             name = "users_projects",
-            joinColumns = @JoinColumn(name = "userId"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "projectsId"))
     private Set<Role> projects = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private List<DayOff> daysOff;
+    private Set<Certification> certifications = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private Set<PersonalFile> personalFiles = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private Set<Education> educations = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private Set<Experiences> experiences = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private Set<DayOff> daysOff = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
+    private Address address;
+
 
     @Column(unique = true)
     private String username;

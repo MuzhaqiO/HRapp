@@ -17,7 +17,8 @@ public class AddressController {
     private final AddressServiceInterface addressServiceInterface;
 
     @GetMapping("getAll")
-    public ResponseEntity<List<AddressDto>> findAllAddresses(){return ResponseEntity.ok(addressServiceInterface.getAddresses());
+    public ResponseEntity<List<AddressDto>> findAllAddresses(){
+        return ResponseEntity.ok(addressServiceInterface.getAddresses());
     }
     @PostMapping("/addNewAddress")
     public ResponseEntity<AddressDto> createNewAddress(@RequestBody AddressDto addressDto) {

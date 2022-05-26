@@ -32,8 +32,8 @@ public class Certification {
     private String link_of_certification;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "user_certification_id", referencedColumnName = "userId")
+    private User users;
 
 //    @ManyToOne(optional = false)
 //    @JoinColumn(name = "userid", nullable = false,

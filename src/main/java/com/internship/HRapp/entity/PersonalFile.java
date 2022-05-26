@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.UUID;
 
 @Entity
-@Data
 @Table
 @Getter
 @Setter
@@ -25,9 +24,8 @@ public class PersonalFile {
     private URL id_card;
     private URL degree;
     private String working_skills;
-    private UUID userId;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "personalfileId")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_personalfile_id", referencedColumnName = "userId")
+    private User users;
 }

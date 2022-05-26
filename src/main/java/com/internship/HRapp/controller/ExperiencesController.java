@@ -1,6 +1,7 @@
 package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.UserExperienceDTO;
+import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import com.internship.HRapp.entity.Experiences;
 import com.internship.HRapp.mapper.ExperiencesMapper;
 import com.internship.HRapp.repository.ExperiencesRepo;
@@ -31,9 +32,17 @@ public class ExperiencesController {
     public ResponseEntity<List<UserExperienceDTO>>getExperiences(){
         return ResponseEntity.ok(experiencesService.getExperiences());
     }
+    @GetMapping("/id/{expId}")
+    public ResponseEntity<UserExperienceDTO> findExperienceById(@PathVariable UUID expId){
+        return ResponseEntity.ok(experiencesService.getExperienceById(expId));
+    }
     @PutMapping("/experiences/updateExperience/{expId}")
     public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO){
         experiencesService.updateExperiences(userExperienceDTO);
+    }
+    @DeleteMapping("/delete/{expId}")
+    public String deleteExperiencesById(@PathVariable UUID expId){
+        return experiencesService.deleteExperiencesById(expId);
     }
 
    /* @GetMapping("/experiences/id/{expId}")

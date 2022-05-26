@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ExperiencesService {
-    Experiences getExperienceById(UUID expId);
+    UserExperienceDTO getExperienceById(UUID expId);
 
    // List<UserExperienceDTO> getExperiences(UUID expId);
 
@@ -20,4 +20,6 @@ public interface ExperiencesService {
    // String deleteExperiences(UUID expId);
 
     void updateExperiences(UserExperienceDTO experienceDTO);
+
+    String deleteExperiencesById(UUID expId);
 }

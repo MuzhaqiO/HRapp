@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserServiceInterface {
     private final UserMapper usersMapper;
     @Override
     public UserDTO getUserById(UUID userId) {
+        boolean exists = usersRepo.existsById(userId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "User with id " + userId + " does not exist");
+        }
         return usersMapper.entityToDTO(usersRepo.getById(userId));
     }
     @Override
@@ -55,10 +60,4 @@ public class UserServiceImpl implements UserServiceInterface {
      user.setUsersStatus(usersStatusDTO.getUsersStatus());
      usersRepo.save(user);
     }
-
-   /* @Override
-    public UserDTO updateUser(UUID userId, UserDTO userDTO) {
-        Optional<User> user = usersRepo.findById(userId);
-        return null;
-    } */
 }

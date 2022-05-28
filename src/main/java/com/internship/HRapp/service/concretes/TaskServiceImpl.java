@@ -29,7 +29,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDTO assignTask(TaskAssignDTO assignDTO) {
         Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
-
         if (task.getTaskStatus().equals(TaskStatus.UNASSIGNED)) {
             task.setTaskStatus(TaskStatus.ASSIGNED);
         }

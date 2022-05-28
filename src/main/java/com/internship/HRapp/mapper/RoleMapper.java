@@ -1,5 +1,6 @@
 package com.internship.HRapp.mapper;
 
+import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import com.internship.HRapp.entity.Role;
 import org.mapstruct.Mapper;
@@ -12,5 +13,8 @@ public interface RoleMapper {
         RoleDTO toDTO(Role role);
         List<RoleDTO> toDTOs(List<Role> roles);
         Role toEntity(RoleDTO roleDTO);
+        Role assignRoleToEntity(AssignRoleDTO assignRoleDTO);
+        AssignRoleDTO assignRoleToEntity(Role role);
         List<Role> toEntities(List<RoleDTO> roleDTOs);
+
 }

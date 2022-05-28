@@ -1,4 +1,4 @@
-package com.internship.HRapp.dto.taskDTO;
+package com.internship.HRapp.dto.roleDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,8 +6,8 @@ import lombok.Setter;
 import java.util.UUID;
 @Getter
 @Setter
-public class TaskAssignDTO {
-    private UUID taskId;
+public class AssignRoleDTO {
     private UUID userId;
+    private UUID roleId;
 
 }

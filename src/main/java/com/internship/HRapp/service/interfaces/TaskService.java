@@ -3,7 +3,6 @@ package com.internship.HRapp.service.interfaces;
 import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDTO.TaskDTO;
 import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
-import com.internship.HRapp.entity.Task;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,5 +18,6 @@ public interface TaskService {
     List<TaskDTO> getTasksByUserId(UUID userId);
 
     List<TaskDTO> getTasksByProjectId(UUID projectId);
+
 
 }

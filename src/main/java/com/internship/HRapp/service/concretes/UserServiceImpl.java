@@ -1,10 +1,13 @@
 package com.internship.HRapp.service.concretes;
 
+import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.UserMapper;
+import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
+    private final RoleRepo roleRepo;
     @Override
     public UserDTO getUserById(UUID userId) {
         return usersMapper.entityToDTO(usersRepo.getById(userId));
@@ -33,6 +37,14 @@ public class UserServiceImpl implements UserServiceInterface {
     public List<UserDTO> getUsers() {
         return usersMapper.entitiesToDTOs(usersRepo.findAll());
     }
+
+    @Override
+    public void assignRole(AssignRoleDTO assignRoleDTO) {
+        User user = usersRepo.findUserByUserId(assignRoleDTO.getUserId());
+        Role role = roleRepo.findRoleByRoleId(assignRoleDTO.getRoleId());
+        user.getRoles().add(role);
+    }
+
     @Override
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));

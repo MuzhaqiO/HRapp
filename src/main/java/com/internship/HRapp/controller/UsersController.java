@@ -1,5 +1,6 @@
 package com.internship.HRapp.controller;
 
+import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
@@ -28,6 +29,11 @@ public class UsersController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId){
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
+    @PatchMapping("assignRole")
+    public void updateUsersStatus(@RequestParam AssignRoleDTO assignRoleDTO){
+        userServiceInterface.assignRole(assignRoleDTO);
+    }
+
     @PostMapping("addNewUser")
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
         return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));

@@ -1,8 +1,8 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
-import com.internship.HRapp.dto.userDTO.UserDTO;
-import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.dto.roleDTO.RoleDTO;
+import com.internship.HRapp.dto.userDTO.*;
+import com.internship.HRapp.service.concretes.UserServiceImpl;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +15,37 @@ import java.util.UUID;
 @RequestMapping(path = "api/v1/hr_management_system/users")
 @RequiredArgsConstructor
 public class UsersController {
-    private final UserServiceInterface userServiceInterface;
+    private final UserServiceImpl userService;
     @GetMapping("getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
-        return ResponseEntity.ok(userServiceInterface.getUsers());
+        return ResponseEntity.ok(userService.getUsers());
     }
     @GetMapping("username/{username}")
     public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userServiceInterface.getUserByUsername(username));
+        return ResponseEntity.ok(userService.getUserByUsername(username));
     }
     @GetMapping("userId/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId){
-        return ResponseEntity.ok(userServiceInterface.getUserById(userId));
+        return ResponseEntity.ok(userService.getUserById(userId));
     }
     @PostMapping("addNewUser")
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
-        return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
+        return ResponseEntity.ok(userService.addNewUser(userCreateDTO));
     }
     @PutMapping("updateUser/{userId}")
-    public void updateUser(@RequestBody UserCreateDTO userCreateDTO){
-        userServiceInterface.updateUser(userCreateDTO);
+    public ResponseEntity<UserCreateDTO> updateUser(@RequestBody UserCreateDTO userCreateDTO){
+        return ResponseEntity.ok(userService.updateUser(userCreateDTO));
     }
     @PatchMapping("updateUsersStatus/{userId}")
-    public void updateUsersStatus(@RequestBody UsersStatusDTO usersStatusDTO){
-        userServiceInterface.updateUsersStatus(usersStatusDTO);
+    public ResponseEntity<UsersStatusDTO> updateUsersStatus(@PathVariable UUID userId, @RequestBody UsersStatusDTO usersStatusDTO){
+        return ResponseEntity.ok(userService.updateUsersStatus(userId, usersStatusDTO));
     }
-    /*@PutMapping("updateUser/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userServiceInterface.updateUser(userId, userDTO));
-    }*/
+    @PatchMapping("assignRole/{userId}")
+    public ResponseEntity<AssignRoleDTO> assignRoleToUser(@PathVariable UUID userId, @RequestBody AssignRoleDTO assignRoleDTO){
+        return ResponseEntity.ok(userService.assignRoleToUser(userId, assignRoleDTO));
+    }
+    @PatchMapping("assignProject/{userId}")
+    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable UUID userId, @RequestBody ProjectAssignDTO projectAssignDTO){
+        return ResponseEntity.ok(userService.assignProjectToUser(userId, projectAssignDTO));
+    }
 }

@@ -10,34 +10,36 @@ import com.internship.HRapp.mapper.DayOffMapper;
 import com.internship.HRapp.repository.DayOffRepository;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.DayOffService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
+@AllArgsConstructor
 @EnableScheduling
 
-public class DayOffServiceImpl implements DayOffService {
-
+public class DayOffServiceImpl{
+    @Autowired
     private final DayOffRepository dayOffRepo;
-
+    @Autowired
     private final DayOffMapper dayOffMapper;
-
+    @Autowired
     private final UserRepo userRepo;
 
 
-    @Override
     public void updateDayOffRequest(StatusDTO status) {
         DayOff thisDayOff = dayOffRepo.findDayOffByDayOffId(status.getDayOffId());
         thisDayOff.setRequestStatus(status.getRequestStatus());
         dayOffRepo.save(thisDayOff);
     }
 
-    @Override
 //    @Scheduled(initialDelay = 60 * 60, fixedDelay = 60 * 60)
 //    public void updateLeaveDaysLeft() {
 //        var users = userRepo.findAll();
@@ -61,7 +63,6 @@ public class DayOffServiceImpl implements DayOffService {
         dayOffRepo.deleteById(dayOffId);
     }
 
-    @Override
     public List<UserDayOffDTO> getUserDayOff(UUID userId) {
         return dayOffMapper.toDtos(dayOffRepo.getByUsersUserId(userId));
     }
@@ -76,12 +77,6 @@ public class DayOffServiceImpl implements DayOffService {
                 userRepo.save(user2);
             }
         }
-
-
         return dayOffMapper.toDto(created);
-
-
     }
-
-
 }

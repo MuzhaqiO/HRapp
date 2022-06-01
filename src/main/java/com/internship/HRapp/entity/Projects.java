@@ -17,7 +17,6 @@ public class Projects {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id")
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID projectId;
     private String projectName;

@@ -28,7 +28,6 @@ public class Education {
     private LocalDate end_time;
     private String average;
     private String active_status;
-    private UUID userId;
 
 @ManyToOne
 @JoinColumn(name = "user_education_id", referencedColumnName = "userId")

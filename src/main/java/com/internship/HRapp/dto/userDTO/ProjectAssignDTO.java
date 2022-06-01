@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class UsersStatusDTO {
-    private Boolean usersStatus;
+public class ProjectAssignDTO {
+    private UUID projectId;
 }

@@ -14,6 +14,7 @@ public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
   // List<Projects> findByUserId(UUID userId);
 
     Projects getProjectsByProjectId(UUID projectId);
+    Projects findProjectByProjectId(UUID projectId);
 
 
     @Query(value = "select * from Projects p " +

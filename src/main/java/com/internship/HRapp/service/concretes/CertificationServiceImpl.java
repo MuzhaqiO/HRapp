@@ -12,18 +12,20 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 
 @Service
-@RequiredArgsConstructor
-public  class CertificationServiceImpl implements CertificationServiceInterface {
-
+@Transactional
+@AllArgsConstructor
+public  class CertificationServiceImpl{
+    @Autowired
     private final CertificationRepo certificationRepo;
+    @Autowired
     private final CertificationMapper certificationMapper;
 
-    @Override
     public CertificationDto getCertificationById(UUID certificationID){
         boolean exists = certificationRepo.existsById(certificationID);
         if (!exists){
@@ -34,18 +36,15 @@ public  class CertificationServiceImpl implements CertificationServiceInterface 
     return certificationMapper.modeltoDto(certificationRepo.getById(certificationID));
     }
 
-    @Override
     public List<CertificationDto> getCertifications(){
         return certificationMapper.toDto(certificationRepo.findAll());
     }
 
-    @Override
     public CertificationDto addNewCertification(CertificationDto certificationDto){
     Certification createdCertification = certificationRepo.save(certificationMapper.dtotoModel(certificationDto));
         return certificationMapper.modeltoDto(createdCertification);
     }
 
-    @Override
     public String deleteCertificationById(UUID certificationId){
         boolean exists = certificationRepo.existsById(certificationId);
         if (!exists){
@@ -57,7 +56,6 @@ public  class CertificationServiceImpl implements CertificationServiceInterface 
         return "Certification removed {}" + certificationId;
     }
 
-    @Override
     public void editCertification(CertificationDto certificationDto) {
     Certification certification =certificationRepo.findCertificationByCertificationID(certificationDto.getCertificationID());
     certification.setCertification_name(certificationDto.getCertification_name());

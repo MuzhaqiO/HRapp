@@ -5,21 +5,25 @@ import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.repository.ProjectsRepo;
 import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.NaturalId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class ProjectsServiceImpl implements ProjectsServiceInterface {
-
+@Transactional
+@AllArgsConstructor
+public class ProjectsServiceImpl{
+    @Autowired
     private final ProjectsRepo projectsRepo;
-
+    @Autowired
     private final ProjectsMapper projectsMapper;
 
-    @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
         boolean exists = projectsRepo.existsById(userId);
         if (!exists) {
@@ -30,7 +34,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         return  test;
     }
 
-   /* @Override
+   /*
     public void addProjectToNewUser() {
         User user = new User();
         user.setUsername("adushi");
@@ -51,18 +55,15 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         return projectsMapper.entityToDto((projectsRepo.getProjectsByProjectId(projectId)));
     }
 
-    @Override
     public ProjectsDTO getProjectByProjectName(String projectName) {
         return projectsMapper.entityToDto(projectsRepo.findByProjectsName(projectName));
     }
 
-    @Override
     public ProjectsDTO addNewProjects(ProjectsDTO projectsDTO) {
         Projects createdProject = projectsRepo.save(projectsMapper.dtoToEntity(projectsDTO));
         return projectsMapper.entityToDto(createdProject);
     }
 
-    @Override
     public String deleteProject(UUID projectsId) {
         boolean exists = projectsRepo.existsById(projectsId);
         if (!exists){
@@ -74,7 +75,6 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
        return "Project {} was removed"+projectsId;
     }
 
-    @Override
     public void updateProject(ProjectsDTO projectsDTO) {
         Projects projects = projectsRepo.getProjectsByProjectId(projectsDTO.getProjectId());
         projects.setProjectName(projectsDTO.getProjectName());
@@ -84,7 +84,6 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         projectsRepo.save(projects);
 
     }
-    @Override
     public List<ProjectsDTO> getProjects() {
         return projectsMapper.entitiesToDtos(projectsRepo.findAll());
     }

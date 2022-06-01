@@ -5,21 +5,24 @@ import com.internship.HRapp.entity.Experiences;
 import com.internship.HRapp.mapper.ExperiencesMapper;
 import com.internship.HRapp.repository.ExperiencesRepo;
 import com.internship.HRapp.service.interfaces.ExperiencesService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class ExperiencesServiceImpl implements ExperiencesService {
-
+@Transactional
+@AllArgsConstructor
+public class ExperiencesServiceImpl{
+    @Autowired
     private final ExperiencesRepo experiencesRepo;
-
+    @Autowired
     private final ExperiencesMapper experiencesMapper;
 
-    @Override
     public UserExperienceDTO getExperienceById(UUID expId) {
         boolean exists = experiencesRepo.existsById(expId);
         if (!exists) {
@@ -29,7 +32,6 @@ public class ExperiencesServiceImpl implements ExperiencesService {
         return experiencesMapper.entityToDto(experiencesRepo.findById(expId).orElse(null));
     }
 
-    @Override
     public List<UserExperienceDTO> getExperiences() {
         return experiencesMapper.entitiesToDtos(experiencesRepo.findAll());
     }
@@ -51,13 +53,12 @@ public class ExperiencesServiceImpl implements ExperiencesService {
         return userExperienceDTO;
     }*/
 
-    @Override
     public UserExperienceDTO addNewExperiences(UserExperienceDTO experiencesDTO) {
         Experiences createdExperience = experiencesRepo.save(experiencesMapper.dtoToEntity(experiencesDTO));
         return experiencesMapper.entityToDto(createdExperience);
     }
 
-  /*  @Override
+  /*
     public String deleteExperiences(UUID expId) { //kontrollo nese ekziston si fillim pastaj te fshihet
         boolean exists = experiencesRepo.existsById(expId);
         if(!exists){
@@ -68,7 +69,6 @@ public class ExperiencesServiceImpl implements ExperiencesService {
 
     }*/
 
-    @Override
     public void updateExperiences(UserExperienceDTO userExperienceDTO) {
         Experiences experiences = experiencesRepo.getExperiencesByExpId(userExperienceDTO.getExpId());
         experiences.setCompany(userExperienceDTO.getCompany());
@@ -79,7 +79,6 @@ public class ExperiencesServiceImpl implements ExperiencesService {
         experiences.setTrustLevel(userExperienceDTO.getTrustLevel());
         experiencesRepo.save(experiences);
     }
-    @Override
     public String deleteExperiencesById(UUID expId) {
         boolean exists = experiencesRepo.existsById(expId);
         if (!exists){

@@ -3,9 +3,8 @@ package com.internship.HRapp.entity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
 @Entity
 @Table(name = "roles")
 @Getter
@@ -19,7 +18,7 @@ public class Role {
     private UUID roleId;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private List<User> users = new ArrayList<>();
 
     private String roleName;
 

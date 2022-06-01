@@ -1,8 +1,10 @@
 package com.internship.HRapp.service.interfaces;
 
+import com.internship.HRapp.dto.userDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.entity.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,8 +20,9 @@ public interface UserServiceInterface {
 
     UserCreateDTO addNewUser(UserCreateDTO userCreateDTO);
 
-    //UserDTO updateUser(UUID userId, UserDTO userDTO);
-    void updateUser (UserCreateDTO userCreateDTO);
+    UserCreateDTO updateUser (UserCreateDTO userCreateDTO);
 
-    void updateUsersStatus (UsersStatusDTO usersStatusDTO);
+    UsersStatusDTO updateUsersStatus (UsersStatusDTO usersStatusDTO);
+
+    AssignRoleDTO assignRoleToUser(AssignRoleDTO assignRoleDTO);
 }

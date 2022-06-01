@@ -5,20 +5,25 @@ import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.mapper.RoleMapper;
 import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.service.interfaces.RoleServiceInterface;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class RoleServiceImpl implements RoleServiceInterface {
+@Transactional
+@AllArgsConstructor
+public class RoleServiceImpl{
 
+    @Autowired
     private final RoleRepo rolesRepo;
+    @Autowired
     private final RoleMapper roleMapper;
 
-    @Override
     public RoleDTO getRoleById(UUID roleId) {
         boolean exists = rolesRepo.existsById(roleId);
         if (!exists){
@@ -28,22 +33,19 @@ public class RoleServiceImpl implements RoleServiceInterface {
         }
         return roleMapper.toDTO(rolesRepo.getById(roleId));
     }
-    @Override
     public RoleDTO getRoleByRoleName(String roleName) {
         return roleMapper.toDTO(rolesRepo.findByRoleName(roleName));
     }
 
-    @Override
     public List<RoleDTO> getRoles() {
         return roleMapper.toDTOs(rolesRepo.findAll());
     }
 
-    @Override
     public RoleDTO addNewRoles(RoleDTO roleDTO) {
-        Role createdRole = rolesRepo.save(roleMapper.toEntity(roleDTO));
+        Role createdRole = roleMapper.toEntity(roleDTO);
+        rolesRepo.save(createdRole);
         return roleMapper.toDTO(createdRole);
     }
-    @Override
     public String deleteRolesById(UUID roleId) {
         boolean exists = rolesRepo.existsById(roleId);
         if (!exists){
@@ -54,10 +56,9 @@ public class RoleServiceImpl implements RoleServiceInterface {
         rolesRepo.deleteById(roleId);
         return "role removed {} " + roleId;
     }
-    @Override
-    public void updateRole(RoleDTO roleDTO) {
-        Role role = rolesRepo.findRoleByRoleId(roleDTO.getRoleId());
-        role.setRoleName(roleDTO.getRoleName());
+    public RoleDTO updateRole(RoleDTO roleDTO) {
+        Role role = roleMapper.toEntity(roleDTO);
         rolesRepo.save(role);
+        return roleMapper.toDTO(role);
     }
 }

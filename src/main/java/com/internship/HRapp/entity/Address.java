@@ -5,9 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -32,7 +30,7 @@ public class Address {
 
     @JsonIgnore
     @OneToMany(mappedBy = "address")
-    private Set<User> users = new HashSet<>();
+    private List<User> users = new ArrayList<>();
     /*@OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User users;*/

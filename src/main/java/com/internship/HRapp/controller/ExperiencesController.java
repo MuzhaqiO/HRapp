@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(path = "api/v1/hr_management_system/experiences")
 @RequiredArgsConstructor
 public class ExperiencesController {
 
 
-    private final ExperiencesService experiencesService;
+    private final ExperiencesServiceImpl experiencesService;
 
 
     @PostMapping("/addExperiences")

@@ -29,34 +29,34 @@ public class User {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
             name = "users_projects",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "projectsId"))
-    private Set<Role> projects = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "projectId"))
+    private List<Projects> projects = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private Set<Certification> certifications = new HashSet<>();
+    private List<Certification> certifications = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private Set<PersonalFile> personalFiles = new HashSet<>();
+    private List<PersonalFile> personalFiles = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private Set<Education> educations = new HashSet<>();
+    private List<Education> educations = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private Set<Experiences> experiences = new HashSet<>();
+    private List<Experiences> experiences = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
-    private Set<DayOff> daysOff = new HashSet<>();
+    private List<DayOff> daysOff = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
@@ -77,4 +77,5 @@ public class User {
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
+
 }

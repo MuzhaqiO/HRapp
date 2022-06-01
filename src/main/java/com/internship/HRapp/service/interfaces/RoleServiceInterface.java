@@ -17,5 +17,5 @@ public interface RoleServiceInterface {
 
     String deleteRolesById(UUID roleId);
 
-    void updateRole(RoleDTO roleDTO);
+    RoleDTO updateRole(RoleDTO roleDTO);
 }

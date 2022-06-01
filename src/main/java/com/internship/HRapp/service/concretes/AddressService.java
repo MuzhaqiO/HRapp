@@ -4,21 +4,25 @@ import com.internship.HRapp.dto.addressDto.AddressDto;
 import com.internship.HRapp.entity.Address;
 import com.internship.HRapp.mapper.AddressMapper;
 import com.internship.HRapp.repository.AddressRepo;
-import com.internship.HRapp.service.interfaces.AddressServiceInterface;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class AddressServiceImpl implements AddressServiceInterface {
-    private final AddressRepo addressRepo;
-    private final AddressMapper addressMapper;
+@Transactional
+@AllArgsConstructor
+public class AddressService {
+    @Autowired
+    private AddressRepo addressRepo;
+    @Autowired
+    private AddressMapper addressMapper;
 
-    @Override
+
     public AddressDto getAddressById(UUID addressId){
         boolean exists = addressRepo.existsById(addressId);
         if (!exists){
@@ -28,11 +32,11 @@ public class AddressServiceImpl implements AddressServiceInterface {
         }
         return addressMapper.modeltoDto(addressRepo.getById(addressId));
     }
-    @Override
+
     public List<AddressDto> getAddresses(){
         return addressMapper.toDto(addressRepo.findAll());
     }
-    @Override
+
     public String deleteAddressById(UUID addressId){
         boolean exists = addressRepo.existsById(addressId);
         if (!exists){
@@ -43,12 +47,12 @@ public class AddressServiceImpl implements AddressServiceInterface {
         addressRepo.deleteById(addressId);
         return "address removed {}" + addressId;
     }
-    @Override
+
     public AddressDto addNewAddress(AddressDto addressDto) {
         Address createdAddress = addressRepo.save(addressMapper.dtotoModel(addressDto));
         return addressMapper.modeltoDto(createdAddress);
     }
-    @Override
+
     public void  editAddress(@NotNull AddressDto addressDto) {
       Address address =addressRepo.getAddressByAddressID(addressDto.getAddressID());
       address.setCity(addressDto.getCity());

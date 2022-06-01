@@ -12,18 +12,20 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 
 @Service
-@RequiredArgsConstructor
-public  class EducationServicelmpl implements EducationInterface {
-
+@Transactional
+@AllArgsConstructor
+public  class EducationServicelmpl{
+    @Autowired
     private final EducationRepository educationRepository;
+    @Autowired
     private final EducationMapper educationMapper;
 
-    @Override
     public EducationDto getEducationById(UUID educationId){
         boolean exists = educationRepository.existsById(educationId);
         if (!exists){
@@ -34,18 +36,15 @@ public  class EducationServicelmpl implements EducationInterface {
         return educationMapper.modeltoDto(educationRepository.getById(educationId));
     }
 
-    @Override
     public List<EducationDto> getEducations(){
         return educationMapper.toDto(educationRepository.findAll());
     }
 
-    @Override
     public EducationDto addNewEducation(EducationDto educationDto){
         Education createdEducation = educationRepository.save(educationMapper.dtotoModel(educationDto));
         return educationMapper.modeltoDto(createdEducation);
     }
 
-    @Override
     public String deleteEducationById(UUID educationId){
         boolean exists = educationRepository.existsById(educationId);
         if (!exists){
@@ -57,7 +56,6 @@ public  class EducationServicelmpl implements EducationInterface {
         return "Education removed {} " + educationId;
     }
 
-    @Override
     public void editEducation(EducationDto educationDto) {
         Education education =educationRepository.findEducationByEducationId(educationDto.getEducationId());
         education.setDegree(educationDto.getDegree());

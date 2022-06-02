@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -19,23 +20,36 @@ public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "user_id")
+    @Column(name = "userId")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
     @ManyToMany
     @JoinTable(
             name = "users_roles",
-            joinColumns = @JoinColumn(name = "userId"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
-            name = "user_projects",
-            joinColumns = @JoinColumn(name = "userId"),
+            name = "users_projects",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "projectId"))
     private List<Projects> projects = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private List<Experiences> experiences = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private List<DayOff> daysOff = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
+    private Address address;
+
 
     @Column(unique = true)
     private String username;
@@ -51,11 +65,5 @@ public class User {
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
-
-    @OneToMany(mappedBy = "users")
-    private List<DayOff> daysOff;
-
-    @OneToMany(mappedBy = "user")
-    private List<Task> tasks;
 
 }

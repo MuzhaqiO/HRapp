@@ -11,20 +11,40 @@ import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserServiceInterface {
+public class UserServiceImpl implements UserServiceInterface, UserDetailsService {
 
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
     private final RoleRepo roleRepo;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = usersRepo.findByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException("User by username "+username+ " doesn't exist");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));});
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+    }
     @Override
     public UserDTO getUserById(UUID userId) {
         return usersMapper.entityToDTO(usersRepo.getById(userId));
@@ -47,6 +67,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
+        userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
         return usersMapper.toDTO(createdUser);
     }
@@ -68,6 +89,8 @@ public class UserServiceImpl implements UserServiceInterface {
      user.setUsersStatus(usersStatusDTO.getUsersStatus());
      usersRepo.save(user);
     }
+
+
 
    /* @Override
     public UserDTO updateUser(UUID userId, UserDTO userDTO) {

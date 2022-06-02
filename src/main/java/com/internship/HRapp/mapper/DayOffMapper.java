@@ -14,7 +14,10 @@ import java.util.List;
 public interface DayOffMapper {
     UserDayOffDTO toDto(DayOff dayOff);
 
+
     StatusDTO statusToDTO(DayOff dayOff);
+    @Mapping(target = "users.userId", source = "userId")
+    DayOff statusToEntity(StatusDTO status);
 
     DayOff toModel(UserDayOffDTO userDayOffDTO);
 

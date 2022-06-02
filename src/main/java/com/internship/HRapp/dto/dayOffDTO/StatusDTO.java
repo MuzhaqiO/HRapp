@@ -12,6 +12,6 @@ import java.util.UUID;
 public class StatusDTO {
     private UUID dayOffId;
     private DayOffStatus requestStatus;
-    private UUID idOfApprove;
+    private UUID userId;
     private String rejectReason;
 }

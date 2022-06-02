@@ -1,18 +1,20 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.entity.Address;
+import com.internship.HRapp.dto.addressDto.AddressDto;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public interface AddressServiceInterface {
-    void getAddress(Address address);
 
-    List<Address> getAddress();
+    List<AddressDto> getAddresses();
 
-    void addNewAddress(Address address);
+    AddressDto addNewAddress(AddressDto addressDto);
+    AddressDto getAddressById(UUID addressid);
 
-    void deleteAddress(UUID addressId);
+    void editAddress(AddressDto addressDto);
 
-    void updateAddress(UUID addressId, String street, String city, String state, String postal_code);
+    String deleteAddressById(UUID addressID);
 }
-

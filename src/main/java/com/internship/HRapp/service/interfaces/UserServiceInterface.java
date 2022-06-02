@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public interface UserServiceInterface {
 
-
     UserDTO getUserById(UUID userId);
 
     UserDTO getUserByUsername(String username);

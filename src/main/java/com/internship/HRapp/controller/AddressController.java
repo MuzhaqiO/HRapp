@@ -1,40 +1,40 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.entity.Address;
-import com.internship.HRapp.service.implementation.AddressServiceImpl;
-import lombok.NoArgsConstructor;
+import com.internship.HRapp.dto.addressDto.AddressDto;
+import com.internship.HRapp.service.interfaces.AddressServiceInterface;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping(path = "api/v1/hr/management_system")
-@NoArgsConstructor
-public class AddressController {
-    private AddressServiceImpl addressServiceImpl;
 
-    @GetMapping("/{addressid}")
-    public List<Address> getAddress(){
-        return addressServiceImpl.getAddress();
+@RestController
+@RequestMapping (path ="api/v1/hr_management_system/addressess")
+@RequiredArgsConstructor
+public class AddressController {
+    private final AddressServiceInterface addressServiceInterface;
+
+    @GetMapping("getAll")
+    public ResponseEntity<List<AddressDto>> findAllAddresses(){return ResponseEntity.ok(addressServiceInterface.getAddresses());
     }
-    public void getAddress(Address address){
-        addressServiceImpl.getAddress(address);
+    @PostMapping("/addNewAddress")
+    public ResponseEntity<AddressDto> createNewAddress(@RequestBody AddressDto addressDto) {
+        return ResponseEntity.ok(addressServiceInterface.addNewAddress(addressDto));
     }
-    @PostMapping
-    public void registerNewAddress(@RequestBody Address address){
-        addressServiceImpl.addNewAddress(address);
+    @PutMapping("editAddress/{addressID}")
+    public void editAddress(@RequestParam AddressDto addressDto){
+        addressServiceInterface.editAddress(addressDto);
     }
-    @DeleteMapping(path = "{addressid}")
-    public void deleteAddress(@PathVariable("addressid") UUID addressid){
-        addressServiceImpl.deleteAddress(addressid);
+
+
+    @GetMapping("id/{addressID}")
+    public ResponseEntity<AddressDto> findAddressById(@PathVariable UUID addressID){
+        return ResponseEntity.ok(addressServiceInterface.getAddressById(addressID));
     }
-    @PutMapping()
-    public void updateAddress(
-            @RequestParam UUID addressid,
-            @RequestParam(required = false) String state,
-            @RequestParam(required = false) String city,
-            @RequestParam(required = false) String street,
-            @RequestParam(required = false) String postal_code){
-        addressServiceImpl.updateAddress(addressid,state,city,street,postal_code);
+    @DeleteMapping("delete/{addressID}")
+    public String deleteRolesById(@PathVariable UUID addressID) {
+        return addressServiceInterface.deleteAddressById(addressID);
     }
 }

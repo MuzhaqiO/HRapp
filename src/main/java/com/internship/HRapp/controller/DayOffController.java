@@ -33,9 +33,8 @@ public class DayOffController {
     //   }
 
     @PatchMapping
-    public ResponseEntity<StatusDTO> updateDayOffRequest(@RequestBody StatusDTO status) {
+    public void updateDayOffRequest(@RequestBody StatusDTO status) {
         dayOffService.updateDayOffRequest(status);
-        return ResponseEntity.ok(status);
     }
 
 

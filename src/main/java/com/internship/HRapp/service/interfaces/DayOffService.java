@@ -15,7 +15,7 @@ public interface DayOffService {
 
     void deleteDayOff(UUID dayOffId);
 
-    StatusDTO updateDayOffRequest(StatusDTO status);
+    void updateDayOffRequest(StatusDTO status);
     List<UserDayOffDTO> getUserDayOff(UUID userId);
 
     //void updateLeaveDaysLeft();

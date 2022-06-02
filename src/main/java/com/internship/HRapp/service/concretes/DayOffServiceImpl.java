@@ -6,6 +6,7 @@ import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.DayOffPermission;
+import com.internship.HRapp.enums.DayOffStatus;
 import com.internship.HRapp.mapper.DayOffMapper;
 import com.internship.HRapp.repository.DayOffRepository;
 import com.internship.HRapp.repository.UserRepo;
@@ -31,14 +32,23 @@ public class DayOffServiceImpl implements DayOffService {
 
 
     @Override
-    public StatusDTO updateDayOffRequest(StatusDTO status) {
+    public void updateDayOffRequest(StatusDTO status) {
         DayOff thisDayOff = dayOffRepo.findDayOffByDayOffId(status.getDayOffId());
-        User approver = userRepo.findByDaysOffDayOffId(status.getDayOffId());
+        User approver = userRepo.findUserByUserId(status.getUserId());
         thisDayOff.setRequestStatus(status.getRequestStatus());
         thisDayOff.setIdOfApprove(approver.getUserId());
         thisDayOff.setRejectReason(status.getRejectReason());
+        List<User> users = userRepo.findAllByDaysOffDayOffId(status.getDayOffId());
+        if (thisDayOff.getPermissionType().equals(DayOffPermission.DEFAULT)
+                && thisDayOff.getRequestStatus().equals(DayOffStatus.APPROVED)) {
+            for (var user2 : users) {
+                user2.setLeaveDaysLeft(user2.getLeaveDaysLeft() - thisDayOff.getDayOffAmount());
+                userRepo.save(user2);
+            }
+        }else{
+            throw new IllegalStateException("This request was rejected");
+        }
         dayOffRepo.save(thisDayOff);
-        return status;
     }
 
     @Override
@@ -80,12 +90,7 @@ public class DayOffServiceImpl implements DayOffService {
                 }
             }
         }
-        if (created.getPermissionType().equals(DayOffPermission.DEFAULT)) {
-            for (var user2 : users) {
-                user2.setLeaveDaysLeft(user2.getLeaveDaysLeft() - created.getDayOffAmount());
-                userRepo.save(user2);
-            }
-        }
+
         return dayOffMapper.toDto(created);
     }
 

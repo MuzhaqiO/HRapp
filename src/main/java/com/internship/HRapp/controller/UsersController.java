@@ -7,16 +7,21 @@ import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1/hr_management_system/users")
+@RequestMapping("hr_menagement")
 @RequiredArgsConstructor
 public class UsersController {
     private final UserServiceInterface userServiceInterface;
+//    @GetMapping("login")
+//    UsernamePasswordAuthenticationToken login(UsernamePasswordAuthenticationToken authenticationToken){
+//        ;
+//    }
     @GetMapping("getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());
@@ -25,6 +30,7 @@ public class UsersController {
     public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username){
         return ResponseEntity.ok(userServiceInterface.getUserByUsername(username));
     }
+
     @GetMapping("userId/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId){
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));

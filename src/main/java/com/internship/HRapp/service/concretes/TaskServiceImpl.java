@@ -4,9 +4,11 @@ import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDTO.TaskDTO;
 import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
 import com.internship.HRapp.entity.Task;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.TaskStatus;
 import com.internship.HRapp.mapper.TaskMapper;
 import com.internship.HRapp.repository.TaskRepository;
+import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepo;
     private final TaskMapper taskMapper;
+    private final UserRepo userRepo;
 
     @Override
     public TaskDTO addTask(TaskNewDTO newDTO) {
@@ -29,9 +32,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDTO assignTask(TaskAssignDTO assignDTO) {
         Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
-        if (task.getTaskStatus().equals(TaskStatus.UNASSIGNED)) {
+        User user = userRepo.findUserByUserId(assignDTO.getUserId());
             task.setTaskStatus(TaskStatus.ASSIGNED);
-        }
+            task.setUser(user);
         return taskMapper.taskToDto(task);
     }
 

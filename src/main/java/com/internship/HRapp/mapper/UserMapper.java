@@ -2,6 +2,7 @@ package com.internship.HRapp.mapper;
 
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
+import com.internship.HRapp.dto.userDTO.UserLoginDTO;
 import com.internship.HRapp.entity.User;
 import org.mapstruct.Mapper;
 
@@ -17,4 +18,6 @@ public interface UserMapper {
     List<UserCreateDTO> oDTOs(List<User> users);
     User toEntity(UserCreateDTO userCreateDTO);
     List<User> toEntities(List<UserCreateDTO> userCreateDTOs);
+    User userLoginToDto(UserLoginDTO userLoginDTO);
+    UserLoginDTO userLoginToEntity(User user);
 }

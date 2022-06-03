@@ -4,6 +4,7 @@ import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,4 +25,6 @@ public interface UserServiceInterface {
     void updateUser (UserCreateDTO userCreateDTO);
 
     void updateUsersStatus (UsersStatusDTO usersStatusDTO);
+
+    //UserDetails loadUserByUsername(String username);
 }

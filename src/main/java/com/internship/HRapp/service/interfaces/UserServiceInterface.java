@@ -26,5 +26,5 @@ public interface UserServiceInterface {
 
     void updateUsersStatus (UsersStatusDTO usersStatusDTO);
 
-    //UserDetails loadUserByUsername(String username);
+    UserDetails loadUserByUsername(String username);
 }

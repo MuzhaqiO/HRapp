@@ -1,7 +1,7 @@
 package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.personalfileDto.PersonalFileDto;
-import com.internship.HRapp.service.concretes.PersonalFileServicelmpl;
+import com.internship.HRapp.service.concretes.PersonalFileService;
 import com.internship.HRapp.service.interfaces.PersonalFileInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,29 +12,33 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping (path ="api/v1/hr_management_system/personalfiles")
+@RequestMapping (path ="api/v1/hr_management_system/personalFiles")
 @RequiredArgsConstructor
 public class PersonalFileController {
-    private final PersonalFileServicelmpl personalFileService;
+    private final PersonalFileInterface personalFileServiceInterface;
 
     @GetMapping("getAll")
     public ResponseEntity<List<PersonalFileDto>> findAllPersonalFiles(){
-        return ResponseEntity.ok(personalFileService.getPersonalFiles());
+        return ResponseEntity.ok(personalFileServiceInterface.getPersonalFiles());
     }
-    @PostMapping("/addNewPersonalFile")
+    @PostMapping("addNewPersonalFile")
     public ResponseEntity<PersonalFileDto> createNewPersonalFile(@RequestBody PersonalFileDto personalFileDto) {
-        return ResponseEntity.ok(personalFileService.addNewPersonalFile(personalFileDto));
+        return ResponseEntity.ok(personalFileServiceInterface.addNewPersonalFile(personalFileDto));
     }
-    @PutMapping("editPersonalFile/{personalfileId}")
-    public void editPersonalFile(@RequestParam PersonalFileDto personalFileDto){
-        personalFileService.editPersonalFile(personalFileDto);
+    @PutMapping("editPersonalFile/{personalFileId}")
+    public ResponseEntity<PersonalFileDto> editPersonalFile(@RequestBody PersonalFileDto personalFileDto){
+        return ResponseEntity.ok(personalFileServiceInterface.editPersonalFile(personalFileDto));
     }
-    @GetMapping("id/{personalfileId}")
-    public ResponseEntity<PersonalFileDto> findPersonalFileById(@PathVariable UUID personalfileId){
-        return ResponseEntity.ok(personalFileService.getPersonalFileById(personalfileId));
+    @GetMapping("getPersonalFile/{personalFileId}")
+    public ResponseEntity<PersonalFileDto> findPersonalFileById(@PathVariable UUID personalFileId){
+        return ResponseEntity.ok(personalFileServiceInterface.getPersonalFileById(personalFileId));
     }
-    @DeleteMapping("delete/{personalfileId}")
-    public String deleteRolesById(@PathVariable UUID personalfileId) {
-        return personalFileService.deletePersonalFileById(personalfileId);
+    @GetMapping("getPersonalFileByUser/{userId}")
+    public ResponseEntity<List<PersonalFileDto>> getPersonalFileByUserId(@PathVariable UUID userId){
+        return ResponseEntity.ok(personalFileServiceInterface.getPersonalFileByUserId(userId));
+    }
+    @DeleteMapping("deletePersonalFile/{personalFileId}")
+    public String deleteRolesById(@PathVariable UUID personalFileId) {
+        return personalFileServiceInterface.deletePersonalFileById(personalFileId);
     }
 }

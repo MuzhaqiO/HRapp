@@ -21,7 +21,6 @@ public class Certification {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "ID")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
 
     private UUID certificationID;

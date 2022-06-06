@@ -1,12 +1,11 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.UserExperienceDTO;
-import com.internship.HRapp.entity.Experiences;
+import com.internship.HRapp.dto.experiencesDTO.UserExperienceDTO;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ExperiencesService {
+public interface ExperiencesServiceInterface {
     UserExperienceDTO getExperienceById(UUID expId);
 
    // List<UserExperienceDTO> getExperiences(UUID expId);
@@ -22,4 +21,5 @@ public interface ExperiencesService {
     void updateExperiences(UserExperienceDTO experienceDTO);
 
     String deleteExperiencesById(UUID expId);
+    List<UserExperienceDTO> getExperienceByUserId(UUID userId);
 }

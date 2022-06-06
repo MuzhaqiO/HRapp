@@ -7,19 +7,15 @@ import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import java.util.List;
 import java.util.UUID;
 
-public interface DayOffService {
+public interface DayOffServiceInterface {
 
-   // UserDayOffDTO getUserDayOff(UUID userId);
 
     UserDayOffDTO placeDayOffRequest(createDayOffDTO requestDTO);
 
     void deleteDayOff(UUID dayOffId);
 
-    void updateDayOffRequest(StatusDTO status);
+    void updateDayOffRequest(UUID dayOffId, StatusDTO status);
     List<UserDayOffDTO> getUserDayOff(UUID userId);
 
     //void updateLeaveDaysLeft();
-
-
-
 }

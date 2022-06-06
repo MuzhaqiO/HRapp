@@ -1,6 +1,8 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDTO.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDTO.ProjectsUsersDTO;
+import com.internship.HRapp.dto.userDTO.AssignUserDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,4 +24,8 @@ public interface ProjectsServiceInterface {
     String deleteProject(UUID expId);
 
     void updateProject(ProjectsDTO projectsDTO);
+
+    AssignUserDTO assignUserToProject(UUID projectId, AssignUserDTO assignUserDTO);
+
+    AssignUserDTO removeUserFromProject(UUID projectId, UUID userId);
 }

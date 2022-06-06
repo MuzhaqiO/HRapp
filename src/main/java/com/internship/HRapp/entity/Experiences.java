@@ -12,6 +12,7 @@ import java.util.UUID;
 
 
 @Entity
+@Table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,7 +21,6 @@ public class Experiences {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id")
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID expId;
     private String company;

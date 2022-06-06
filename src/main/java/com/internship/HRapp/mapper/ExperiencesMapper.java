@@ -1,6 +1,6 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.UserExperienceDTO;
+import com.internship.HRapp.dto.experiencesDTO.UserExperienceDTO;
 import com.internship.HRapp.entity.Experiences;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,4 +20,5 @@ public interface ExperiencesMapper {
     @Mapping(source ="userId", target = "users.userId")
 
     Experiences dtoToEntity(UserExperienceDTO userExperienceDTO);
+    List<Experiences> DTOToEntities(List<UserExperienceDTO> userExperienceDTOs);
 }

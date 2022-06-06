@@ -1,12 +1,9 @@
-package com.internship.HRapp.dto;
+package com.internship.HRapp.dto.projectsDTO;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Data

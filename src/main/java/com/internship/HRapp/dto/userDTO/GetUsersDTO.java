@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ProjectAssignDTO {
-    private UUID projectId;
+public class GetUsersDTO {
+    private UUID userId;
+    private String username;
 }

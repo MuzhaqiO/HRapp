@@ -11,8 +11,10 @@ public interface PersonalFileInterface {
 
     List<PersonalFileDto> getPersonalFiles();
     PersonalFileDto addNewPersonalFile(PersonalFileDto personalFileDto);
-    void editPersonalFile(PersonalFileDto personalFileDto);
-    PersonalFileDto getPersonalFileById(UUID personalfileId);
+    PersonalFileDto editPersonalFile(PersonalFileDto personalFileDto);
+    PersonalFileDto getPersonalFileById(UUID personalFileId);
 
-    String deletePersonalFileById(UUID personalfileId);
+    String deletePersonalFileById(UUID personalFileId);
+
+    List<PersonalFileDto> getPersonalFileByUserId(UUID userId);
 }

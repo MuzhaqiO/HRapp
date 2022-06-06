@@ -18,4 +18,6 @@ public interface RoleServiceInterface {
     String deleteRolesById(UUID roleId);
 
     RoleDTO updateRole(RoleDTO roleDTO);
+
+    List<RoleDTO> getRoleByUserId(UUID userId);
 }

@@ -11,8 +11,10 @@ public interface EducationInterface {
 
    List<EducationDto> getEducations();
    EducationDto addNewEducation(EducationDto educationDto);
-   void editEducation(EducationDto educationDto);
+   void editEducation(UUID educationId, EducationDto educationDto);
    EducationDto getEducationById(UUID educationId);
 
    String deleteEducationById(UUID educationId);
+
+   List<EducationDto> getEducationByUserId(UUID userId);
 }

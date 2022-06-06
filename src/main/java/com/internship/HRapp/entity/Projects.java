@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -11,6 +12,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 public class Projects {
@@ -26,4 +28,8 @@ public class Projects {
 
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks = new ArrayList<>();
 }

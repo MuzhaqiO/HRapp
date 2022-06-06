@@ -18,7 +18,6 @@ public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid" , strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", nullable = false, columnDefinition = "VARCHAR(255)")
 
     private UUID educationId;
     private String degree;

@@ -1,4 +1,4 @@
-package com.internship.HRapp.dto;
+package com.internship.HRapp.dto.experiencesDTO;
 
 import com.internship.HRapp.enums.TrustLevel;
 import lombok.Getter;

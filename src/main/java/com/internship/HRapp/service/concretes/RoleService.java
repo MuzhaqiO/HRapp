@@ -4,6 +4,7 @@ import com.internship.HRapp.dto.roleDTO.RoleDTO;
 import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.mapper.RoleMapper;
 import com.internship.HRapp.repository.RoleRepo;
+import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.RoleServiceInterface;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -16,49 +17,55 @@ import java.util.UUID;
 
 @Service
 @Transactional
-@AllArgsConstructor
-public class RoleServiceImpl{
+@RequiredArgsConstructor
+public class RoleService implements RoleServiceInterface {
 
-    @Autowired
     private final RoleRepo rolesRepo;
-    @Autowired
     private final RoleMapper roleMapper;
+    private final UserRepo userRepo;
 
+    @Override
     public RoleDTO getRoleById(UUID roleId) {
-        boolean exists = rolesRepo.existsById(roleId);
-        if (!exists){
-            throw new IllegalStateException(
-                    "Role with id " + roleId + " does not exist!"
-            );
-        }
         return roleMapper.toDTO(rolesRepo.getById(roleId));
     }
+
+    @Override
     public RoleDTO getRoleByRoleName(String roleName) {
         return roleMapper.toDTO(rolesRepo.findByRoleName(roleName));
     }
 
+    @Override
     public List<RoleDTO> getRoles() {
         return roleMapper.toDTOs(rolesRepo.findAll());
     }
 
+    @Override
     public RoleDTO addNewRoles(RoleDTO roleDTO) {
         Role createdRole = roleMapper.toEntity(roleDTO);
         rolesRepo.save(createdRole);
         return roleMapper.toDTO(createdRole);
     }
+
+    @Override
     public String deleteRolesById(UUID roleId) {
-        boolean exists = rolesRepo.existsById(roleId);
-        if (!exists){
-            throw new IllegalStateException(
-                    "Role with id " + roleId + " does not exist!"
-            );
-        }
         rolesRepo.deleteById(roleId);
         return "role removed {} " + roleId;
     }
+
+    @Override
     public RoleDTO updateRole(RoleDTO roleDTO) {
         Role role = roleMapper.toEntity(roleDTO);
         rolesRepo.save(role);
         return roleMapper.toDTO(role);
+    }
+
+    @Override
+    public List<RoleDTO> getRoleByUserId(UUID userId) {
+        boolean exists = userRepo.existsById(userId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "User with id " + userId + " does not exist");
+        }
+        return roleMapper.toDTOs(rolesRepo.getRoleByUsersUserId(userId));
     }
 }

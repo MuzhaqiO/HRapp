@@ -18,10 +18,8 @@ public class Address {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "ID")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
-
     private UUID addressID;
     private String state;
     private String city;

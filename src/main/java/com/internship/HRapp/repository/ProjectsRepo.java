@@ -14,13 +14,12 @@ public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
   // List<Projects> findByUserId(UUID userId);
 
     Projects getProjectsByProjectId(UUID projectId);
-    Projects findProjectByProjectId(UUID projectId);
+    List<Projects> getProjectsByUsersUserId(UUID userId);
 
-
-    @Query(value = "select * from Projects p " +
-            "left join Users_Projects up on p.id = up.project_id " +
-            "where up.user_id =:userId", nativeQuery = true)
-    List<Projects> getProjectsByUserId(@Param("userId") UUID userId);
+//    @Query(value = "select * from Projects p " +
+//            "left join Users_Projects up on p.id = up.project_id " +
+//            "where up.user_id =:userId", nativeQuery = true)
+//    List<Projects> getProjectsByUserId(@Param("userId") UUID userId);
 
     @Query("SELECT p FROM Projects p WHERE p.projectName=?1")
      Projects findByProjectsName(String projectName);

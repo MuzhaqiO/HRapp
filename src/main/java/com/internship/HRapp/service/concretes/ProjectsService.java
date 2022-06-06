@@ -1,14 +1,14 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDTO.ProjectsDTO;
+import com.internship.HRapp.dto.userDTO.AssignUserDTO;
 import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.mapper.ProjectsMapper;
+import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.ProjectsRepo;
+import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NaturalId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,53 +17,46 @@ import java.util.UUID;
 
 @Service
 @Transactional
-@AllArgsConstructor
-public class ProjectsServiceImpl{
-    @Autowired
+@RequiredArgsConstructor
+public class ProjectsService implements ProjectsServiceInterface {
+
     private final ProjectsRepo projectsRepo;
-    @Autowired
+    private final UserRepo userRepo;
     private final ProjectsMapper projectsMapper;
+    private final UserMapper userMapper;
 
-    public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
-        boolean exists = projectsRepo.existsById(userId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "User with id " + userId + " does not exist");
-        }
-        var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
-        return  test;
+    @Override
+    public List<ProjectsDTO> getProjects() {
+        return projectsMapper.entitiesToDtos(projectsRepo.findAll());
     }
 
-   /*
-    public void addProjectToNewUser() {
-        User user = new User();
-        user.setUsername("adushi");
-        user.setPassword("123");
-        user.setFirstName("arian");
-        user.setLastName("dushi");
-        user.setEmail("adushi@gmail.com");
-
-        Projects projects =projectsRepo.findByName();
-    }*/
-
+    @Override
     public ProjectsDTO getProjectById(UUID projectId) {
-        boolean exists = projectsRepo.existsById(projectId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "Project with id " + projectId + " does not exist");
-        }
-        return projectsMapper.entityToDto((projectsRepo.getProjectsByProjectId(projectId)));
+        return projectsMapper.entityToDto((projectsRepo.getById(projectId)));
     }
 
+    @Override
     public ProjectsDTO getProjectByProjectName(String projectName) {
         return projectsMapper.entityToDto(projectsRepo.findByProjectsName(projectName));
     }
 
+    @Override
+    public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
+        boolean exists = userRepo.existsById(userId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "User with id " + userId + " does not exist");
+        }
+        return projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUsersUserId(userId)));
+    }
+
+    @Override
     public ProjectsDTO addNewProjects(ProjectsDTO projectsDTO) {
         Projects createdProject = projectsRepo.save(projectsMapper.dtoToEntity(projectsDTO));
         return projectsMapper.entityToDto(createdProject);
     }
 
+    @Override
     public String deleteProject(UUID projectsId) {
         boolean exists = projectsRepo.existsById(projectsId);
         if (!exists){
@@ -75,6 +68,7 @@ public class ProjectsServiceImpl{
        return "Project {} was removed"+projectsId;
     }
 
+    @Override
     public void updateProject(ProjectsDTO projectsDTO) {
         Projects projects = projectsRepo.getProjectsByProjectId(projectsDTO.getProjectId());
         projects.setProjectName(projectsDTO.getProjectName());
@@ -84,7 +78,18 @@ public class ProjectsServiceImpl{
         projectsRepo.save(projects);
 
     }
-    public List<ProjectsDTO> getProjects() {
-        return projectsMapper.entitiesToDtos(projectsRepo.findAll());
+    @Override
+    public AssignUserDTO assignUserToProject(UUID projectId, AssignUserDTO assignUserDTO) {
+        Projects project = projectsRepo.getById(projectId);
+        project.getUsers().addAll(userMapper.toEntitiesGet(assignUserDTO.getUsers()));
+        projectsRepo.save(project);
+        return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
+    }
+    @Override
+    public AssignUserDTO removeUserFromProject(UUID projectId, UUID userId){
+        Projects project = projectsRepo.getById(projectId);
+        project.getUsers().removeIf(user -> user.getUserId().equals(userId));
+        projectsRepo.save(project);
+        return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -59,8 +60,12 @@ public class User {
     private List<DayOff> daysOff = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
+    @JoinColumn(name = "user_addresses_id", referencedColumnName = "addressID")
     private Address address;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
 
 
     @Column(unique = true)
@@ -68,14 +73,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    @Transient
+    private Text BIO;
     @Column(unique = true)
     private String email;
-    private LocalDate DOB;
+    private LocalDate dateOfBirth;
     private Double leaveDaysLeft;
     private String mobile;
     private LocalDate startingDay;
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
-
 }

@@ -1,10 +1,10 @@
 package com.internship.HRapp.security;
 
 import com.internship.HRapp.filter.CustomAuthenticationFilter;
-import com.internship.HRapp.service.concretes.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,17 +19,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserServiceImpl userService;
+    private final MyUserDetails userDetails;
     private final CustomAuthenticationFilter authenticationFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
+        auth.userDetailsService(userDetails);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
+                .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll().anyRequest()
@@ -54,7 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/hr_menagement/login/**"
+            "/hr_menagement/login/**",
+            "/hr_menagement/addNewUser/**",
+            //"/hr_menagement/getAll/**",
+            "/hr_menagement/placeDayOffRequest/**",
+            "/hr_management_system/addRole/**",
+            "/hr_menagement/assignRole/**"
     };
-//
 }

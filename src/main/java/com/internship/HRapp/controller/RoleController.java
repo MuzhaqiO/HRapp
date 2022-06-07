@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1/hr_management_system/roles")
+@RequestMapping(path = "hr_management_system")
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleServiceInterface roleServiceInterface;

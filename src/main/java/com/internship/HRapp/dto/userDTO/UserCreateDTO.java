@@ -2,9 +2,11 @@ package com.internship.HRapp.dto.userDTO;
 
 import com.internship.HRapp.dto.ProjectsDTO;
 import com.internship.HRapp.dto.roleDTO.RoleDTO;
+import com.internship.HRapp.entity.Role;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,6 +25,6 @@ public class UserCreateDTO {
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
-    private Set<RoleDTO> roles;
-    private Set<ProjectsDTO> projects;
+    private List<RoleDTO> roles;
+
 }

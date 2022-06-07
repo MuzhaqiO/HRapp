@@ -28,20 +28,26 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserServiceInterface, UserDetailsService {
+public class UserServiceImpl implements UserServiceInterface {
 
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
     private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = usersRepo.findByUsername(username);
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = usersRepo.findByUsername(username);
 //        if (user == null) {
 //            throw new UsernameNotFoundException("User by username " + username + " doesn't exist");
 //        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());}
+//                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        user.getRoles().forEach(role -> {
+//            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+//        });
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+//    }
+        //return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());}
 
 //        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 //        user.getRoles().forEach(role -> {
@@ -76,6 +82,7 @@ public class UserServiceImpl implements UserServiceInterface, UserDetailsService
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
         userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
+        //sendRegistrationEmail(userCreateDTO);
         return usersMapper.toDTO(createdUser);
     }
 
@@ -103,7 +110,7 @@ public class UserServiceImpl implements UserServiceInterface, UserDetailsService
 //        email.setTo(userCreateDTO.getEmail());
 //        email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
 //        email.setText("Text + username + password " + userCreateDTO.getUsername() + " \nPassword: " + userCreateDTO.getPassword());
-//        email.setFrom("3isolution@gmail.com");
+//        email.setFrom("ibronazi@gmail.com");
 //        JavaMailSender mailSender = new JavaMailSenderImpl();
 //        mailSender.send(email);
 //    }

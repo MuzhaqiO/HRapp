@@ -1,5 +1,6 @@
 package com.internship.HRapp.config;
 
+import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import com.internship.HRapp.util.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

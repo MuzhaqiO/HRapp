@@ -1,5 +1,6 @@
 package com.internship.HRapp.filter;
 
+import com.internship.HRapp.security.MyUserDetails;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import com.internship.HRapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
-    private final UserServiceInterface userServiceInterface;
+    private final MyUserDetails userDetails;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -35,7 +36,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
             username = jwtUtil.extractUsername(jwt);
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userServiceInterface.loadUserByUsername(username);
+            UserDetails userDetails = this.userDetails.loadUserByUsername(username);
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

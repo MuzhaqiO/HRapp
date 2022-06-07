@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1/userDayOff")
+@RequestMapping(path = "hr_menagement")
 public class DayOffController {
 
     private final DayOffService dayOffService;
 
-    @PostMapping("api/test")
+    @PostMapping("/placeDayOffRequest")
     public ResponseEntity<UserDayOffDTO> placeDayOffRequest(@RequestBody createDayOffDTO requestDTO) {
         return ResponseEntity.ok(dayOffService.placeDayOffRequest(requestDTO));
     }

@@ -1,6 +1,9 @@
 package com.internship.HRapp.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -8,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@Entity
+@javax.persistence.Entity
 @Table(name = "users")
 @Getter
 @Setter
@@ -22,7 +25,6 @@ public class User {
     @Column(name = "userId")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
-
     @ManyToMany
     @JoinTable(
             name = "users_roles",

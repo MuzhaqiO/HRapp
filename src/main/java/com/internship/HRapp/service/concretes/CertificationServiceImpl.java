@@ -1,4 +1,4 @@
-package com.internship.HRapp.service.implementation;
+package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.certificationDto.CertificationDto;
 import com.internship.HRapp.entity.Certification;
@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

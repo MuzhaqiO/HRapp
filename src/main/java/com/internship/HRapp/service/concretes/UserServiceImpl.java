@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,27 +35,6 @@ public class UserServiceImpl implements UserServiceInterface {
     private final UserMapper usersMapper;
     private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = usersRepo.findByUsername(username);
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User by username " + username + " doesn't exist");
-//        }
-//                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        user.getRoles().forEach(role -> {
-//            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-//        });
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-//    }
-        //return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());}
-
-//        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        user.getRoles().forEach(role -> {
-//            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-//        });
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-//    }
 
     @Override
     public UserDTO getUserById(UUID userId) {
@@ -80,9 +60,12 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
+        userCreateDTO.setPassword(generateRandomPassword(10));
+        System.out.println(userCreateDTO.getPassword());
+        //sendRegistrationEmail(userCreateDTO);
         userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
-        //sendRegistrationEmail(userCreateDTO);
+
         return usersMapper.toDTO(createdUser);
     }
 
@@ -104,6 +87,18 @@ public class UserServiceImpl implements UserServiceInterface {
         User user = usersRepo.findUserByUserId(usersStatusDTO.getUserId());
         user.setUsersStatus(usersStatusDTO.getUsersStatus());
         usersRepo.save(user);
+    }
+    public static String generateRandomPassword(int len)
+    {
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++)
+        {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+        return sb.toString();
     }
 //    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) {
 //        SimpleMailMessage email = new SimpleMailMessage();

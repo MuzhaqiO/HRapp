@@ -14,8 +14,8 @@ public class PasswordEncryptConfig {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
-    public JwtUtil jwtUtilBean() {
-        return new JwtUtil();
-    }
+//    @Bean
+//    public JwtUtil jwtUtilBean() {
+//        return new JwtUtil();
+//    }
 }

@@ -8,6 +8,7 @@ import com.internship.HRapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("hr_menagement")
 @RequiredArgsConstructor
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class UsersController {
     private final MyUserDetails myUserDetails;
     private final UserServiceInterface userServiceInterface;
@@ -48,7 +49,9 @@ public class UsersController {
 
 
     @GetMapping("getAll")
-    @RolesAllowed("ADMIN")
+    //@PreAuthorize("hasRole('ADMIN')")
+   //@RolesAllowed("ADMIN")
+    //@Secured("ADMIN")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());
     }

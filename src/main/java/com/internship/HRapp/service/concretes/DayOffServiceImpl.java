@@ -2,7 +2,7 @@ package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
 import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.DayOffPermission;
@@ -80,12 +80,12 @@ public class DayOffServiceImpl implements DayOffService {
         return dayOffMapper.toDtos(dayOffRepo.getByUsersUserId(userId));
     }
 
-    public UserDayOffDTO placeDayOffRequest(createDayOffDTO requestDTO) {
+    public UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO) {
         DayOff created = dayOffRepo.save(dayOffMapper.toEntity(requestDTO));
         List<User> users = userRepo.findAllByDaysOffDayOffId(created.getDayOffId());
         {
             for (var user1 : users) {
-                if (created.getDayOffAmount() > user1.getLeaveDaysLeft()) {
+                if (requestDTO.getDayOffAmount() > user1.getLeaveDaysLeft()) {
                     throw new RuntimeException("Can't make request, not enough days left");
                 }
             }

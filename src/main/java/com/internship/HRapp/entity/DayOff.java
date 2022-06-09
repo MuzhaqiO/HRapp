@@ -31,11 +31,9 @@ public class DayOff {
     private DayOffStatus requestStatus =  DayOffStatus.PENDING;
     private String rejectReason;
     private UUID idOfApprove;
-    @Transient
     private Double dayOffAmount;
-    public Double getDayOffAmount(){
-        return (double)ChronoUnit.DAYS.between(startDate, endDate);
-    }/// kte ma zhduk nga ktu
+//    public Double getDayOffAmount(){
+//        return (double)ChronoUnit.DAYS.between(startDate, endDate);
 
     @ManyToOne
     private User users;

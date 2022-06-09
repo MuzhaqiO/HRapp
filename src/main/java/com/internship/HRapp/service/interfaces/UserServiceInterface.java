@@ -1,9 +1,7 @@
 package com.internship.HRapp.service.interfaces;
 
 import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
-import com.internship.HRapp.dto.userDTO.UserDTO;
-import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.dto.userDTO.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -27,4 +25,6 @@ public interface UserServiceInterface {
     void updateUsersStatus (UsersStatusDTO usersStatusDTO);
 
     //UserDetails loadUserByUsername(String username);
+
+    AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception;
 }

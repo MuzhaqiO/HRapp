@@ -2,7 +2,8 @@ package com.internship.HRapp.mapper;
 
 import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
 import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
+import com.internship.HRapp.dto.dayOffDTO.UserOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
 import org.mapstruct.Mapper;
@@ -14,7 +15,6 @@ import java.util.List;
 public interface DayOffMapper {
     UserDayOffDTO toDto(DayOff dayOff);
 
-
     StatusDTO statusToDTO(DayOff dayOff);
     @Mapping(target = "users.userId", source = "userId")
     DayOff statusToEntity(StatusDTO status);
@@ -22,13 +22,16 @@ public interface DayOffMapper {
     DayOff toModel(UserDayOffDTO userDayOffDTO);
 
     @Mapping(target = "users.userId", source = "userId")
-    DayOff toEntity(createDayOffDTO requestDTO);
+    DayOff toEntity(CreateDayOffDTO requestDTO);
 
-    createDayOffDTO requestToDto(DayOff dayOff);
+    CreateDayOffDTO requestToDto(DayOff dayOff);
 
     UserDayOffDTO userToDto(User user);
+
 
     User toUser(UserDayOffDTO userDayOffDTO);
 
     List<UserDayOffDTO> toDtos(List<DayOff> dayOffList);
+
+
 }

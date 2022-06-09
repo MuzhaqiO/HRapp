@@ -1,5 +1,6 @@
 package com.internship.HRapp.mapper;
 
+import com.internship.HRapp.dto.dayOffDTO.UserOffDTO;
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
 import com.internship.HRapp.dto.userDTO.UserDTO;
 import com.internship.HRapp.dto.userDTO.UserLoginDTO;
@@ -20,4 +21,5 @@ public interface UserMapper {
     List<User> toEntities(List<UserCreateDTO> userCreateDTOs);
     User userLoginToDto(UserLoginDTO userLoginDTO);
     UserLoginDTO userLoginToEntity(User user);
+    UserOffDTO offToUser(User user);
 }

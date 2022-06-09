@@ -1,23 +1,25 @@
 package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
-import com.internship.HRapp.dto.userDTO.UserDTO;
-import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.dto.userDTO.*;
 import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.repository.UserRepo;
+import com.internship.HRapp.security.MyUserDetails;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
+import com.internship.HRapp.util.JwtUtil;
+import com.internship.HRapp.util.MailAndPassword;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
+import java.io.NotActiveException;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +30,10 @@ public class UserServiceImpl implements UserServiceInterface {
     private final UserMapper usersMapper;
     private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
-    private final JavaMailSender mailSender;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtTokenUtil;
+    private final MyUserDetails myUserDetails;
+    private final MailAndPassword mailAndPassword;
 
     @Override
     public UserDTO getUserById(UUID userId) {
@@ -54,9 +59,9 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
-        userCreateDTO.setPassword(generateRandomPassword(10));
+        userCreateDTO.setPassword(mailAndPassword.generateRandomPassword(10));
         System.out.println(userCreateDTO.getPassword());
-        sendRegistrationEmail(userCreateDTO);
+        mailAndPassword.sendRegistrationEmail(userCreateDTO);
         userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
 
@@ -83,31 +88,22 @@ public class UserServiceImpl implements UserServiceInterface {
         usersRepo.save(user);
     }
 
-    public static String generateRandomPassword(int len) {
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        SecureRandom random = new SecureRandom();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            int randomIndex = random.nextInt(chars.length());
-            sb.append(chars.charAt(randomIndex));
+    @Override
+    public AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception {
+        User user = usersRepo.getByUsername(loginDTO.getUsername());
+        if (user.getUsersStatus()) {
+            try {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+                );
+            } catch (BadCredentialsException e) {
+                throw new Exception("Incorrect username or password", e);
+            }
+            final UserDetails userDetails = myUserDetails
+                    .loadUserByUsername(loginDTO.getUsername());
+            final String jwt = jwtTokenUtil.generateToken(userDetails);
+            return new AuthResponseDTO(jwt);
         }
-        return sb.toString();
+        throw new NotActiveException("This user is not active");
     }
-
-    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) {
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(userCreateDTO.getEmail());
-        email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
-        email.setText("Text + username + password " + userCreateDTO.getUsername() + " \nPassword: " + userCreateDTO.getPassword());
-        email.setFrom("naziibro33@yahoo.com");
-        mailSender.send(email);
-    }
-
-
-
-   /* @Override
-    public UserDTO updateUser(UUID userId, UserDTO userDTO) {
-        Optional<User> user = usersRepo.findById(userId);
-        return null;
-    } */
 }

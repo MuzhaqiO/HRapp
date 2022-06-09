@@ -1,8 +1,8 @@
 package com.internship.HRapp.controller;
 
+import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
 import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
 import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.createDayOffDTO;
 import com.internship.HRapp.service.interfaces.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class DayOffController {
     private final DayOffService dayOffService;
 
     @PostMapping("/placeDayOffRequest")
-    public ResponseEntity<UserDayOffDTO> placeDayOffRequest(@RequestBody createDayOffDTO requestDTO) {
+    public ResponseEntity<UserDayOffDTO> placeDayOffRequest(@RequestBody CreateDayOffDTO requestDTO) {
         return ResponseEntity.ok(dayOffService.placeDayOffRequest(requestDTO));
     }
 
@@ -32,7 +32,7 @@ public class DayOffController {
 //        dayOffService.updateLeaveDaysLeft();
     //   }
 
-    @PatchMapping
+    @PatchMapping(path = "/approveDayOff")
     public void updateDayOffRequest(@RequestBody StatusDTO status) {
         dayOffService.updateDayOffRequest(status);
     }

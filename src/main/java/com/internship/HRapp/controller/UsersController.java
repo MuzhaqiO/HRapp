@@ -34,17 +34,7 @@ public class UsersController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO) throws Exception {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
-            );
-        } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
-        }
-        final UserDetails userDetails = myUserDetails
-                .loadUserByUsername(loginDTO.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthResponseDTO(jwt));
+        return ResponseEntity.ok(userServiceInterface.login(loginDTO));
     }
 
 

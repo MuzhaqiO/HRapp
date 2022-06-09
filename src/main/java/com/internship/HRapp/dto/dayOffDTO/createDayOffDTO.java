@@ -17,5 +17,6 @@ public class createDayOffDTO {
     private DayOffPermission permissionType;
     private String reason;
     private String report;
+    private Double dayOffAmount;
 
 }

@@ -24,6 +24,8 @@ public interface DayOffMapper {
     @Mapping(target = "users.userId", source = "userId")
     DayOff toEntity(createDayOffDTO requestDTO);
 
+    createDayOffDTO requestToDto(DayOff dayOff);
+
     UserDayOffDTO userToDto(User user);
 
     User toUser(UserDayOffDTO userDayOffDTO);

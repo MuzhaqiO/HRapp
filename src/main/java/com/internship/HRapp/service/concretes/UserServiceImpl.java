@@ -14,27 +14,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserServiceInterface {
-
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
     private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
     @Override
     public UserDTO getUserById(UUID userId) {
@@ -62,7 +56,7 @@ public class UserServiceImpl implements UserServiceInterface {
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
         userCreateDTO.setPassword(generateRandomPassword(10));
         System.out.println(userCreateDTO.getPassword());
-        //sendRegistrationEmail(userCreateDTO);
+        sendRegistrationEmail(userCreateDTO);
         userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
 
@@ -88,27 +82,26 @@ public class UserServiceImpl implements UserServiceInterface {
         user.setUsersStatus(usersStatusDTO.getUsersStatus());
         usersRepo.save(user);
     }
-    public static String generateRandomPassword(int len)
-    {
+
+    public static String generateRandomPassword(int len) {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < len; i++)
-        {
+        for (int i = 0; i < len; i++) {
             int randomIndex = random.nextInt(chars.length());
             sb.append(chars.charAt(randomIndex));
         }
         return sb.toString();
     }
-//    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) {
-//        SimpleMailMessage email = new SimpleMailMessage();
-//        email.setTo(userCreateDTO.getEmail());
-//        email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
-//        email.setText("Text + username + password " + userCreateDTO.getUsername() + " \nPassword: " + userCreateDTO.getPassword());
-//        email.setFrom("ibronazi@gmail.com");
-//        JavaMailSender mailSender = new JavaMailSenderImpl();
-//        mailSender.send(email);
-//    }
+
+    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(userCreateDTO.getEmail());
+        email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
+        email.setText("Text + username + password " + userCreateDTO.getUsername() + " \nPassword: " + userCreateDTO.getPassword());
+        email.setFrom("naziibro33@yahoo.com");
+        mailSender.send(email);
+    }
 
 
 

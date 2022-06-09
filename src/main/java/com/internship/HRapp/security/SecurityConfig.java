@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //"/hr_menagement/getAll/**",
             "/hr_menagement/placeDayOffRequest/**",
             "/hr_management_system/addRole/**",
-            "/hr_menagement/assignRole/**"
+            "/hr_menagement/assignRole/**",
+            "/hr_menagement/**"
     };
 }

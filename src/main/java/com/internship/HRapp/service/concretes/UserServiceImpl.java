@@ -106,4 +106,16 @@ public class UserServiceImpl implements UserServiceInterface {
         }
         throw new NotActiveException("This user is not active");
     }
+
+    @Override
+    public void changePassword(PasswordDTO passwordUpdate) {
+        User user = usersRepo.getById(passwordUpdate.getUserId());
+        if (passwordUpdate.getNewPassword().length() >= 8) {
+            if (passwordEncoder.matches(passwordUpdate.getOldPassword(), user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
+                usersRepo.save(user);
+            }
+        }else throw new IllegalStateException("Password should have 8 or more characters");
+
+    }
 }

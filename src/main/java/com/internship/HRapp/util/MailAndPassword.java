@@ -1,6 +1,7 @@
 package com.internship.HRapp.util;
 
 import com.internship.HRapp.dto.userDTO.UserCreateDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 @Service
+@RequiredArgsConstructor
 public class MailAndPassword {
+    private final JavaMailSender mailSender;
 
     public String generateRandomPassword(int len) {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -25,9 +28,9 @@ public class MailAndPassword {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(userCreateDTO.getEmail());
         email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
-        email.setText("Text + username + password " + userCreateDTO.getUsername() + " \nPassword: " + userCreateDTO.getPassword());
-        email.setFrom("naziibro33@yahoo.com");
-        JavaMailSender mailSender = new JavaMailSenderImpl();
+        email.setText(" Password for " + " '" + userCreateDTO.getUsername() + "' "
+                + " is: " + userCreateDTO.getPassword());
+        email.setFrom("solutions3i@yahoo.com");
         mailSender.send(email);
     }
 }

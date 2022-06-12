@@ -27,10 +27,6 @@ public class DayOffController {
     public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID id) {
         return ResponseEntity.ok(dayOffService.getUserDayOff(id));
     }
-//    @PatchMapping(path = "api/updateLeaveDays")
-//    public void updateLeaveDaysLeft(){
-//        dayOffService.updateLeaveDaysLeft();
-    //   }
 
     @PatchMapping(path = "/approveDayOff")
     public void updateDayOffRequest(@RequestBody StatusDTO status) {

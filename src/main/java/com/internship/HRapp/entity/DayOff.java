@@ -32,8 +32,6 @@ public class DayOff {
     private String rejectReason;
     private UUID idOfApprove;
     private Double dayOffAmount;
-//    public Double getDayOffAmount(){
-//        return (double)ChronoUnit.DAYS.between(startDate, endDate);
 
     @ManyToOne
     private User users;

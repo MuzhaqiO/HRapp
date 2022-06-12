@@ -6,18 +6,11 @@ import com.internship.HRapp.security.MyUserDetails;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import com.internship.HRapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,22 +19,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class UsersController {
-    private final MyUserDetails myUserDetails;
     private final UserServiceInterface userServiceInterface;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtTokenUtil;
-
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO) throws Exception {
         return ResponseEntity.ok(userServiceInterface.login(loginDTO));
     }
 
-
-    @GetMapping("getAll")
-    //@PreAuthorize("hasRole('ADMIN')")
-   //@RolesAllowed("ADMIN")
-    //@Secured("ADMIN")
+    @GetMapping("/getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());
     }
@@ -75,8 +60,9 @@ public class UsersController {
     public void updateUsersStatus(@RequestParam UsersStatusDTO usersStatusDTO) {
         userServiceInterface.updateUsersStatus(usersStatusDTO);
     }
-    /*@PutMapping("updateUser/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userServiceInterface.updateUser(userId, userDTO));
-    }*/
+
+    @PatchMapping("/changePassword")
+    public void changePassword(@RequestBody PasswordDTO passwordDTO) {
+        userServiceInterface.changePassword(passwordDTO);
+    }
 }

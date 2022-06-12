@@ -1,7 +1,5 @@
 package com.internship.HRapp.config;
 
-import com.internship.HRapp.service.interfaces.UserServiceInterface;
-import com.internship.HRapp.util.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +12,4 @@ public class PasswordEncryptConfig {
         return new BCryptPasswordEncoder(10);
     }
 
-//    @Bean
-//    public JwtUtil jwtUtilBean() {
-//        return new JwtUtil();
-//    }
 }

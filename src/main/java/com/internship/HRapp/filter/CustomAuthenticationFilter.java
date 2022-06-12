@@ -1,7 +1,6 @@
 package com.internship.HRapp.filter;
 
 import com.internship.HRapp.security.MyUserDetails;
-import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import com.internship.HRapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

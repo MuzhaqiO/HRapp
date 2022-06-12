@@ -56,12 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/hr_menagement/login/**",
-            "/hr_menagement/addNewUser/**",
-            //"/hr_menagement/getAll/**",
-            "/hr_menagement/placeDayOffRequest/**",
-            "/hr_management_system/addRole/**",
-            "/hr_menagement/assignRole/**",
-            "/hr_menagement/approveDayOff/**"
+            "/hr_menagement/**"
     };
 }

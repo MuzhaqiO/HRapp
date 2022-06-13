@@ -11,7 +11,6 @@ import com.internship.HRapp.mapper.DayOffMapper;
 import com.internship.HRapp.repository.DayOffRepository;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.DayOffService;
-import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;

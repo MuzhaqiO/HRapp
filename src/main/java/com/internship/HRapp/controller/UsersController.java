@@ -2,12 +2,9 @@ package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
 import com.internship.HRapp.dto.userDTO.*;
-import com.internship.HRapp.security.MyUserDetails;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
-import com.internship.HRapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 

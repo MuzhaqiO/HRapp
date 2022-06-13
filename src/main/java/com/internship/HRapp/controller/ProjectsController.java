@@ -15,27 +15,32 @@ public class ProjectsController {
     private final ProjectsServiceInterface projectsServiceInterface;
 
     @PostMapping("/addProject")
-    public ResponseEntity<ProjectsDTO> save(@RequestBody ProjectsDTO projectsDTO){
-        return  ResponseEntity.ok(projectsServiceInterface.addNewProjects(projectsDTO));
+    public ResponseEntity<ProjectsDTO> save(@RequestBody ProjectsDTO projectsDTO) {
+        return ResponseEntity.ok(projectsServiceInterface.addNewProjects(projectsDTO));
     }
+
     @GetMapping("/projects/{userId}")
-    public ResponseEntity<List<ProjectsDTO>> getProjectsByUserId(@PathVariable UUID userId){
+    public ResponseEntity<List<ProjectsDTO>> getProjectsByUserId(@PathVariable UUID userId) {
         return ResponseEntity.ok(projectsServiceInterface.getProjectsByUserId(userId));
     }
+
     @GetMapping("/projects/id/{projectsId}")
-    public ResponseEntity<ProjectsDTO> getProjectById(@PathVariable UUID projectsId){
+    public ResponseEntity<ProjectsDTO> getProjectById(@PathVariable UUID projectsId) {
         return ResponseEntity.ok(projectsServiceInterface.getProjectById(projectsId));
     }
+
     @GetMapping("name/{projectsName}")
-    public ResponseEntity<ProjectsDTO> findProjectByName(@PathVariable String projectsName){
+    public ResponseEntity<ProjectsDTO> findProjectByName(@PathVariable String projectsName) {
         return ResponseEntity.ok(projectsServiceInterface.getProjectByProjectName(projectsName));
     }
+
     @GetMapping("/projects")
-    public ResponseEntity<List<ProjectsDTO>>getProjects(){
+    public ResponseEntity<List<ProjectsDTO>> getProjects() {
         return ResponseEntity.ok(projectsServiceInterface.getProjects());
     }
+
     @PutMapping("/projects/updateProject/{projectId}")
-    public void updateProject(@RequestParam ProjectsDTO projectsDTO){
+    public void updateProject(@RequestParam ProjectsDTO projectsDTO) {
         projectsServiceInterface.updateProject(projectsDTO);
     }
 }

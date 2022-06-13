@@ -9,5 +9,4 @@ import java.util.UUID;
 public interface AddressRepo extends JpaRepository<Address,UUID> {
 
     Address getAddressByAddressID(UUID addressID);
-
 }

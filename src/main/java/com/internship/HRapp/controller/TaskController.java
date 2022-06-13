@@ -34,11 +34,14 @@ public class TaskController {
         return ResponseEntity.ok(taskService.assignTask(assignDTO));
 
     }
+
     @GetMapping("userId")
-    public ResponseEntity<List<TaskDTO>> getTasksByUserId(@RequestParam UUID userId){
+    public ResponseEntity<List<TaskDTO>> getTasksByUserId(@RequestParam UUID userId) {
         return ResponseEntity.ok(taskService.getTasksByUserId(userId));
     }
+
     @GetMapping("projectId")
-    public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam UUID projectId){
+    public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam UUID projectId) {
         return ResponseEntity.ok(taskService.getTasksByProjectId(projectId));
-}}
+    }
+}

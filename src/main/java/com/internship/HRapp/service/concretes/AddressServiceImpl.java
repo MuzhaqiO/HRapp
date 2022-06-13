@@ -1,4 +1,4 @@
-package com.internship.HRapp.service.implementation;
+package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.addressDto.AddressDto;
 import com.internship.HRapp.entity.Address;
@@ -19,20 +19,20 @@ public class AddressServiceImpl implements AddressServiceInterface {
     private final AddressMapper addressMapper;
 
     @Override
-    public AddressDto getAddressById(UUID addressid){
+    public AddressDto getAddressById(UUID addressid) {
         return addressMapper.modeltoDto(addressRepo.getById(addressid));
     }
 
     @Override
-    public List<AddressDto> getAddresses(){
+    public List<AddressDto> getAddresses() {
         return addressMapper.toDto(addressRepo.findAll());
     }
+
     @Override
-    public String deleteAddressById(UUID addressID){
+    public String deleteAddressById(UUID addressID) {
         addressRepo.deleteById(addressID);
         return "address removed {}" + addressID;
     }
-
 
 
     @Override
@@ -42,8 +42,8 @@ public class AddressServiceImpl implements AddressServiceInterface {
     }
 
     @Override
-    public void  editAddress(@NotNull AddressDto addressDto) {
-        Address address =addressRepo.getAddressByAddressID(addressDto.getAddressID());
+    public void editAddress(@NotNull AddressDto addressDto) {
+        Address address = addressRepo.getAddressByAddressID(addressDto.getAddressID());
         address.setCity(addressDto.getCity());
         address.setState(addressDto.getState());
         address.setStreet(addressDto.getStreet());

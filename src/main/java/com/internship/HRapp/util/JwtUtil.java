@@ -8,11 +8,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 import java.util.function.Function;
+
 @Configuration
 @RequiredArgsConstructor
 public class JwtUtil {
@@ -46,10 +46,10 @@ public class JwtUtil {
         Set<UUID> Userroles = new HashSet<>();
         Map<String, Object> claims = new HashMap<>();
         User user = userRepo.findByUsername(userDetails.getUsername());
-        for(Role role:user.getRoles()){
+        for (Role role : user.getRoles()) {
             Userroles.add(role.getRoleId());
         }
-        claims.put("Roles",Userroles.toArray());
+        claims.put("Roles", Userroles.toArray());
         return createToken(claims, userDetails.getUsername());
     }
 

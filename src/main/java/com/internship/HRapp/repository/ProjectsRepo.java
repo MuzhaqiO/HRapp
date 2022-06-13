@@ -11,10 +11,8 @@ import java.util.UUID;
 
 @Repository
 public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
-  // List<Projects> findByUserId(UUID userId);
 
     Projects getProjectsByProjectId(UUID projectId);
-
 
     @Query(value = "select * from Projects p " +
             "left join Users_Projects up on p.id = up.project_id " +

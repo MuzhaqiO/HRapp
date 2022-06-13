@@ -8,7 +8,6 @@ import com.internship.HRapp.service.interfaces.ExperiencesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 

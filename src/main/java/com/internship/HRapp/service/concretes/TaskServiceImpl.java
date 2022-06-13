@@ -33,8 +33,8 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO assignTask(TaskAssignDTO assignDTO) {
         Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
         User user = userRepo.findUserByUserId(assignDTO.getUserId());
-            task.setTaskStatus(TaskStatus.ASSIGNED);
-            task.setUser(user);
+        task.setTaskStatus(TaskStatus.ASSIGNED);
+        task.setUser(user);
         return taskMapper.taskToDto(task);
     }
 

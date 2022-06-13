@@ -16,27 +16,32 @@ public class RoleController {
     private final RoleServiceInterface roleServiceInterface;
 
     @GetMapping("getAll")
-    public ResponseEntity<List<RoleDTO>> findAllRoles(){
+    public ResponseEntity<List<RoleDTO>> findAllRoles() {
         return ResponseEntity.ok(roleServiceInterface.getRoles());
     }
+
     @GetMapping("id/{roleId}")
-    public ResponseEntity<RoleDTO> findRoleById(@PathVariable UUID roleId){
+    public ResponseEntity<RoleDTO> findRoleById(@PathVariable UUID roleId) {
         return ResponseEntity.ok(roleServiceInterface.getRoleById(roleId));
     }
+
     @GetMapping("name/{roleName}")
-    public ResponseEntity<RoleDTO> findRoleByName(@PathVariable String roleName){
+    public ResponseEntity<RoleDTO> findRoleByName(@PathVariable String roleName) {
         return ResponseEntity.ok(roleServiceInterface.getRoleByRoleName(roleName));
     }
+
     @PostMapping("addRole")
-    public ResponseEntity<RoleDTO> createNewRole(@RequestBody RoleDTO roleDTO){
+    public ResponseEntity<RoleDTO> createNewRole(@RequestBody RoleDTO roleDTO) {
         return ResponseEntity.ok(roleServiceInterface.addNewRoles(roleDTO));
     }
+
     @DeleteMapping("delete/{roleId}")
-    public String deleteRolesById(@PathVariable UUID roleId){
+    public String deleteRolesById(@PathVariable UUID roleId) {
         return roleServiceInterface.deleteRolesById(roleId);
     }
+
     @PutMapping("updateRole/{roleId}")
-    public void updateRole(@RequestParam RoleDTO roleDTO){
+    public void updateRole(@RequestParam RoleDTO roleDTO) {
         roleServiceInterface.updateRole(roleDTO);
     }
 }

@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserServiceInterface {
                 user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
                 usersRepo.save(user);
             }
-        }else throw new IllegalStateException("Password should have 8 or more characters");
+        } else throw new IllegalStateException("Password should have 8 or more characters");
 
     }
 }

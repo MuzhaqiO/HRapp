@@ -22,7 +22,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
         var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
-        return  test;
+        return test;
     }
 
    /* @Override
@@ -54,8 +54,8 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public String deleteProject(UUID projectsId) {
-       projectsRepo.deleteById(projectsId);
-       return "Project {} was removed"+projectsId;
+        projectsRepo.deleteById(projectsId);
+        return "Project {} was removed" + projectsId;
     }
 
     @Override
@@ -68,6 +68,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         projectsRepo.save(projects);
 
     }
+
     @Override
     public List<ProjectsDTO> getProjects() {
         return projectsMapper.entitiesToDtos(projectsRepo.findAll());

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "api/v1/hr_management_system/projects")
 @RequiredArgsConstructor
@@ -45,10 +46,10 @@ public class ProjectsController{
     public void updateProject(@RequestBody ProjectsDTO projectsDTO){
         projectsServiceInterface.updateProject(projectsDTO);
     }
-    @PatchMapping("assignUser/{projectId}")
-    public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @RequestBody AssignUserDTO assignUserDTO){
-        return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, assignUserDTO));
-    }
+//    @PatchMapping("assignUser/{projectId}")
+//    public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @RequestParam UUID userId){
+//        return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, userId));
+//    }
     @PatchMapping("removeUser/{projectId}")
     public ResponseEntity<AssignUserDTO> removeUserFromProject(@PathVariable UUID projectId, @RequestParam UUID userId){
         return ResponseEntity.ok(projectsServiceInterface.removeUserFromProject(projectId, userId));

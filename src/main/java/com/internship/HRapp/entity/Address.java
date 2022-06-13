@@ -19,6 +19,7 @@ public class Address {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "addressID")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID addressID;
     private String state;
@@ -27,7 +28,7 @@ public class Address {
     private String postalCode;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "addresses")
     private List<User> users = new ArrayList<>();
     /*@OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")

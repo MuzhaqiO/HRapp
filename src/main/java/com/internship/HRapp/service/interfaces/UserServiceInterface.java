@@ -27,31 +27,15 @@ public interface UserServiceInterface {
 
     UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO);
 
-    UsersStatusDTO updateUsersStatus(UUID userId, UsersStatusDTO usersStatusDTO);
+    UserDTO updateUsersStatus(UUID userId, UsersStatusDTO usersStatusDTO);
     UsernameDTO updateUsername(UUID userId, UsernameDTO usernameDTO);
     PasswordDTO updatePassword(UUID userId, PasswordDTO passwordDTO);
-    AssignRoleDTO assignRoleToUser(UUID userId, AssignRoleDTO assignRoleDTO);
+    AssignRoleDTO assignRoleToUser(UUID userId, UUID roleId);
     UpdateRoleDTO removeRoleFromUser(UUID userId, UUID roleId);
-    AssignPersonalFileDTO assignPersonalFileToUser(UUID userId, AssignPersonalFileDTO assignPersonalFileDTO);
-    AssignPersonalFileDTO removePersonalFileFromUser(UUID userId, UUID personalFileId);
 //    UpdateRoleDTO updateRole2(UUID userId, UpdateRoleDTO updateRoleDTO);
-    ProjectAssignDTO assignProjectToUser(UUID userId, ProjectAssignDTO projectAssignDTO);
-
-    AssignExperiencesDTO assignExperienceToUser(UUID userId, AssignExperiencesDTO assignExperiencesDTO);
-
+    ProjectAssignDTO assignProjectToUser(UUID userId,UUID projectId);
     ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId);
-
-    AssignExperiencesDTO removeExperienceFromUser(UUID userId, UUID expId);
-
-    AssignEducationDTO assignEducationToUser(UUID userId, AssignEducationDTO assignEducationDTO);
-
-    AssignEducationDTO removeEducationFromUser(UUID userId, UUID educationId);
-
-    AssignCertificationDTO assignCertificationToUser(UUID userId, AssignCertificationDTO assignCertificationDTO);
-
-    AssignCertificationDTO removeCertificationFromUser(UUID userId, UUID certificationID);
-
-    Boolean updateRole(UpdateUsersRoleDto usersRoleDto);
+    UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto);
     List<UserDTO> getUserByRoleId(UUID roleId);
     List<UserDTO> getUserByProjectId(UUID projectId);
 

@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1/tasks")
+@RequestMapping(path = "api/v1/hr_management_system/tasks")
 public class TaskController {
     private final TaskService taskService;
 

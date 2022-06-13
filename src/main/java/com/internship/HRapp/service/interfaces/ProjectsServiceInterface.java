@@ -16,16 +16,13 @@ public interface ProjectsServiceInterface {
 
     ProjectsDTO getProjectByProjectName(String projectName);
 
-
-    // List<UserProjectsDTO> getProjects(UUID expId);
-
     ProjectsDTO addNewProjects(ProjectsDTO projectsDTO);
 
     String deleteProject(UUID expId);
 
     void updateProject(ProjectsDTO projectsDTO);
 
-    AssignUserDTO assignUserToProject(UUID projectId, AssignUserDTO assignUserDTO);
+//    AssignUserDTO assignUserToProject(UUID projectId, UUID userId);
 
     AssignUserDTO removeUserFromProject(UUID projectId, UUID userId);
 }

@@ -9,5 +9,5 @@ import java.util.UUID;
 public class TaskAssignDTO {
     private UUID taskId;
     private UUID userId;
-
+    private UUID projectId;
 }

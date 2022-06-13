@@ -14,8 +14,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String usersStatus;
-    private Address address;
+    private Boolean usersStatus;
     private List<RoleDTO> roles;
     private List<ProjectsDTO> projects;
 }

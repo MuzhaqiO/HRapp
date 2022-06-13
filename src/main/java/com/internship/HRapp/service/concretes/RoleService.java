@@ -61,11 +61,6 @@ public class RoleService implements RoleServiceInterface {
 
     @Override
     public List<RoleDTO> getRoleByUserId(UUID userId) {
-        boolean exists = userRepo.existsById(userId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "User with id " + userId + " does not exist");
-        }
         return roleMapper.toDTOs(rolesRepo.getRoleByUsersUserId(userId));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "api/v1/hr_management_system/roles")
 @RequiredArgsConstructor
@@ -20,11 +21,11 @@ public class RoleController {
     public ResponseEntity<List<RoleDTO>> findAllRoles(){
         return ResponseEntity.ok(roleServiceInterface.getRoles());
     }
-    @GetMapping("id/{roleId}")
+    @GetMapping("getRoleById/{roleId}")
     public ResponseEntity<RoleDTO> findRoleById(@PathVariable UUID roleId){
         return ResponseEntity.ok(roleServiceInterface.getRoleById(roleId));
     }
-    @GetMapping("name/{roleName}")
+    @GetMapping("getRoleByName/{roleName}")
     public ResponseEntity<RoleDTO> findRoleByName(@PathVariable String roleName){
         return ResponseEntity.ok(roleServiceInterface.getRoleByRoleName(roleName));
     }
@@ -32,7 +33,7 @@ public class RoleController {
     public ResponseEntity<RoleDTO> createNewRole(@RequestBody RoleDTO roleDTO){
         return ResponseEntity.ok(roleServiceInterface.addNewRoles(roleDTO));
     }
-    @DeleteMapping("delete/{roleId}")
+    @DeleteMapping("deleteRole/{roleId}")
     public String deleteRolesById(@PathVariable UUID roleId){
         return roleServiceInterface.deleteRolesById(roleId);
     }

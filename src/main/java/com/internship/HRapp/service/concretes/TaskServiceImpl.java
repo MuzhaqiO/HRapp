@@ -3,10 +3,12 @@ package com.internship.HRapp.service.concretes;
 import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDTO.TaskDTO;
 import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
+import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.entity.Task;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.TaskStatus;
 import com.internship.HRapp.mapper.TaskMapper;
+import com.internship.HRapp.repository.ProjectsRepo;
 import com.internship.HRapp.repository.TaskRepository;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.TaskService;
@@ -22,7 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepo;
     private final TaskMapper taskMapper;
     private final UserRepo userRepo;
-
+    private final ProjectsRepo projectsRepo;
     @Override
     public TaskDTO addTask(TaskNewDTO newDTO) {
         Task task = taskRepo.save(taskMapper.newTaskToEntity(newDTO));
@@ -33,8 +35,10 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO assignTask(TaskAssignDTO assignDTO) {
         Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
         User user = userRepo.findUserByUserId(assignDTO.getUserId());
+        Projects project = projectsRepo.getProjectsByProjectId(assignDTO.getProjectId());
         task.setTaskStatus(TaskStatus.ASSIGNED);
         task.setUser(user);
+        task.setProject(project);
         return taskMapper.taskToDto(task);
     }
 
@@ -43,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
         boolean exists = taskRepo.existsById(taskId);
         if (!exists) {
             throw new IllegalStateException(
-                    "task with id " + taskId + " does not exist");
+                    "Task with id " + taskId + " does not exist");
         }
         taskRepo.deleteById(taskId);
     }

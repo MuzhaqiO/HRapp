@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 import org.w3c.dom.Text;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -60,8 +62,8 @@ public class User {
     private List<DayOff> daysOff = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_addresses_id", referencedColumnName = "addressID")
-    private Address address;
+    @JoinColumn(name = "user_address_id", referencedColumnName = "addressID")
+    private Address addresses;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -73,8 +75,6 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    @Transient
-    private Text BIO;
     @Column(unique = true)
     private String email;
     private LocalDate dateOfBirth;

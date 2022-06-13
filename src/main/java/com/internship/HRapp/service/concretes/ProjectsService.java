@@ -3,11 +3,13 @@ package com.internship.HRapp.service.concretes;
 import com.internship.HRapp.dto.projectsDTO.ProjectsDTO;
 import com.internship.HRapp.dto.userDTO.AssignUserDTO;
 import com.internship.HRapp.entity.Projects;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.ProjectsRepo;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
+import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +44,6 @@ public class ProjectsService implements ProjectsServiceInterface {
 
     @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
-        boolean exists = userRepo.existsById(userId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "User with id " + userId + " does not exist");
-        }
         return projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUsersUserId(userId)));
     }
 
@@ -78,13 +75,14 @@ public class ProjectsService implements ProjectsServiceInterface {
         projectsRepo.save(projects);
 
     }
-    @Override
-    public AssignUserDTO assignUserToProject(UUID projectId, AssignUserDTO assignUserDTO) {
-        Projects project = projectsRepo.getById(projectId);
-        project.getUsers().addAll(userMapper.toEntitiesGet(assignUserDTO.getUsers()));
-        projectsRepo.save(project);
-        return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
-    }
+//    @Override
+//    public AssignUserDTO assignUserToProject(UUID projectId, UUID userId) {
+//        Projects project = projectsRepo.getById(projectId);
+//        User user = userMapper.DTOtoEntity(userService.getUserById(userId));
+//        project.getUsers().add(user);
+//        projectsRepo.save(project);
+//        return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
+//    }
     @Override
     public AssignUserDTO removeUserFromProject(UUID projectId, UUID userId){
         Projects project = projectsRepo.getById(projectId);

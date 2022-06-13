@@ -29,6 +29,4 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_task_id", referencedColumnName = "projectId")
     private Projects project;
-
-
 }

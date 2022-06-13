@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
@@ -14,7 +15,7 @@ public class ExceptionController {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException entitynotFoundException){
-        return new ResponseEntity<String>("Parameter not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("Id not found!", HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(NotFoundException notFoundException){
@@ -22,10 +23,10 @@ public class ExceptionController {
     }
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException noSuchElementException){
-        return new ResponseEntity<String>("Parameter not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("Id not found!", HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(EmptyResultDataAccessException.class)
     ResponseEntity<String> handleEmptyResultDataAccessException(EmptyResultDataAccessException emptyResultDataAccessException){
-        return new ResponseEntity<String>("Parameter not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("Id not found!", HttpStatus.NOT_FOUND);
     }
 }

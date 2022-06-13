@@ -1,12 +1,9 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.certificationDto.AssignCertificationDTO;
-import com.internship.HRapp.dto.educationDto.AssignEducationDTO;
-import com.internship.HRapp.dto.experiencesDTO.AssignExperiencesDTO;
-import com.internship.HRapp.dto.personalfileDto.AssignPersonalFileDTO;
 import com.internship.HRapp.dto.projectsDTO.ProjectAssignDTO;
 import com.internship.HRapp.dto.roleDTO.*;
 import com.internship.HRapp.dto.userDTO.*;
+import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.exceptions.NotFoundException;
@@ -14,6 +11,8 @@ import com.internship.HRapp.mapper.*;
 import com.internship.HRapp.repository.ProjectsRepo;
 import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.repository.UserRepo;
+import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
+import com.internship.HRapp.service.interfaces.RoleServiceInterface;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,15 +29,11 @@ public class UserService implements UserServiceInterface {
     private final UserRepo usersRepo;
     private final UserMapper usersMapper;
     private final ProjectsMapper projectsMapper;
+    private final ProjectsServiceInterface projectsService;
+    private final ProjectsRepo projectsRepo;
     private final RoleMapper roleMapper;
     private final RoleRepo roleRepo;
-    private final ProjectsRepo projectsRepo;
-    private final PersonalFileMapper personalFileMapper;
-    private final ExperiencesMapper experiencesMapper;
-    private final EducationMapper educationMapper;
-    private final CertificationMapper certificationMapper;
-
-
+    private final RoleServiceInterface roleService;
     @Override
     public UserDTO getUserById(UUID userId) {
         return usersMapper.entityToDTO(usersRepo.getById(userId));
@@ -72,10 +67,10 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public UsersStatusDTO updateUsersStatus(UUID userId, UsersStatusDTO usersStatusDTO) {
+    public UserDTO updateUsersStatus(UUID userId, UsersStatusDTO usersStatusDTO) {
         User user = usersRepo.getById(userId);
         user.setUsersStatus(usersStatusDTO.getUsersStatus());
-        return usersMapper.toDTOStatus(usersRepo.save(user));
+        return usersMapper.entityToDTO(usersRepo.save(user));
     }
 
     @Override
@@ -93,11 +88,12 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public AssignRoleDTO assignRoleToUser(UUID userId, AssignRoleDTO assignRoleDTO) {
+    public AssignRoleDTO assignRoleToUser(UUID userId, UUID roleId) {
         User user = usersRepo.getById(userId);
-        user.getRoles().addAll(roleMapper.toEntities(assignRoleDTO.getRoles()));
+        Role role = roleMapper.toEntity(roleService.getRoleById(roleId));
+        user.getRoles().add(role);
         usersRepo.save(user);
-        return usersMapper.toDTOAssign(usersRepo.findUserByUserId(userId));
+        return usersMapper.toDTOAssign(usersRepo.getById(userId));
     }
 
     @Override
@@ -108,25 +104,12 @@ public class UserService implements UserServiceInterface {
         return usersMapper.toDTORole(usersRepo.getById(userId));
     }
     @Override
-    public AssignPersonalFileDTO assignPersonalFileToUser(UUID userId, AssignPersonalFileDTO assignPersonalFileDTO) {
+    public ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId) {
         User user = usersRepo.getById(userId);
-        user.getPersonalFiles().addAll(personalFileMapper.toModel(assignPersonalFileDTO.getPersonalFiles()));
+        Projects project = projectsMapper.dtoToEntity(projectsService.getProjectById(projectId));
+        user.getProjects().add(project);
         usersRepo.save(user);
-        return usersMapper.toDTOPersonalFile(usersRepo.findUserByUserId(userId));
-    }
-    @Override
-    public AssignPersonalFileDTO removePersonalFileFromUser(UUID userId, UUID personalFileId){
-        User user = usersRepo.getById(userId);
-        user.getPersonalFiles().removeIf(personalFile -> personalFile.getPersonalFileId().equals(personalFileId));
-        usersRepo.save(user);
-        return usersMapper.toDTOPersonalFile(usersRepo.getById(userId));
-    }
-    @Override
-    public ProjectAssignDTO assignProjectToUser(UUID userId, ProjectAssignDTO projectAssignDTO) {
-        User user = usersRepo.getById(userId);
-        user.getProjects().addAll(projectsMapper.toEntities(projectAssignDTO.getProjects()));
-        usersRepo.save(user);
-        return usersMapper.toDTOProject(usersRepo.findUserByUserId(userId));
+        return usersMapper.toDTOProject(usersRepo.getById(userId));
     }
     @Override
     public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId){
@@ -136,49 +119,29 @@ public class UserService implements UserServiceInterface {
         return usersMapper.toDTOProject(usersRepo.getById(userId));
     }
     @Override
-    public AssignExperiencesDTO assignExperienceToUser(UUID userId, AssignExperiencesDTO assignExperiencesDTO) {
-        User user = usersRepo.getById(userId);
-        user.getExperiences().addAll(experiencesMapper.DTOToEntities(assignExperiencesDTO.getExperiences()));
-        usersRepo.save(user);
-        return usersMapper.toDTOExperience(usersRepo.findUserByUserId(userId));
-    }
-    @Override
-    public AssignExperiencesDTO removeExperienceFromUser(UUID userId, UUID expId){
-        User user = usersRepo.getById(userId);
-        user.getExperiences().removeIf(experience -> experience.getExpId().equals(expId));
-        usersRepo.save(user);
-        return usersMapper.toDTOExperience(usersRepo.getById(userId));
-    }
-    @Override
-    public AssignEducationDTO assignEducationToUser(UUID userId, AssignEducationDTO assignEducationDTO) {
-        User user = usersRepo.getById(userId);
-        user.getEducations().addAll(educationMapper.toModel(assignEducationDTO.getEducations()));
-        usersRepo.save(user);
-        return usersMapper.toDTOEducation(usersRepo.findUserByUserId(userId));
-    }
-    @Override
-    public AssignEducationDTO removeEducationFromUser(UUID userId, UUID educationId){
-        User user = usersRepo.getById(userId);
-        user.getEducations().removeIf(education -> education.getEducationId().equals(educationId));
-        usersRepo.save(user);
-        return usersMapper.toDTOEducation(usersRepo.getById(userId));
-    }
-    @Override
-    public AssignCertificationDTO assignCertificationToUser(UUID userId, AssignCertificationDTO assignCertificationDTO) {
-        User user = usersRepo.getById(userId);
-        user.getCertifications().addAll(certificationMapper.toModel(assignCertificationDTO.getCertifications()));
-        usersRepo.save(user);
-        return usersMapper.toDTOCertification(usersRepo.findUserByUserId(userId));
-    }
-    @Override
-    public AssignCertificationDTO removeCertificationFromUser(UUID userId, UUID certificationID){
-        User user = usersRepo.getById(userId);
-        user.getCertifications().removeIf(certification -> certification.getCertificationID().equals(certificationID));
-        usersRepo.save(user);
-        return usersMapper.toDTOCertification(usersRepo.getById(userId));
+    public UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto) {
+            User user = usersRepo.getById(userId);
+            Role existingRole = user.getRoles()
+                    .stream()
+                    .filter(role -> role.getRoleId().equals(usersRoleDto.getOldRoleId()))
+                    .findAny().get();
+            user.getRoles().remove(existingRole);
+            Role newRole = roleMapper.toEntity(roleService.getRoleById(usersRoleDto.getNewRoleId()));
+            user.getRoles().add(newRole);
+            usersRepo.saveAndFlush(user);
+            return usersMapper.toDTORole(usersRepo.getById(userId));
     }
 
-//    @Override
+    @Override
+    public List<UserDTO> getUserByRoleId(UUID roleId) {
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(roleId));
+    }
+
+    @Override
+    public List<UserDTO> getUserByProjectId(UUID projectId) {
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByProjectsProjectId(projectId));
+    }
+    //    @Override
 //    public UpdateRoleDTO updateRole2(UUID userId, UpdateRoleDTO updateRoleDTO){
 //        User user = usersRepo.getById(userId);
 //        user.setRoles(roleMapper.toEntities(updateRoleDTO.getRoles()));
@@ -186,43 +149,4 @@ public class UserService implements UserServiceInterface {
 //        return usersMapper.toDTORole(usersRepo.getById(userId));
 //    }
 //    i fshin te gjitha rolet dhe vensos te reja
-
-    @Override
-    public Boolean updateRole(UpdateUsersRoleDto usersRoleDto) {
-        try
-        {
-        User user = usersRepo.getById(usersRoleDto.getUserId());
-        Role existingRole = user.getRoles()
-                .stream()
-                .filter(role -> role.getRoleId().equals(usersRoleDto.getOldRoleId()))
-                .findAny().get();
-        user.getRoles().remove(existingRole);
-        Role newRole = roleRepo.getById(usersRoleDto.getNewRoleId());
-        user.getRoles().add(newRole);
-        usersRepo.saveAndFlush(user);
-        return user.getRoles().stream().anyMatch(role -> role.getRoleId().equals(usersRoleDto.getNewRoleId()));
-        } catch (Exception ex) {
-            return false;
-        }
-    }
-
-    @Override
-    public List<UserDTO> getUserByRoleId(UUID roleId) {
-        boolean exists = roleRepo.existsById(roleId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "Role with id " + roleId + " does not exist");
-        }
-        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(roleId));
-    }
-
-    @Override
-    public List<UserDTO> getUserByProjectId(UUID projectId) {
-        boolean exists = projectsRepo.existsById(projectId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "Project with id " + projectId + " does not exist");
-        }
-        return usersMapper.entitiesToDTOs(usersRepo.getUserByProjectsProjectId(projectId));
-    }
 }

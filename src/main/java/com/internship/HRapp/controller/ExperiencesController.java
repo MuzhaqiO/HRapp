@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
 public class ExperiencesController {
@@ -16,20 +18,40 @@ public class ExperiencesController {
     private final ExperiencesService experiencesService;
 
 
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/addExperiences")
-    public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO) {
-        return ResponseEntity.ok(experiencesService.addNewExperiences(userExperienceDTO));
+    public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO){
+        return  ResponseEntity.ok(experiencesService.addNewExperiences(userExperienceDTO));
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/experiences")
-    public ResponseEntity<List<UserExperienceDTO>> getExperiences() {
+    public ResponseEntity<List<UserExperienceDTO>>getExperiences(){
         return ResponseEntity.ok(experiencesService.getExperiences());
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/experiences/getExperiencesByUserId/{userId}")
+    public ResponseEntity<List<UserExperienceDTO>> getExperiencesByUserId(@PathVariable UUID userId){
+        return ResponseEntity.ok(experiencesService.getExperiencesByUserId(userId));
+    }
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/experiences/getExperiencesByExpId/{expId}")
+    public ResponseEntity<UserExperienceDTO> getExperiencesByExpId(@PathVariable UUID expId){
+        return ResponseEntity.ok(experiencesService.getExperiencesByExpId(expId));
+    }
+
+    @CrossOrigin(origins="http://localhost:4200")
     @PutMapping("/experiences/updateExperience/{expId}")
-    public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO) {
+    public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO){
         experiencesService.updateExperiences(userExperienceDTO);
     }
+    @DeleteMapping("experiences/deleteExperience/{expId}")
+    public String deleteExperience(@PathVariable UUID expId){
+        return experiencesService.deleteExperienceByExpId(expId);
+
+    }
+
 
    /* @GetMapping("/experiences/id/{expId}")
     public ResponseEntity<List<UserExperienceDTO>> findExperienceById(@PathVariable UUID expId){

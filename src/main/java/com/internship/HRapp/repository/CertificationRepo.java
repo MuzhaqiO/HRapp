@@ -15,8 +15,8 @@ public interface CertificationRepo extends JpaRepository<Certification, UUID> {
 
     //@Query(value = "select certificationID from Certification ")
     Certification findCertificationByCertificationID(UUID certificationID);
-    List<Certification> getCertificationByUserUserId(UUID userId);
-//    @Query(value = "select certificationID from Certifications c" +
+    //    @Query(value = "select certificationID from Certifications c" +
 //        "left join Users_Certifications up on c.id= up.certificationID"+
 //        "where up.user_id=:userId", nativeQuery = true)
+    List<Certification> getCertificationByUsersUserId(UUID userId);
 }

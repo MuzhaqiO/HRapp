@@ -46,8 +46,8 @@ public class User {
     @OneToMany(mappedBy = "users")
     private List<DayOff> daysOff = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
+    @OneToOne
+//    @JoinColumn(name = "user_address_id", referencedColumnName = "ID")
     private Address address;
 
 

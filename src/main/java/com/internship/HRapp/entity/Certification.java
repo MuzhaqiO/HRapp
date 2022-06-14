@@ -21,7 +21,6 @@ public class Certification {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "ID")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
 
     private UUID certificationID;
@@ -32,8 +31,8 @@ public class Certification {
     private String link_of_certification;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "user_certification_id", referencedColumnName = "userId")
+    private User users;
 
 //    @ManyToOne(optional = false)
 //    @JoinColumn(name = "userid", nullable = false,

@@ -12,7 +12,6 @@ import java.util.UUID;
 
 
 @Entity
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +24,7 @@ public class Experiences {
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID expId;
     private String company;
-    private String positions;
+    private String position;
     private LocalDate startTime;
     private LocalDate endTime;
     private String description;

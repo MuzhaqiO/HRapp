@@ -2,6 +2,7 @@ package com.internship.HRapp.repository;
 
 import com.internship.HRapp.entity.Experiences;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface ExperiencesRepo extends JpaRepository<Experiences, UUID> {
 
     List<Experiences> findByUsersUserId(UUID userId);
     Experiences getExperiencesByExpId(UUID expId);
+    //Experiences getByUsersUserId(@Param("userId") UUID userId);
+    List<Experiences> getByUsersUserId(@Param("userId") UUID userId);
 }

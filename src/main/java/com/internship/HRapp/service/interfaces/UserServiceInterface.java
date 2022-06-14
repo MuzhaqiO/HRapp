@@ -1,8 +1,7 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
-import com.internship.HRapp.dto.userDTO.UserDTO;
-import com.internship.HRapp.dto.userDTO.UsersStatusDTO;
+import com.internship.HRapp.dto.projectDTO.ProjectAssignDTO;
+import com.internship.HRapp.dto.userDTO.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +9,8 @@ import java.util.UUID;
 public interface UserServiceInterface {
 
 
-    UserDTO getUserById(UUID userId);
+    UserCreateDTO getUserById(UUID userId);
+    UserCreateDTO getUserProfile(UUID userId);
 
     UserDTO getUserByUsername(String username);
 
@@ -20,6 +20,14 @@ public interface UserServiceInterface {
 
     //UserDTO updateUser(UUID userId, UserDTO userDTO);
     void updateUser (UserCreateDTO userCreateDTO);
+    void updateUserDTO (UserDTO userDTO);
 
     void updateUsersStatus (UsersStatusDTO usersStatusDTO);
+    void updateUserByUsername(UserDTO userDTO);
+
+    ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId);
+
+    AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception;
+
+    void changePassword(PasswordDTO passwordUpdate);
 }

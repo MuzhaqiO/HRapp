@@ -18,6 +18,10 @@ public interface ExperiencesService {
 //    UserExperienceDTO getExperienceByName(String experienceName);
 
    // String deleteExperiences(UUID expId);
+   //UserExperienceDTO getExperiencesByUserId(UUID userId);
+   List<UserExperienceDTO> getExperiencesByUserId(UUID userId);
+   UserExperienceDTO getExperiencesByExpId(UUID expId);
 
     void updateExperiences(UserExperienceDTO experienceDTO);
+    String deleteExperienceByExpId(UUID expId);
 }

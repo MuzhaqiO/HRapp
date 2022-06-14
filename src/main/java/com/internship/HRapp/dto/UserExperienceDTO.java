@@ -13,7 +13,7 @@ public class UserExperienceDTO {
     private UUID userId;
     private UUID expId;
     private String company;
-    private String positions;
+    private String position;
     private LocalDate startTime;
     private LocalDate endTime;
     private String description;

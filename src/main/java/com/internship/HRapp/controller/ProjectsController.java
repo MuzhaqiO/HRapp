@@ -1,6 +1,7 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.AssignUserDTO;
+import com.internship.HRapp.dto.projectDTO.ProjectsDTO;
 import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
 public class ProjectsController {
@@ -26,7 +28,7 @@ public class ProjectsController {
     public ResponseEntity<ProjectsDTO> getProjectById(@PathVariable UUID projectsId){
         return ResponseEntity.ok(projectsServiceInterface.getProjectById(projectsId));
     }
-    @GetMapping("name/{projectsName}")
+    @GetMapping("/projects/name/{projectsName}")
     public ResponseEntity<ProjectsDTO> findProjectByName(@PathVariable String projectsName){
         return ResponseEntity.ok(projectsServiceInterface.getProjectByProjectName(projectsName));
     }
@@ -35,7 +37,11 @@ public class ProjectsController {
         return ResponseEntity.ok(projectsServiceInterface.getProjects());
     }
     @PutMapping("/projects/updateProject/{projectId}")
-    public void updateProject(@RequestParam ProjectsDTO projectsDTO){
+    public void updateProject(@RequestBody ProjectsDTO projectsDTO){
         projectsServiceInterface.updateProject(projectsDTO);
+    }
+    @PatchMapping("assignUser/{projectId}/userId/{userId}")
+    public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @PathVariable UUID userId){
+        return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, userId));
     }
 }

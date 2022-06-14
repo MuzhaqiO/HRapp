@@ -21,20 +21,6 @@ public class User {
     @Column(name = "user_id")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<Role> roles = new HashSet<>();
-    @ManyToMany
-    @JoinTable(
-            name = "user_projects",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "projectId"))
-    private List<Projects> projects = new ArrayList<>();
-
     @Column(unique = true)
     private String username;
     private String password;
@@ -49,4 +35,25 @@ public class User {
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private Set<Role> roles = new HashSet<>();
+
+
+    @ManyToMany(mappedBy = "users")
+    private List<Projects> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy="users")
+    private List<Experiences> experiences;
+
+    @OneToMany(mappedBy = "users")
+    private List<Certification> certifications = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_addresses_id", referencedColumnName = "addressID")
+    private Address addresses;
 }

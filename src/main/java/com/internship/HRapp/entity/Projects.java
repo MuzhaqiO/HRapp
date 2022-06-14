@@ -26,6 +26,18 @@ public class Projects {
     private LocalDate endTime;
     private String description;
 
-    @ManyToMany(mappedBy = "projects")
+
+
+    @ManyToMany
+    @JoinTable(name = "user_projects", joinColumns = {@JoinColumn(name = "project_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", nullable = false)})
     private List<User> users = new ArrayList<>();
+
+
+    public void addUserToProject(User user){
+        users.add(user);
+    }
+
 }
+
+

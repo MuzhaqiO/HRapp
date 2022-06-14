@@ -9,7 +9,12 @@ import com.internship.HRapp.repository.UserRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
@@ -19,34 +24,19 @@ public class HRmanagementApplication{ //implements CommandLineRunner {
 		SpringApplication.run(HRmanagementApplication.class, args);
 	}
 
-	/*private ExperiencesRepo experiencesRepo;
-
-	private UsersRepo usersRepo;
-	@Override
-	public void run(String... args) throws Exception {
-		Experiences experiences = new Experiences();
-		experiences.setCompany("Facebook");
-		experiences.setPositions("Manager");
-		experiences.setStartTime(2022,01,01);
-		experiences.setEndTime(2022,02,02);
-		experiences.setTrustLevel(TrustLevel.LOW_TRUST);
-		experiencesRepo.save(experiences);
-
-		Users users1 = new Users();
-		users1.setFirstName("Arian");
-		users1.setLastName("Dushi");
-		users1.setEmail("ariandushi000@gmail.com");
-		users1.setPassword("sekret");
-		users1.setExperiences((List<Experiences>) experiences);
-		usersRepo.save(users1);
-
-		Users users2 = new Users();
-		users1.setFirstName("Nazi");
-		users1.setLastName("Ibro");
-		users1.setEmail("naziibro@gmail.com");
-		users1.setPassword("sekret2");
-		users1.setExperiences((List<Experiences>) experiences);
-		usersRepo.save(users2);
-
-	}*/
+//	@Bean
+//	public CorsFilter corsFilter() {
+//		CorsConfiguration corsConfiguration = new CorsConfiguration();
+//		corsConfiguration.setAllowCredentials(true);
+//		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+//		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
+//				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
+//				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
+//		corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
+//				"Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+//		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+//		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+//		return new CorsFilter(urlBasedCorsConfigurationSource);
+//	}
 }

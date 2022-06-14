@@ -1,8 +1,8 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
-import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.CreateDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.StatusDTO;
+import com.internship.HRapp.dto.dayOffDto.UserDayOffDTO;
 import com.internship.HRapp.entity.DayOff;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.DayOffPermission;
@@ -13,10 +13,14 @@ import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +45,7 @@ public class DayOffServiceImpl implements DayOffService {
         if (thisDayOff.getPermissionType().equals(DayOffPermission.DEFAULT)
                 && thisDayOff.getRequestStatus().equals(DayOffStatus.APPROVED)) {
             for (var user2 : users) {
-                user2.setLeaveDaysLeft(user2.getLeaveDaysLeft() - thisDayOff.getDayOffAmount());
+                user2.setLeaveDaysLeft((user2.getLeaveDaysLeft() - thisDayOff.getDayOffAmount()));
                 userRepo.save(user2);
             }
         } else {
@@ -50,7 +54,6 @@ public class DayOffServiceImpl implements DayOffService {
         dayOffRepo.save(thisDayOff);
     }
 
-    @Override
 //    @Scheduled(initialDelay = 60 * 60, fixedDelay = 60 * 60)
 //    public void updateLeaveDaysLeft() {
 //        var users = userRepo.findAll();
@@ -59,8 +62,6 @@ public class DayOffServiceImpl implements DayOffService {
 //            if (daysBetween % 30 == 0) {
 //                user.setLeaveDaysLeft(user.getLeaveDaysLeft() + 1.7);
 //                userRepo.save(user);
-//            } else if (daysBetween % 30 != 0) {
-//                System.out.println("No vacay");
 //            }
 //        }
 //    }
@@ -77,6 +78,11 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public List<UserDayOffDTO> getUserDayOff(UUID userId) {
         return dayOffMapper.toDtos(dayOffRepo.getByUsersUserId(userId));
+    }
+
+    @Override
+    public List<UserDayOffDTO> getAllDaysOff() {
+        return dayOffMapper.toDtos(dayOffRepo.findAll());
     }
 
     public UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO) {

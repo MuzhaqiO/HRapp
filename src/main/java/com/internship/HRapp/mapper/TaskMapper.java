@@ -1,8 +1,8 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
-import com.internship.HRapp.dto.taskDTO.TaskDTO;
-import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
+import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
+import com.internship.HRapp.dto.taskDto.TaskDTO;
+import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 import com.internship.HRapp.entity.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

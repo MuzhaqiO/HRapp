@@ -1,6 +1,6 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.UserExperienceDTO;
+import com.internship.HRapp.dto.experienceDto.UserExperienceDTO;
 import com.internship.HRapp.entity.Experiences;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

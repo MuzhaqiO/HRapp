@@ -1,6 +1,5 @@
 package com.internship.HRapp.repository;
 
-import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +14,8 @@ public interface UserRepo extends JpaRepository<User, UUID> {
     User getByUsername(String username);
     User findUserByUserId(UUID userId);
     List<User> findAllByDaysOffDayOffId(UUID dayOffId);
-    User findByDaysOffDayOffId(UUID dayOffId);
 
+    boolean existsByUsername(String username);
+    List<User> getUserByRolesRoleId(UUID roleId);
+    List<User> getUserByProjectsProjectId(UUID projectId);
 }

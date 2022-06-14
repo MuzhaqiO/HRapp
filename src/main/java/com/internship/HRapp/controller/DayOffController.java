@@ -1,8 +1,8 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
-import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.CreateDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.StatusDTO;
+import com.internship.HRapp.dto.dayOffDto.UserDayOffDTO;
 import com.internship.HRapp.service.interfaces.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +26,11 @@ public class DayOffController {
     @GetMapping("{id}")
     public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID id) {
         return ResponseEntity.ok(dayOffService.getUserDayOff(id));
+    }
+
+    @GetMapping("/getAllDaysOff")
+    public ResponseEntity<List<UserDayOffDTO>> getAllDaysOff(){
+        return ResponseEntity.ok(dayOffService.getAllDaysOff());
     }
 
     @PatchMapping(path = "/approveDayOff")

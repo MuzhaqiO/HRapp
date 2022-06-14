@@ -1,8 +1,8 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
-import com.internship.HRapp.dto.taskDTO.TaskDTO;
-import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
+import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
+import com.internship.HRapp.dto.taskDto.TaskDTO;
+import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 import com.internship.HRapp.entity.Task;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.TaskStatus;

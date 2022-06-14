@@ -1,6 +1,6 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDto.ProjectsDTO;
 import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

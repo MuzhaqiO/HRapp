@@ -1,6 +1,6 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.UserExperienceDTO;
+import com.internship.HRapp.dto.experienceDto.UserExperienceDTO;
 import com.internship.HRapp.entity.Experiences;
 import com.internship.HRapp.mapper.ExperiencesMapper;
 import com.internship.HRapp.repository.ExperiencesRepo;

@@ -1,6 +1,6 @@
 package com.internship.HRapp.controller;
 
-import com.internship.HRapp.dto.UserExperienceDTO;
+import com.internship.HRapp.dto.experienceDto.UserExperienceDTO;
 import com.internship.HRapp.service.interfaces.ExperiencesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

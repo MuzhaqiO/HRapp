@@ -1,22 +1,28 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.roleDTO.RoleDTO;
+import com.internship.HRapp.dto.roleDto.RoleDTO;
 import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.mapper.RoleMapper;
 import com.internship.HRapp.repository.RoleRepo;
+import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.RoleServiceInterface;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleServiceInterface {
 
     private final RoleRepo rolesRepo;
     private final RoleMapper roleMapper;
+    private final UserRepo userRepo;
 
     @Override
     public RoleDTO getRoleById(UUID roleId) {
@@ -35,20 +41,26 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
     @Override
     public RoleDTO addNewRoles(RoleDTO roleDTO) {
-        Role createdRole = rolesRepo.save(roleMapper.toEntity(roleDTO));
+        Role createdRole = roleMapper.toEntity(roleDTO);
+        rolesRepo.save(createdRole);
         return roleMapper.toDTO(createdRole);
     }
 
     @Override
     public String deleteRolesById(UUID roleId) {
         rolesRepo.deleteById(roleId);
-        return "role removed {}" + roleId;
+        return "role removed {} " + roleId;
     }
 
     @Override
-    public void updateRole(RoleDTO roleDTO) {
-        Role role = rolesRepo.findRoleByRoleId(roleDTO.getRoleId());
-        role.setRoleName(roleDTO.getRoleName());
+    public RoleDTO updateRole(RoleDTO roleDTO) {
+        Role role = roleMapper.toEntity(roleDTO);
         rolesRepo.save(role);
+        return roleMapper.toDTO(role);
+    }
+
+    @Override
+    public List<RoleDTO> getRoleByUserId(UUID userId) {
+        return roleMapper.toDTOs(rolesRepo.getRoleByUsersUserId(userId));
     }
 }

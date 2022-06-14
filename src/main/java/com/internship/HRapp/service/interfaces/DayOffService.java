@@ -1,8 +1,8 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.dayOffDTO.CreateDayOffDTO;
-import com.internship.HRapp.dto.dayOffDTO.StatusDTO;
-import com.internship.HRapp.dto.dayOffDTO.UserDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.CreateDayOffDTO;
+import com.internship.HRapp.dto.dayOffDto.StatusDTO;
+import com.internship.HRapp.dto.dayOffDto.UserDayOffDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +16,12 @@ public interface DayOffService {
     void deleteDayOff(UUID dayOffId);
 
     void updateDayOffRequest(StatusDTO status);
+
     List<UserDayOffDTO> getUserDayOff(UUID userId);
+
+    List<UserDayOffDTO> getAllDaysOff();
+
+
 
     //void updateLeaveDaysLeft();
 

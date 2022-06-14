@@ -1,18 +1,21 @@
 package com.internship.HRapp.util;
 
-import com.internship.HRapp.dto.userDTO.UserCreateDTO;
+import com.internship.HRapp.dto.userDto.UserCreateDTO;
+import com.internship.HRapp.service.interfaces.UserServiceInterface;
+import com.internship.HRapp.service.interfaces.UtilityInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import javax.mail.SendFailedException;
 import java.security.SecureRandom;
 @Service
 @RequiredArgsConstructor
-public class MailAndPassword {
+public class MailAndPassword implements UtilityInterface {
     private final JavaMailSender mailSender;
 
+    @Override
     public String generateRandomPassword(int len) {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();
@@ -24,7 +27,8 @@ public class MailAndPassword {
         return sb.toString();
     }
 
-    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) {
+    @Override
+    public void sendRegistrationEmail(UserCreateDTO userCreateDTO) throws SendFailedException {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(userCreateDTO.getEmail());
         email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");

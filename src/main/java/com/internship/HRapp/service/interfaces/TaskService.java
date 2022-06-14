@@ -1,8 +1,8 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.taskDTO.TaskAssignDTO;
-import com.internship.HRapp.dto.taskDTO.TaskDTO;
-import com.internship.HRapp.dto.taskDTO.TaskNewDTO;
+import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
+import com.internship.HRapp.dto.taskDto.TaskDTO;
+import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 
 import java.util.List;
 import java.util.UUID;

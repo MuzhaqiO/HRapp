@@ -1,9 +1,8 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDto.ProjectsDTO;
 import com.internship.HRapp.entity.Projects;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

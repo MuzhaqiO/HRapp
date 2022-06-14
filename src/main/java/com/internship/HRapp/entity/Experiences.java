@@ -1,6 +1,6 @@
 package com.internship.HRapp.entity;
 
-import com.internship.HRapp.enumeration.TrustLevel;
+import com.internship.HRapp.enums.TrustLevel;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;

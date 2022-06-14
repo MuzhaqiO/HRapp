@@ -1,6 +1,6 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.projectsDto.ProjectsDTO;
 import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.repository.ProjectsRepo;

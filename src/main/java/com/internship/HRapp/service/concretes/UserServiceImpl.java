@@ -1,16 +1,24 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.roleDTO.AssignRoleDTO;
-import com.internship.HRapp.dto.userDTO.*;
+import com.internship.HRapp.dto.projectsDto.ProjectAssignDTO;
+import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
+import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;
+import com.internship.HRapp.dto.roleDto.UpdateUsersRoleDto;
+import com.internship.HRapp.dto.userDto.*;
+import com.internship.HRapp.entity.Projects;
 import com.internship.HRapp.entity.Role;
 import com.internship.HRapp.entity.User;
+import com.internship.HRapp.mapper.ProjectsMapper;
+import com.internship.HRapp.mapper.RoleMapper;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.RoleRepo;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.security.MyUserDetails;
+import com.internship.HRapp.service.interfaces.ProjectsServiceInterface;
+import com.internship.HRapp.service.interfaces.RoleServiceInterface;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
+import com.internship.HRapp.service.interfaces.UtilityInterface;
 import com.internship.HRapp.util.JwtUtil;
-import com.internship.HRapp.util.MailAndPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.SendFailedException;
 import java.io.NotActiveException;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +42,11 @@ public class UserServiceImpl implements UserServiceInterface {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtTokenUtil;
     private final MyUserDetails myUserDetails;
-    private final MailAndPassword mailAndPassword;
+    private final UtilityInterface utility;
+    private final RoleServiceInterface roleService;
+    private final RoleMapper roleMapper;
+    private final ProjectsMapper projectsMapper;
+    private final ProjectsServiceInterface projectsService;
 
     @Override
     public UserDTO getUserById(UUID userId) {
@@ -58,10 +71,14 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) {
-        userCreateDTO.setPassword(mailAndPassword.generateRandomPassword(10));
+    public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) throws Exception {
+        userCreateDTO.setPassword(utility.generateRandomPassword(10));
         System.out.println(userCreateDTO.getPassword());
-        mailAndPassword.sendRegistrationEmail(userCreateDTO);
+        try {
+            utility.sendRegistrationEmail(userCreateDTO);
+        } catch (SendFailedException e) {
+            throw new Exception("Incorrect email", e);
+        }
         userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         User createdUser = usersRepo.save(usersMapper.toEntity(userCreateDTO));
 
@@ -69,23 +86,80 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public void updateUser(UserCreateDTO userCreateDTO) {
-        User user = usersRepo.findUserByUserId(userCreateDTO.getUserId());
-        user.setUsername(userCreateDTO.getUsername());
-        user.setPassword(userCreateDTO.getPassword());
-        user.setFirstName(userCreateDTO.getFirstName());
-        user.setLastName(userCreateDTO.getLastName());
-        user.setEmail(userCreateDTO.getEmail());
-        user.setMobile(userCreateDTO.getMobile());
-        user.setSecondContact(userCreateDTO.getSecondContact());
+    public UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO) {
+        User user = usersMapper.toEntityUpdate(userUpdateDTO);
         usersRepo.save(user);
+        return usersMapper.toDTOUpdate(user);
     }
 
     @Override
-    public void updateUsersStatus(UsersStatusDTO usersStatusDTO) {
-        User user = usersRepo.findUserByUserId(usersStatusDTO.getUserId());
+    public UserDTO updateUsersStatus(UUID userId, UsersStatusDTO usersStatusDTO) {
+        User user = usersRepo.getById(userId);
         user.setUsersStatus(usersStatusDTO.getUsersStatus());
+        return usersMapper.entityToDTO(usersRepo.save(user));
+    }
+
+    @Override
+    public UsernameDTO updateUsername(UUID userId, UsernameDTO usernameDTO) {
+        User user = usersRepo.getById(userId);
+        user.setUsername(usernameDTO.getUsername());
+        return usersMapper.toDTOUsername(usersRepo.save(user));
+    }
+
+
+    @Override
+    public AssignRoleDTO assignRoleToUser(UUID userId, UUID roleId) {
+        User user = usersRepo.getById(userId);
+        Role role = roleMapper.toEntity(roleService.getRoleById(roleId));
+        user.getRoles().add(role);
         usersRepo.save(user);
+        return usersMapper.toDTOAssign(usersRepo.getById(userId));
+    }
+
+    @Override
+    public UpdateRoleDTO removeRoleFromUser(UUID userId, UUID roleId) {
+        User user = usersRepo.getById(userId);
+        user.getRoles().removeIf(role1 -> role1.getRoleId().equals(roleId));
+        usersRepo.save(user);
+        return usersMapper.toDTORole(usersRepo.getById(userId));
+    }
+    @Override
+    public ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId) {
+        User user = usersRepo.getById(userId);
+        Projects project = projectsMapper.dtoToEntity(projectsService.getProjectById(projectId));
+        user.getProjects().add(project);
+        usersRepo.save(user);
+        return usersMapper.toDTOProject(usersRepo.getById(userId));
+    }
+    @Override
+    public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId){
+        User user = usersRepo.getById(userId);
+        user.getProjects().removeIf(project -> project.getProjectId().equals(projectId));
+        usersRepo.save(user);
+        return usersMapper.toDTOProject(usersRepo.getById(userId));
+    }
+    @Override
+    public UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto) {
+        User user = usersRepo.getById(userId);
+        Role existingRole = user.getRoles()
+                .stream()
+                .filter(role -> role.getRoleId().equals(usersRoleDto.getOldRoleId()))
+                .findAny().get();
+        user.getRoles().remove(existingRole);
+        Role newRole = roleMapper.toEntity(roleService.getRoleById(usersRoleDto.getNewRoleId()));
+        user.getRoles().add(newRole);
+        usersRepo.saveAndFlush(user);
+        return usersMapper.toDTORole(usersRepo.getById(userId));
+    }
+
+    @Override
+    public List<UserDTO> getUserByRoleId(UUID roleId) {
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(roleId));
+    }
+
+    @Override
+    public List<UserDTO> getUserByProjectId(UUID projectId) {
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(projectId));
     }
 
     @Override

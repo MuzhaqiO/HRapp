@@ -97,9 +97,9 @@ public class UsersController {
         userServiceInterface.updateUsersStatus(usersStatusDTO);
     }
 
-    @PatchMapping("assignProjectToUser/{userId}/projectId/{projectId}")
-    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable UUID userId, @PathVariable UUID projectId){
-        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(userId, projectId));
+    @PatchMapping("assignProjectToUser/{username}/projectId/{projectId}")
+    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @PathVariable UUID projectId){
+        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
     }
     /*@PutMapping("updateUser/{userId}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {

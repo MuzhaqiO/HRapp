@@ -25,7 +25,7 @@ public interface UserServiceInterface {
     void updateUsersStatus (UsersStatusDTO usersStatusDTO);
     void updateUserByUsername(UserDTO userDTO);
 
-    ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId);
+    ProjectAssignDTO assignProjectToUser(String username, UUID projectId);
 
     AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception;
 

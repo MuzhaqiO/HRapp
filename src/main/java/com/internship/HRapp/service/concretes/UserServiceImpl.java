@@ -110,11 +110,11 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId) {
-        User user = usersRepo.getById(userId);
+    public ProjectAssignDTO assignProjectToUser(String username, UUID projectId) {
+        User user = usersRepo.getByUsername(username);
         user.getProjects().add(projectsRepo.getById(projectId));
         usersRepo.save(user);
-        return usersMapper.toDTOProject(usersRepo.findUserByUserId(userId));
+        return usersMapper.toDTOProject(usersRepo.findByUsername(username));
     }
    /* @Override
     public UserDTO updateUser(UUID userId, UserDTO userDTO) {

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public interface UserServiceInterface {
 
-    ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId);
+    ProjectAssignDTO assignProjectToUser(String username, UUID projectId);
 
     UserDTO getUserById(UUID userId);
 

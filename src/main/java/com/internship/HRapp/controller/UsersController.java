@@ -70,9 +70,9 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.removeRoleFromUser(userId, roleId));
     }
 
-    @PatchMapping("assignProject/{userId}")
-    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
-        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(userId, projectId));
+    @PatchMapping("assignProject/{username}/projectId/{projectId}")
+    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @RequestParam UUID projectId) {
+        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
     }
 
     @PatchMapping("removeProject/{userId}")

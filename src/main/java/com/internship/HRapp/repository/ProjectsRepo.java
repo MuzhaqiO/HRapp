@@ -20,7 +20,7 @@ public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
             "left join User_Projects up on p.id = up.project_id " +
             "where up.user_id =:userId", nativeQuery = true)
     List<Projects> getProjectsByUserId(@Param("userId") UUID userId);
-    List<Projects> getByProjectId(UUID projectId);
+
 
     @Query("SELECT p FROM Projects p WHERE p.projectName=?1")
     Projects findByProjectsName(String projectName);

@@ -58,7 +58,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }
 
     @Override
-    public String deleteProject(UUID projectsId) {
+    public String deleteProjectById(UUID projectsId) {
         projectsRepo.deleteById(projectsId);
         return "Project {} was removed"+projectsId;
     }
@@ -88,9 +88,9 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }
 
     @Override
-    public AssignUserDTO assignUserToProject(UUID projectId, UUID userId) {
+    public AssignUserDTO assignUserToProject(UUID projectId, String username) {
         Projects project = projectsRepo.getProjectsByProjectId(projectId);
-        project.getUsers().add(userRepo.getById(userId));
+        project.getUsers().add(userRepo.getByUsername(username));
         projectsRepo.save(project);
         return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
     }

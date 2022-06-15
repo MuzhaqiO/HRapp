@@ -1,6 +1,6 @@
 package com.internship.HRapp.mapper;
 
-import com.internship.HRapp.dto.AssignUserDTO;
+import com.internship.HRapp.dto.userDTO.AssignUserDTO;
 import com.internship.HRapp.dto.projectDTO.ProjectsDTO;
 import com.internship.HRapp.entity.Projects;
 import org.mapstruct.Mapper;

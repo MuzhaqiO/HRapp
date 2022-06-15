@@ -30,4 +30,6 @@ public interface UserServiceInterface {
     AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception;
 
     void changePassword(PasswordDTO passwordUpdate);
+    List<UserDTO> getUserByProjectId(UUID projectId);
+    String deleteUserByUserId(UUID userId);
 }

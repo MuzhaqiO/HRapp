@@ -29,12 +29,13 @@ public class User {
     @Column(unique = true)
     private String email;
     private LocalDate DOB;
-    private Integer leaveDays;
+    private Double leaveDaysLeft;
     private String mobile;
     private LocalDate startingDay;
     private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus;
+
 
 
     @ManyToMany
@@ -53,7 +54,9 @@ public class User {
 
     @OneToMany(mappedBy = "users")
     private List<Certification> certifications = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "user_addresses_id", referencedColumnName = "addressID")
-    private Address addresses;
+//    @OneToOne(mappedBy = "users")
+//    private Address addresses;
+
+    @OneToMany(mappedBy = "users")
+    private List<DayOff> daysOff = new ArrayList<>();
 }

@@ -64,6 +64,12 @@ public class UsersController {
     public ResponseEntity<UserCreateDTO> getUserProfile(@PathVariable UUID userId){
         return ResponseEntity.ok(userServiceInterface.getUserProfile(userId));
     }
+
+
+    @GetMapping("getUsersByProject/{projectId}")
+    public ResponseEntity<List<UserDTO>> getUserByProject(@PathVariable UUID projectId){
+        return ResponseEntity.ok(userServiceInterface.getUserByProjectId(projectId));
+    }
     @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("addNewUser")
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO) {
@@ -99,4 +105,8 @@ public class UsersController {
     public ResponseEntity<UserDTO> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userServiceInterface.updateUser(userId, userDTO));
     }*/
+    @DeleteMapping("deleteUser/{userId}")
+    public String deleteUser(@PathVariable UUID userId){
+        return userServiceInterface.deleteUserByUserId(userId);
+    }
 }

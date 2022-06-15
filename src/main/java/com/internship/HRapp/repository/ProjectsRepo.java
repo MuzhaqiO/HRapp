@@ -1,6 +1,10 @@
 package com.internship.HRapp.repository;
 
+import com.internship.HRapp.dto.ProjectsDTO;
+import com.internship.HRapp.dto.userDTO.UserDTO;
+import com.internship.HRapp.entity.Experiences;
 import com.internship.HRapp.entity.Projects;
+import com.internship.HRapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +27,8 @@ public interface ProjectsRepo extends JpaRepository<Projects, UUID> {
 
     @Query("SELECT p FROM Projects p WHERE p.projectName=?1")
      Projects findByProjectsName(String projectName);
+
+
+
+    //List<User> getByUsersByProjectId(@Param("projectId") UUID projectId);
 }

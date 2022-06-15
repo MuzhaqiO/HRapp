@@ -1,7 +1,8 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.AssignUserDTO;
+import com.internship.HRapp.dto.userDTO.AssignUserDTO;
 import com.internship.HRapp.dto.projectDTO.ProjectsDTO;
+import com.internship.HRapp.dto.userDTO.UserDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +21,11 @@ public interface ProjectsServiceInterface {
 
     ProjectsDTO addNewProjects(ProjectsDTO projectsDTO);
 
-    String deleteProject(UUID expId);
 
     ProjectsDTO updateProject(ProjectsDTO projectsDTO);
 
-    AssignUserDTO assignUserToProject(UUID projectId, UUID userId);
+    AssignUserDTO assignUserToProject(UUID projectId, String username);
+    String deleteProjectById(UUID projectId);
 
+    //List<UserDTO> getUsersByProjectId(UUID projectId);
 }

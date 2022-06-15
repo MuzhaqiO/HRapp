@@ -172,4 +172,15 @@ public AuthResponseDTO login(UserLoginDTO loginDTO) throws Exception {
 
     }
 
+    @Override
+    public List<UserDTO> getUserByProjectId(UUID projectId) {
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByProjectsProjectId(projectId));
+    }
+
+    @Override
+    public String deleteUserByUserId(UUID userId) {
+        usersRepo.deleteById(userId);
+        return "User {id} has been deleted"+userId;
+    }
+
 }

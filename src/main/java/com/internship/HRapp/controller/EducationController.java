@@ -12,7 +12,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1/hr_management_system/educations")
+@RequestMapping(path = "hr_management/education")
 public class EducationController {
 
     private final EducationInterface educationInterface;

@@ -1,6 +1,7 @@
 package com.internship.HRapp.service.interfaces;
 
-import com.internship.HRapp.dto.addressDto.AddressDto;
+import com.internship.HRapp.dto.addressDto.UserAddressDTO;
+import com.internship.HRapp.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +10,13 @@ import java.util.UUID;
 @Service
 public interface AddressServiceInterface {
 
-    List<AddressDto> getAddresses();
+    List<UserAddressDTO> getAddresses();
 
-    AddressDto addNewAddress(AddressDto addressDto);
+    UserAddressDTO addNewAddress(UserAddressDTO addressDto);
 
-    AddressDto getAddressById(UUID addressID);
+    UserAddressDTO getAddressById(UUID addressID);
 
-    void editAddress(AddressDto addressDto);
+    void editAddress(UserAddressDTO addressDto);
 
     String deleteAddressById(UUID addressID);
 

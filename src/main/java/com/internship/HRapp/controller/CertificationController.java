@@ -13,7 +13,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path ="api/v1/hr_management_system/certifications")
+@RequestMapping(path = "hr_management/certification")
 public class CertificationController {
 
     private final CertificationServiceInterface certificationServiceInterface;

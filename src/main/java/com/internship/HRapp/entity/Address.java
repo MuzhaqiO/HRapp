@@ -7,12 +7,12 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.*;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Getter
 @Setter
+@Table
+@AllArgsConstructor
+@NoArgsConstructor
 public class Address {
 
     @Id
@@ -25,11 +25,6 @@ public class Address {
     private String city;
     private String street;
     private String postalCode;
-
-    @JsonIgnore
-//    @OneToMany(mappedBy = "addresses")
-//    private List<User> users = new ArrayList<>();
     @OneToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User users;
 }

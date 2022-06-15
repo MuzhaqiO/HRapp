@@ -14,15 +14,17 @@ import java.util.List;
 public interface DayOffMapper {
     UserDayOffDTO toDto(DayOff dayOff);
 
+    @Mapping(source ="users.userId", target = "userId")
     StatusDTO statusToDTO(DayOff dayOff);
-    @Mapping(target = "users.userId", source = "userId")
+    @Mapping(source ="userId", target = "users.userId")
     DayOff statusToEntity(StatusDTO status);
 
     DayOff toModel(UserDayOffDTO userDayOffDTO);
 
-    @Mapping(target = "users.userId", source = "userId")
+    @Mapping(source ="userId", target = "users.userId")
     DayOff toEntity(CreateDayOffDTO requestDTO);
 
+    @Mapping(source ="users.userId", target = "userId")
     CreateDayOffDTO requestToDto(DayOff dayOff);
 
     UserDayOffDTO userToDto(User user);

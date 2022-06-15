@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
+//                .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST)
@@ -56,6 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/hr_menagement/**"
+            "/hr_management/**"
     };
 }

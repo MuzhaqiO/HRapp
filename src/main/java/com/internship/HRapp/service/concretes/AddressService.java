@@ -1,10 +1,11 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.addressDto.AddressDto;
+import com.internship.HRapp.dto.addressDto.UserAddressDTO;
 import com.internship.HRapp.entity.Address;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.AddressMapper;
-import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.AddressRepo;
+import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.AddressServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ import java.util.UUID;
 public class AddressService implements AddressServiceInterface {
     private final AddressRepo addressRepo;
     private final AddressMapper addressMapper;
-    private final UserMapper userMapper;
+    private final UserRepo userRepo;
 
     @Override
-    public AddressDto getAddressById(UUID addressID){
+    public UserAddressDTO getAddressById(UUID addressID){
         boolean exists = addressRepo.existsById(addressID);
         if (!exists){
             throw new IllegalStateException(
@@ -34,7 +35,7 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
-    public List<AddressDto> getAddresses(){
+    public List<UserAddressDTO> getAddresses(){
         return addressMapper.toDto(addressRepo.findAll());
     }
 
@@ -51,13 +52,15 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
-    public AddressDto addNewAddress(AddressDto addressDto) {
+    public UserAddressDTO addNewAddress(UserAddressDTO addressDto) {
+        User user = userRepo.getById(addressDto.getUserId());
         Address createdAddress = addressRepo.save(addressMapper.dtotoModel(addressDto));
+//        createdAddress.setUsers(user);
         return addressMapper.modeltoDto(createdAddress);
     }
 
     @Override
-    public void  editAddress(@NotNull AddressDto addressDto) {
+    public void  editAddress(@NotNull UserAddressDTO addressDto) {
         Address address =addressRepo.getAddressByAddressID(addressDto.getAddressID());
         address.setCity(addressDto.getCity());
         address.setState(addressDto.getState());

@@ -10,6 +10,7 @@ import java.util.UUID;
 @Getter
 
 public class PersonalFileDTO {
+    private UUID userId;
     private UUID personalFileId;
     private URL id_card;
     private URL degree;

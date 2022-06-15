@@ -13,6 +13,7 @@ import java.util.UUID;
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(path = "hr_management/projects")
 public class ProjectsController {
     private final ProjectsServiceInterface projectsServiceInterface;
 

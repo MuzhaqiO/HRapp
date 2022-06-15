@@ -14,6 +14,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 public class Experiences {

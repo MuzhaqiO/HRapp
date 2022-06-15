@@ -1,11 +1,13 @@
 package com.internship.HRapp.dto.addressDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
-
-@Data
-public class AddressDto {
+@Getter
+@Setter
+public class UserAddressDTO {
+    private UUID userId;
     private UUID addressID;
     private String state;
     private String city;

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Data
 public class CertificationDto {
+    private  UUID userId;
     private UUID certificationID;
     private String certification_name;
     private Date certification_year;

@@ -24,7 +24,7 @@ public class User {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

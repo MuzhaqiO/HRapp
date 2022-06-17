@@ -3,6 +3,7 @@ package com.internship.HRapp.security;
 import com.internship.HRapp.config.PasswordEncryptConfig;
 import com.internship.HRapp.filter.CustomAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -35,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+        http.cors();
+        http.csrf().disable()
 //                .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
-                .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll().anyRequest()
@@ -52,6 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetails).passwordEncoder(passwordEncoder);
+    }
+
 
     @Override
     public void configure(WebSecurity web) {
@@ -61,6 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/hr_management/**"
+//            "/hr_management/**"
+            "/hr_management/user/login/**",
+            "/hr_management/role/addRole/**",
+            "/hr_management/user/assignRole/**"
     };
 }

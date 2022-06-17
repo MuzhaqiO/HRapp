@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,15 +31,19 @@ public class MyUserDetails implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User by username " + username + " doesn't exist");
         }
-        return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
-    }
-    private Set getAuthority(com.internship.HRapp.entity.User user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         });
-        return authorities;
+        return new User(user.getUsername(), user.getPassword(), authorities);
     }
+//    private Set getAuthority(com.internship.HRapp.entity.User user) {
+//        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+//        user.getRoles().forEach(role -> {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+//        });
+//        return authorities;
+//    }
 
 //    private void authenticate(String userName, String userPassword) throws Exception {
 //        try {

@@ -8,14 +8,18 @@ import com.internship.HRapp.dto.userDto.*;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "hr_management/user")
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class UsersController {
     private final UserServiceInterface userServiceInterface;
 
@@ -24,6 +28,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.login(loginDTO));
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());

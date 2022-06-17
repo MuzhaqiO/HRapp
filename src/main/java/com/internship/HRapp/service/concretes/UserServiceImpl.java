@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserServiceInterface {
             final UserDetails userDetails = myUserDetails
                     .loadUserByUsername(loginDTO.getUsername());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
-            return new AuthResponseDTO(jwt);
+            return new AuthResponseDTO(jwt, user.getUsername(), user.getPassword(), userDetails.getAuthorities());
         }
         throw new NotActiveException("This user is not active");
     }

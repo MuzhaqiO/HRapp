@@ -16,8 +16,7 @@ import java.util.function.Function;
 @Configuration
 @RequiredArgsConstructor
 public class JwtUtil {
-    private String SECRET_KEY = "secret";
-    private final UserRepo userRepo;
+    private final String SECRET_KEY = "secret";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

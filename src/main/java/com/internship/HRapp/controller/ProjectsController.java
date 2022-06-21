@@ -17,36 +17,36 @@ import java.util.UUID;
 public class ProjectsController {
     private final ProjectsServiceInterface projectsServiceInterface;
 
-    @PostMapping("/addProject")
+    @PostMapping("addProject")
     public ResponseEntity<ProjectsDTO> save(@RequestBody ProjectsDTO projectsDTO){
         return  ResponseEntity.ok(projectsServiceInterface.addNewProjects(projectsDTO));
     }
-    @GetMapping("/projects/{userId}")
+    @GetMapping("getByUserId/{userId}")
     public ResponseEntity<List<ProjectsDTO>> getProjectsByUserId(@PathVariable UUID userId){
         return ResponseEntity.ok(projectsServiceInterface.getProjectsByUserId(userId));
     }
-    @GetMapping("/projects/id/{projectsId}")
+    @GetMapping("getById/{projectsId}")
     public ResponseEntity<ProjectsDTO> getProjectById(@PathVariable UUID projectsId){
         return ResponseEntity.ok(projectsServiceInterface.getProjectById(projectsId));
     }
-    @GetMapping("/projects/name/{projectsName}")
+    @GetMapping("getByName/{projectsName}")
     public ResponseEntity<ProjectsDTO> findProjectByName(@PathVariable String projectsName){
         return ResponseEntity.ok(projectsServiceInterface.getProjectByProjectName(projectsName));
     }
-    @GetMapping("/projects")
-    public ResponseEntity<List<ProjectsDTO>>getProjects(){
+    @GetMapping("getAll")
+    public ResponseEntity<List<ProjectsDTO>>getAllProjects(){
         return ResponseEntity.ok(projectsServiceInterface.getProjects());
     }
-    @PutMapping("/projects/updateProject/{projectId}")
-    public void updateProject(@RequestBody ProjectsDTO projectsDTO){
-        projectsServiceInterface.updateProject(projectsDTO);
+    @PutMapping("updateProject/{projectId}")
+    public ResponseEntity<ProjectsDTO> updateProject(@RequestBody ProjectsDTO projectsDTO){
+        return ResponseEntity.ok(projectsServiceInterface.updateProject(projectsDTO));
     }
-    @PatchMapping("assignUser/{projectId}/username/{username}")
-    public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @PathVariable String username){
-        return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, username));
+    @PatchMapping("assignUser/{projectId}/userId/{userId}")
+    public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @PathVariable UUID userId){
+        return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, userId));
     }
-    @DeleteMapping("/projects/deleteProject/{projectId}")
-    public String deleteProject(@PathVariable UUID projectId){
-        return projectsServiceInterface.deleteProjectById(projectId);
+    @DeleteMapping("deleteProject/{projectId}")
+    public void deleteProject(@PathVariable UUID projectId){
+        projectsServiceInterface.deleteProjectById(projectId);
     }
 }

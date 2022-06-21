@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserServiceInterface {
     private final UtilityInterface utility;
     private final RoleServiceInterface roleService;
     private final RoleMapper roleMapper;
-    private final ProjectsMapper projectsMapper;
-    private final ProjectsServiceInterface projectsService;
+//    private final ProjectsMapper projectsMapper;
+//    private final ProjectsServiceInterface projectsService;
 
     @Override
     public UserDTO getUserById(UUID userId) {
@@ -108,12 +108,12 @@ public class UserServiceImpl implements UserServiceInterface {
 
 
     @Override
-    public AssignRoleDTO assignRoleToUser(UUID userId, UUID roleId) {
+    public UpdateRoleDTO assignRoleToUser(UUID userId, UUID roleId) {
         User user = usersRepo.getById(userId);
         Role role = roleMapper.toEntity(roleService.getRoleById(roleId));
         user.getRoles().add(role);
         usersRepo.save(user);
-        return usersMapper.toDTOAssign(usersRepo.getById(userId));
+        return usersMapper.toDTORole(usersRepo.getById(userId));
     }
 
     @Override
@@ -123,21 +123,21 @@ public class UserServiceImpl implements UserServiceInterface {
         usersRepo.save(user);
         return usersMapper.toDTORole(usersRepo.getById(userId));
     }
-    @Override
-    public ProjectAssignDTO assignProjectToUser(String username, UUID projectId) {
-        User user = usersRepo.getByUsername(username);
-        Projects project = projectsMapper.dtoToEntity(projectsService.getProjectById(projectId));
-        user.getProjects().add(project);
-        usersRepo.save(user);
-        return usersMapper.toDTOProject(usersRepo.getByUsername(username));
-    }
-    @Override
-    public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId){
-        User user = usersRepo.getById(userId);
-        user.getProjects().removeIf(project -> project.getProjectId().equals(projectId));
-        usersRepo.save(user);
-        return usersMapper.toDTOProject(usersRepo.getById(userId));
-    }
+//    @Override
+//    public ProjectAssignDTO assignProjectToUser(String username, UUID projectId) {
+//        User user = usersRepo.getByUsername(username);
+//        Projects project = projectsMapper.dtoToEntity(projectsService.getProjectById(projectId));
+//        user.getProjects().add(project);
+//        usersRepo.save(user);
+//        return usersMapper.toDTOProject(usersRepo.getByUsername(username));
+//    }
+//    @Override
+//    public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId){
+//        User user = usersRepo.getById(userId);
+//        user.getProjects().removeIf(project -> project.getProjectId().equals(projectId));
+//        usersRepo.save(user);
+//        return usersMapper.toDTOProject(usersRepo.getById(userId));
+//    }
     @Override
     public UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto) {
         User user = usersRepo.getById(userId);
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public List<UserDTO> getUserByProjectId(UUID projectId) {
-        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(projectId));
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByProjectsProjectId(projectId));
     }
 
     @Override
@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserServiceInterface {
             final UserDetails userDetails = myUserDetails
                     .loadUserByUsername(loginDTO.getUsername());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
-            return new AuthResponseDTO(jwt);
+            return new AuthResponseDTO(user, jwt);
         }
         throw new NotActiveException("This user is not active");
     }

@@ -8,13 +8,14 @@ import com.internship.HRapp.dto.userDto.*;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(path = "hr_management/user")
+@RequestMapping(path = "hr_management/users")
 @RequiredArgsConstructor
 public class UsersController {
     private final UserServiceInterface userServiceInterface;
@@ -39,13 +40,13 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
 
-    @PostMapping("/addNewUser")
+    @PostMapping("addNewUser")
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO)
             throws Exception {
         return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
 
-    @PutMapping("updateUser/{userId}")
+    @PatchMapping("updateUser/{userId}")
     public ResponseEntity<UserUpdateDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO) {
         return ResponseEntity.ok(userServiceInterface.updateUser(userUpdateDTO));
     }
@@ -60,8 +61,8 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.updateUsersStatus(userId, usersStatusDTO));
     }
 
-    @PatchMapping("assignRole/{userId}")
-    public ResponseEntity<AssignRoleDTO> assignRoleToUser(@PathVariable UUID userId, @RequestParam UUID roleId) {
+    @PatchMapping("assignRole/{userId}/roleId/{roleId}")
+    public ResponseEntity<UpdateRoleDTO> assignRoleToUser(@PathVariable UUID userId, @PathVariable UUID roleId) {
         return ResponseEntity.ok(userServiceInterface.assignRoleToUser(userId, roleId));
     }
 
@@ -70,17 +71,17 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.removeRoleFromUser(userId, roleId));
     }
 
-    @PatchMapping("assignProject/{username}/projectId/{projectId}")
-    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @RequestParam UUID projectId) {
-        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
-    }
+//    @PatchMapping("assignProject/{username}/projectId/{projectId}")
+//    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @RequestParam UUID projectId) {
+//        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
+//    }
+//
+//    @PatchMapping("removeProject/{userId}")
+//    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
+//        return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
+//    }
 
-    @PatchMapping("removeProject/{userId}")
-    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
-        return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
-    }
-
-    @PostMapping("updateUser/{userId}")
+    @PostMapping("updateUsersRole/{userId}")
     public ResponseEntity<UpdateRoleDTO> updateUserRole(@PathVariable UUID userId, @RequestBody UpdateUsersRoleDto requestDto) {
         return ResponseEntity.ok(userServiceInterface.updateRole(userId, requestDto));
     }
@@ -95,7 +96,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.getUserByProjectId(projectId));
     }
 
-    @PatchMapping("/changePassword")
+    @PatchMapping("changePassword")
     public void changePassword(@RequestBody PasswordDTO passwordDTO) {
         userServiceInterface.changePassword(passwordDTO);
     }

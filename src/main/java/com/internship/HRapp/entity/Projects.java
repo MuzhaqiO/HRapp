@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Data
+@Table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,6 +28,8 @@ public class Projects {
     private LocalDate endTime;
     private String description;
 
+//    @ManyToMany(mappedBy = "projects")
+//    private List<User> users = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "user_projects", joinColumns = {@JoinColumn(name = "project_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "user_id", nullable = false)})

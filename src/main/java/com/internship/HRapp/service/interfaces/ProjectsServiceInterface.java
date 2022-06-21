@@ -20,10 +20,10 @@ public interface ProjectsServiceInterface {
 
     ProjectsDTO addNewProjects(ProjectsDTO projectsDTO);
 
-    String deleteProjectById(UUID projectId);
+    void deleteProjectById(UUID projectId);
 
     ProjectsDTO updateProject(ProjectsDTO projectsDTO);
 
-    AssignUserDTO assignUserToProject(UUID projectId, String username);
+    AssignUserDTO assignUserToProject(UUID projectId, UUID userId);
 
 }

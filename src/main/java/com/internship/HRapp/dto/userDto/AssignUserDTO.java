@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class AssignUserDTO {
-    private List<GetUsersDTO> users;
+    private List<UserDTO> users;
 }

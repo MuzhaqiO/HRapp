@@ -19,35 +19,31 @@ public class ExperiencesController {
     private final ExperiencesService experiencesService;
 
 
-    @CrossOrigin(origins="http://localhost:4200")
-    @PostMapping("/addExperiences")
+    @PostMapping("addExperiences")
     public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO){
         return  ResponseEntity.ok(experiencesService.addNewExperiences(userExperienceDTO));
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/experiences")
+    @GetMapping("getAll")
     public ResponseEntity<List<UserExperienceDTO>>getExperiences(){
         return ResponseEntity.ok(experiencesService.getExperiences());
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/experiences/getExperiencesByUserId/{userId}")
+    @GetMapping("getExperiencesByUserId/{userId}")
     public ResponseEntity<List<UserExperienceDTO>> getExperiencesByUserId(@PathVariable UUID userId){
         return ResponseEntity.ok(experiencesService.getExperiencesByUserId(userId));
     }
-    @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/experiences/getExperiencesByExpId/{expId}")
+
+    @GetMapping("getExperiencesByExpId/{expId}")
     public ResponseEntity<UserExperienceDTO> getExperiencesByExpId(@PathVariable UUID expId){
         return ResponseEntity.ok(experiencesService.getExperiencesByExpId(expId));
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
-    @PutMapping("/experiences/updateExperience/{expId}")
+    @PutMapping("updateExperience/{expId}")
     public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO){
         experiencesService.updateExperiences(userExperienceDTO);
     }
-    @DeleteMapping("experiences/deleteExperience/{expId}")
+    @DeleteMapping("deleteExperience/{expId}")
     public String deleteExperience(@PathVariable UUID expId){
         return experiencesService.deleteExperienceByExpId(expId);
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(path = "hr_management/role")
+@RequestMapping(path = "hr_management/roles")
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleServiceInterface roleServiceInterface;
@@ -20,12 +20,12 @@ public class RoleController {
         return ResponseEntity.ok(roleServiceInterface.getRoles());
     }
 
-    @GetMapping("id/{roleId}")
+    @GetMapping("getById/{roleId}")
     public ResponseEntity<RoleDTO> findRoleById(@PathVariable UUID roleId) {
         return ResponseEntity.ok(roleServiceInterface.getRoleById(roleId));
     }
 
-    @GetMapping("name/{roleName}")
+    @GetMapping("getByName/{roleName}")
     public ResponseEntity<RoleDTO> findRoleByName(@PathVariable String roleName) {
         return ResponseEntity.ok(roleServiceInterface.getRoleByRoleName(roleName));
     }
@@ -35,13 +35,18 @@ public class RoleController {
         return ResponseEntity.ok(roleServiceInterface.addNewRoles(roleDTO));
     }
 
-    @DeleteMapping("delete/{roleId}")
-    public String deleteRolesById(@PathVariable UUID roleId) {
-        return roleServiceInterface.deleteRolesById(roleId);
+    @DeleteMapping("deleteRole/{roleId}")
+    public void deleteRolesById(@PathVariable UUID roleId) {
+        roleServiceInterface.deleteRolesById(roleId);
     }
 
     @PutMapping("updateRole/{roleId}")
-    public void updateRole(@RequestParam RoleDTO roleDTO) {
+    public void updateRole(@RequestBody RoleDTO roleDTO) {
         roleServiceInterface.updateRole(roleDTO);
+    }
+
+    @GetMapping("getRoleByUser/{userId}")
+    public ResponseEntity<List<RoleDTO>> getRoleByUserId(@PathVariable UUID userId){
+        return ResponseEntity.ok(roleServiceInterface.getRoleByUserId(userId));
     }
 }

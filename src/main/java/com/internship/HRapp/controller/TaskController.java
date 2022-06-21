@@ -17,13 +17,13 @@ import java.util.UUID;
 public class TaskController {
     private final TaskService taskService;
 
-    @PostMapping("newTask")
+    @PostMapping("addNewTask")
     public ResponseEntity<TaskDTO> addTask(@RequestBody TaskNewDTO newDTO) {
         return ResponseEntity.ok(taskService.addTask(newDTO));
 
     }
 
-    @DeleteMapping(path = "{taskId}")
+    @DeleteMapping("deleteTask/{taskId}")
     public void deleteTask(@PathVariable("taskId") UUID taskId) {
         taskService.deleteTask(taskId);
 
@@ -35,12 +35,12 @@ public class TaskController {
 
     }
 
-    @GetMapping("userId")
+    @GetMapping("getByUserId")
     public ResponseEntity<List<TaskDTO>> getTasksByUserId(@RequestParam UUID userId) {
         return ResponseEntity.ok(taskService.getTasksByUserId(userId));
     }
 
-    @GetMapping("projectId")
+    @GetMapping("getByProjectId")
     public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam UUID projectId) {
         return ResponseEntity.ok(taskService.getTasksByProjectId(projectId));
     }

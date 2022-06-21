@@ -14,6 +14,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private Boolean usersStatus;
     private Set<RoleDTO> roles;
     private Set<ProjectsDTO> projects;
 }

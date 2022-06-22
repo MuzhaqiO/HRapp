@@ -3,7 +3,6 @@ package com.internship.HRapp.controller;
 import com.internship.HRapp.dto.addressDto.UserAddressDTO;
 import com.internship.HRapp.service.interfaces.AddressServiceInterface;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,6 @@ import java.util.UUID;
 @RequestMapping(path = "hr_management/address")
 @RequiredArgsConstructor
 public class AddressController {
-    @Autowired
     private final AddressServiceInterface addressServiceInterface;
 
     @GetMapping("getAll")
@@ -39,7 +37,7 @@ public class AddressController {
     }
 
     @DeleteMapping("deleteAddress/{addressId}")
-    public String deleteRolesById(@PathVariable UUID addressID) {
-        return addressServiceInterface.deleteAddressById(addressID);
+    public void deleteRolesById(@PathVariable UUID addressID) {
+        addressServiceInterface.deleteAddressById(addressID);
     }
 }

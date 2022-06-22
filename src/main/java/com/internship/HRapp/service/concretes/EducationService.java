@@ -45,7 +45,7 @@ public class EducationService implements EducationInterface {
     }
 
     @Override
-    public String deleteEducationById(UUID educationId) {
+    public void deleteEducationById(UUID educationId) {
         boolean exists = educationRepository.existsById(educationId);
         if (!exists) {
             throw new IllegalStateException(
@@ -53,7 +53,6 @@ public class EducationService implements EducationInterface {
             );
         }
         educationRepository.deleteById(educationId);
-        return "Education removed {} " + educationId;
     }
 
     @Override

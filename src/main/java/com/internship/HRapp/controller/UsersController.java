@@ -1,5 +1,6 @@
 package com.internship.HRapp.controller;
 
+import com.internship.HRapp.dto.loginDto.UserLoginDTO;
 import com.internship.HRapp.dto.projectsDto.ProjectAssignDTO;
 import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;
@@ -8,7 +9,6 @@ import com.internship.HRapp.dto.userDto.*;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,38 +28,32 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.login(loginDTO));
     }
 
-    @Secured("ROLE_ADMIN")
     @GetMapping("getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER","ROLE_HRSPECIALIST", "HR_MANAGER", "ROLE_BOARDMEMBER"})
     @GetMapping("username/{username}")
     public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userServiceInterface.getUserByUsername(username));
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER","ROLE_HRSPECIALIST", "HR_MANAGER", "ROLE_BOARDMEMBER"})
     @GetMapping("userId/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId) {
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/addNewUser")
     public ResponseEntity<UserCreateDTO> createUser(@RequestBody UserCreateDTO userCreateDTO)
             throws Exception {
         return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER","ROLE_HRSPECIALIST", "HR_MANAGER", "ROLE_BOARDMEMBER"})
     @PutMapping("updateUser/{userId}")
     public ResponseEntity<UserUpdateDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO) {
         return ResponseEntity.ok(userServiceInterface.updateUser(userUpdateDTO));
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_USER","ROLE_HRSPECIALIST", "HR_MANAGER", "ROLE_BOARDMEMBER"})
     @PatchMapping("updateUsername/{userId}")
     public ResponseEntity<UsernameDTO> updateUsername(@PathVariable UUID userId, @RequestBody UsernameDTO usernameDTO) {
         return ResponseEntity.ok(userServiceInterface.updateUsername(userId, usernameDTO));
@@ -71,7 +65,7 @@ public class UsersController {
     }
 
     @PatchMapping("assignRole/{userId}")
-    public ResponseEntity<AssignRoleDTO> assignRoleToUser(@PathVariable UUID userId, @RequestParam UUID roleId) {
+    public ResponseEntity<AssignRoleDTO> assignRoleToUser(@PathVariable UUID userId, @PathVariable UUID roleId) {
         return ResponseEntity.ok(userServiceInterface.assignRoleToUser(userId, roleId));
     }
 

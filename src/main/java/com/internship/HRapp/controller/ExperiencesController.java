@@ -14,67 +14,35 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(path = "hr_management/experience")
 public class ExperiencesController {
-
-
     private final ExperiencesService experiencesService;
 
-
-    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/addExperiences")
     public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO){
         return  ResponseEntity.ok(experiencesService.addNewExperiences(userExperienceDTO));
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/experiences")
     public ResponseEntity<List<UserExperienceDTO>>getExperiences(){
         return ResponseEntity.ok(experiencesService.getExperiences());
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/experiences/getExperiencesByUserId/{userId}")
     public ResponseEntity<List<UserExperienceDTO>> getExperiencesByUserId(@PathVariable UUID userId){
         return ResponseEntity.ok(experiencesService.getExperiencesByUserId(userId));
     }
-    @CrossOrigin(origins="http://localhost:4200")
+
     @GetMapping("/experiences/getExperiencesByExpId/{expId}")
     public ResponseEntity<UserExperienceDTO> getExperiencesByExpId(@PathVariable UUID expId){
         return ResponseEntity.ok(experiencesService.getExperiencesByExpId(expId));
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
     @PutMapping("/experiences/updateExperience/{expId}")
     public void updateExperiences(@RequestBody UserExperienceDTO userExperienceDTO){
         experiencesService.updateExperiences(userExperienceDTO);
     }
     @DeleteMapping("experiences/deleteExperience/{expId}")
-    public String deleteExperience(@PathVariable UUID expId){
-        return experiencesService.deleteExperienceByExpId(expId);
+    public void deleteExperience(@PathVariable UUID expId){
+        experiencesService.deleteExperienceByExpId(expId);
 
     }
-
-
-   /* @GetMapping("/experiences/id/{expId}")
-    public ResponseEntity<List<UserExperienceDTO>> findExperienceById(@PathVariable UUID expId){
-        return ResponseEntity.ok(experiencesService.getExperiencesByUserId(expId));
-    }*/
-/*
-    @GetMapping("/experiences/{id}")
-    public ResponseEntity<UserExperienceDTO>findById(@PathVariable("id") UUID id){
-        return new ResponseEntity(experiencesMapper.entityToDto(experiencesRepo.findById(id).get()),HttpStatus.OK);
-    }
-    @DeleteMapping("/experiences/{id}")
-    public ResponseEntity<Void>deleteById(@PathVariable("id") UUID id){
-        UserExperienceDTO userExperienceDTO = experiencesMapper.entityToDto(experiencesRepo.findById(id).get());
-
-        experiencesRepo.deleteById(userExperienceDTO.getUserId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-*/
-
- /*   @GetMapping("/users-experience")
-    public List<UserExperienceDTO> getAllUsersExperiences(){
-        return experiencesService.getAllUsersExperiences();
-    }*/
-
 }

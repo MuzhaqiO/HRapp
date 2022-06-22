@@ -34,7 +34,7 @@ public class CertificationController {
         certificationServiceInterface.editCertification(certificationID, certificationDto); }
 
     @DeleteMapping("deleteCertification/{certificationID}")
-    public String deleteRolesById(@PathVariable UUID certificationID) {
-        return certificationServiceInterface.deleteCertificationById(certificationID);
+    public void deleteRolesById(@PathVariable UUID certificationID) {
+        certificationServiceInterface.deleteCertificationById(certificationID);
     }
 }

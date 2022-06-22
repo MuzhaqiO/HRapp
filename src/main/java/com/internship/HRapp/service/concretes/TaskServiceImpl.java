@@ -2,7 +2,6 @@ package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDto.TaskDTO;
-import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 import com.internship.HRapp.entity.Task;
 import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.TaskStatus;
@@ -24,8 +23,8 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepo userRepo;
 
     @Override
-    public TaskDTO addTask(TaskNewDTO newDTO) {
-        Task task = taskRepo.save(taskMapper.newTaskToEntity(newDTO));
+    public TaskDTO addTask(TaskDTO newDTO) {
+        Task task = taskRepo.save(taskMapper.taskToEntity(newDTO));
         return taskMapper.taskToDto(task);
     }
 

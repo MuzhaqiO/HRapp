@@ -54,17 +54,17 @@ public class DayOffServiceImpl implements DayOffService {
         dayOffRepo.save(thisDayOff);
     }
 
-//    @Scheduled(initialDelay = 60 * 60, fixedDelay = 60 * 60)
-//    public void updateLeaveDaysLeft() {
-//        var users = userRepo.findAll();
-//        for (var user : users) {
-//            long daysBetween = DAYS.between(user.getStartingDay(), LocalDate.now());
-//            if (daysBetween % 30 == 0) {
-//                user.setLeaveDaysLeft(user.getLeaveDaysLeft() + 1.7);
-//                userRepo.save(user);
-//            }
-//        }
-//    }
+    @Scheduled(cron = "0 30 09 * * *")
+    public void updateLeaveDaysLeft() {
+        var users = userRepo.findAll();
+        for (var user : users) {
+            long daysBetween = DAYS.between(user.getStartingDay(), LocalDate.now());
+            if (daysBetween % 30 == 0) {
+                user.setLeaveDaysLeft(user.getLeaveDaysLeft() + 1.7);
+                userRepo.save(user);
+            }
+        }
+    }
 
     public void deleteDayOff(UUID dayOffId) {
         boolean exists = dayOffRepo.existsById(dayOffId);

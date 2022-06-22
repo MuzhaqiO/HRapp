@@ -24,18 +24,26 @@ public class User {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users")
+    private List<Certification> certifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users")
+    private List<Education> educations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users")
+    private List<PersonalFile> personalFiles = new ArrayList<>();
 
     @ManyToMany
-//    @JoinTable(
-//            name = "users_projects",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "projectId"))
     private List<Projects> projects = new ArrayList<>();
 
     @JsonIgnore
@@ -48,7 +56,6 @@ public class User {
 
     @JsonIgnore
     @OneToOne(mappedBy = "users")
-    //@JoinColumn(name = "user_address_id", referencedColumnName = "addressID")
     private Address address;
 
 

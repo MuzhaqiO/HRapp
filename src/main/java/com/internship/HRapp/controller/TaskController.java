@@ -2,7 +2,6 @@ package com.internship.HRapp.controller;
 
 import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDto.TaskDTO;
-import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 import com.internship.HRapp.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping("newTask")
-    public ResponseEntity<TaskDTO> addTask(@RequestBody TaskNewDTO newDTO) {
+    public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO newDTO) {
         return ResponseEntity.ok(taskService.addTask(newDTO));
 
     }

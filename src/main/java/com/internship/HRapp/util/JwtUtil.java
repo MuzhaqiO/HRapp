@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 
@@ -17,11 +18,11 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JwtUtil {
     private final String SECRET_KEY = "secret";
+    private final UserRepo userRepo;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
@@ -42,15 +43,15 @@ public class JwtUtil {
 
 
     public String generateToken(UserDetails userDetails) {
-        //Set<UUID> Userroles = new HashSet<>();
+        Set<UUID> Userroles = new HashSet<>();
         Map<String, Object> claims = new HashMap<>();
+        User user = userRepo.findByUsername(userDetails.getUsername());
+        for (Role role : user.getRoles()) {
+            Userroles.add(role.getRoleId());
+        }
+        claims.put("roles", Userroles.toArray());
+        claims.put("userId", user.getUserId());
         //claims.put("ROLES", userDetails.getAuthorities());
-//        User user = userRepo.findByUsername(userDetails.getUsername());
-//        for (Role role : user.getRoles()) {
-//            Userroles.add(role.getRoleId());
-//        }
-//        claims.put("Roles", Userroles.toArray());
-        claims.put("ROLES", userDetails.getAuthorities());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -59,15 +60,28 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
+    private String createRefreshToken(String subject) {
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(LocalDate.now().getMonthValue() + 6))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return createRefreshToken(userDetails.getUsername());
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-
         return (username.equals(userDetails.getUsername())
                 && !isTokenExpired(token));
     }
 }
+

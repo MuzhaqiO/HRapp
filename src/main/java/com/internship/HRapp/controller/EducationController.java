@@ -43,7 +43,7 @@ public class EducationController {
     }
 
     @DeleteMapping("delete/{educationId}")
-    public String deleteRolesById(@PathVariable UUID educationId) {
-        return educationInterface.deleteEducationById(educationId);
+    public void deleteRolesById(@PathVariable UUID educationId) {
+        educationInterface.deleteEducationById(educationId);
     }
 }

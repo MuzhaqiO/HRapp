@@ -9,8 +9,6 @@ import java.util.UUID;
 
 public interface DayOffService {
 
-   // UserDayOffDTO getUserDayOff(UUID userId);
-
     UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO);
 
     void deleteDayOff(UUID dayOffId);
@@ -20,11 +18,5 @@ public interface DayOffService {
     List<UserDayOffDTO> getUserDayOff(UUID userId);
 
     List<UserDayOffDTO> getAllDaysOff();
-
-
-
-    //void updateLeaveDaysLeft();
-
-
 
 }

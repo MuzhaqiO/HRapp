@@ -1,6 +1,8 @@
 package com.internship.HRapp.service.interfaces;
 
 
+import com.internship.HRapp.dto.loginDto.AuthResponseDTO;
+import com.internship.HRapp.dto.loginDto.UserLoginDTO;
 import com.internship.HRapp.dto.projectsDto.ProjectAssignDTO;
 import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;

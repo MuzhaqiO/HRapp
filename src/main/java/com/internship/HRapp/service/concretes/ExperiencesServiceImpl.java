@@ -28,27 +28,11 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     public UserExperienceDTO getExperiencesByExpId(UUID expId) {
         return experiencesMapper.entityToDto((experiencesRepo.findById(expId)).orElse(null));
     }
+
     @Override
     public List<UserExperienceDTO> getExperiences() {
         return experiencesMapper.entitiesToDtos(experiencesRepo.findAll());
     }
-
-    /*  public List<UserExperienceDTO> getAllUsersExperiences(){
-            return experiencesRepo.findAll()
-                    .stream()
-                    .map(this::entitiesToDtos)
-                    .collect(Collectors.toList());
-          }*/
-   /* private UserExperienceDTO convertEntityToDTO(Experiences experiences){
-        UserExperienceDTO userExperienceDTO = new UserExperienceDTO();
-        userExperienceDTO.setUserId(experiences.getUsers().getUserId());
-        userExperienceDTO.setCompany(experiences.getCompany());
-        userExperienceDTO.setPositions(experiences.getPositions());
-        userExperienceDTO.setStartTime(experiences.getStartTime());
-        userExperienceDTO.setEndTime(experiences.getEndTime());
-        userExperienceDTO.setTrustLevel(experiences.getTrustLevel());
-        return userExperienceDTO;
-    }*/
 
     @Override
     public UserExperienceDTO addNewExperiences(UserExperienceDTO experiencesDTO) {
@@ -60,18 +44,6 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     public List<UserExperienceDTO> getExperiencesByUserId(UUID userId) {
         return experiencesMapper.entitiesToDtos((experiencesRepo.getByUsersUserId(userId)));
     }
-
-
-  /*  @Override
-    public String deleteExperiences(UUID expId) { //kontrollo nese ekziston si fillim pastaj te fshihet
-        boolean exists = experiencesRepo.existsById(expId);
-        if(!exists){
-            throw new IllegalStateException("Experience with id {} does not exist"+expId);
-        }
-        experiencesRepo.deleteById(expId);
-            return "Experience {} removed " + expId;
-
-    }*/
 
     @Override
     public void updateExperiences(UserExperienceDTO userExperienceDTO) {
@@ -86,9 +58,8 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     }
 
     @Override
-    public String deleteExperienceByExpId(UUID expId) {
+    public void deleteExperienceByExpId(UUID expId) {
         experiencesRepo.deleteById(expId);
-        return "{expId} was deleted"+ expId;
     }
 
 }

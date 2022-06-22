@@ -2,7 +2,6 @@ package com.internship.HRapp.mapper;
 
 import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDto.TaskDTO;
-import com.internship.HRapp.dto.taskDto.TaskNewDTO;
 import com.internship.HRapp.entity.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,21 +11,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    TaskNewDTO newTaskToDto(Task task);
-
-    @Mapping(target = "project.projectId", source = "projectId")
-    @Mapping(target = "user.userId", source = "userId")
-    Task newTaskToEntity(TaskNewDTO newDTO);
-
+    @Mapping(source = "user.userId", target = "userId")
     TaskAssignDTO taskAssignToDto(Task task);
 
-    @Mapping(target = "user.userId", source = "userId")
+    @Mapping(source = "userId", target = "user.userId")
     Task taskAssignToEntity(TaskAssignDTO assignDTO);
 
+    @Mapping(source = "project.projectId", target = "projectId")
+    @Mapping(source = "user.userId", target = "userId")
     TaskDTO taskToDto(Task task);
 
-    @Mapping(target = "project.projectId", source = "projectId")
-    @Mapping(target = "user.userId", source = "userId")
+    @Mapping(source = "projectId", target = "project.projectId")
+    @Mapping(source = "userId", target = "user.userId")
     Task taskToEntity(TaskDTO taskDTO);
 
     List<TaskDTO> taskListToDto(List<Task> taskList);

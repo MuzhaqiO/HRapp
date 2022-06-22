@@ -46,7 +46,7 @@ public class ProjectsController {
         return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, username));
     }
     @DeleteMapping("/projects/deleteProject/{projectId}")
-    public String deleteProject(@PathVariable UUID projectId){
-        return projectsServiceInterface.deleteProjectById(projectId);
+    public void deleteProject(@PathVariable UUID projectId){
+        projectsServiceInterface.deleteProjectById(projectId);
     }
 }

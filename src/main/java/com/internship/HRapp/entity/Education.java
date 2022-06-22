@@ -1,6 +1,5 @@
 package com.internship.HRapp.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,7 +16,7 @@ import java.util.UUID;
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
-    @GenericGenerator(name = "uuid" , strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 
     private UUID educationId;
     private String degree;

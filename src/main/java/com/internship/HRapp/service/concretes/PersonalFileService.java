@@ -36,9 +36,8 @@ public class PersonalFileService implements PersonalFileInterface {
         return personalFileMapper.toDto(personalFileRepository.findAll());
     }
 
-    public String deletePersonalFileById(UUID personalFileId) {
+    public void deletePersonalFileById(UUID personalFileId) {
         personalFileRepository.deleteById(personalFileId);
-        return "Personal file removed {} " + personalFileId;
     }
 
     @Override

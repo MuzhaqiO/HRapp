@@ -1,6 +1,5 @@
 package com.internship.HRapp.entity;
 
-import com.internship.HRapp.enums.DayOffStatus;
 import com.internship.HRapp.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,12 +14,12 @@ import java.util.UUID;
 @Table
 public class Task {
     @Id
-    @GeneratedValue( generator = "uuid2")
+    @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID taskId;
     private String taskName;
     @Enumerated(EnumType.STRING)
-    private TaskStatus taskStatus =  TaskStatus.UNASSIGNED;
+    private TaskStatus taskStatus = TaskStatus.UNASSIGNED;
 
     @ManyToOne
     private User user;

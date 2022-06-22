@@ -30,18 +30,6 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         return  test;
     }
 
-   /* @Override
-    public void addProjectToNewUser() {
-        User user = new User();
-        user.setUsername("adushi");
-        user.setPassword("123");
-        user.setFirstName("arian");
-        user.setLastName("dushi");
-        user.setEmail("adushi@gmail.com");
-
-        Projects projects =projectsRepo.findByName();
-    }*/
-
     public ProjectsDTO getProjectById(UUID projectId) {
         return projectsMapper.entityToDto((projectsRepo.getProjectsByProjectId(projectId)));
     }
@@ -58,9 +46,8 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     }
 
     @Override
-    public String deleteProjectById(UUID projectsId) {
+    public void deleteProjectById(UUID projectsId) {
         projectsRepo.deleteById(projectsId);
-        return "Project {} was removed"+projectsId;
     }
 
     //    @Override

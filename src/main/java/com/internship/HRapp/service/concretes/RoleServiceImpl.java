@@ -47,9 +47,8 @@ public class RoleServiceImpl implements RoleServiceInterface {
     }
 
     @Override
-    public String deleteRolesById(UUID roleId) {
+    public void deleteRolesById(UUID roleId) {
         rolesRepo.deleteById(roleId);
-        return "role removed {} " + roleId;
     }
 
     @Override

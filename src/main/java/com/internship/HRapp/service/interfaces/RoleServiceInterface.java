@@ -15,7 +15,7 @@ public interface RoleServiceInterface {
 
     RoleDTO addNewRoles(RoleDTO roleDTO);
 
-    String deleteRolesById(UUID roleId);
+    void deleteRolesById(UUID roleId);
 
     RoleDTO updateRole(RoleDTO roleDTO);
 

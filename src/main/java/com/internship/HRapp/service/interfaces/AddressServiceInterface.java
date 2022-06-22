@@ -18,6 +18,6 @@ public interface AddressServiceInterface {
 
     void editAddress(UserAddressDTO addressDto);
 
-    String deleteAddressById(UUID addressID);
+    void deleteAddressById(UUID addressID);
 
 }

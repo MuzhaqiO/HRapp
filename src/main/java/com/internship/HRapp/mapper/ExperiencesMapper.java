@@ -13,11 +13,11 @@ public interface ExperiencesMapper {
 
     ExperiencesMapper INSTANCE = Mappers.getMapper(ExperiencesMapper.class);
 
-    @Mapping(source ="users.userId", target = "userId")
+    @Mapping(source = "users.userId", target = "userId")
     UserExperienceDTO entityToDto(Experiences experiences);
 
     List<UserExperienceDTO> entitiesToDtos(List<Experiences> experiences);
-    @Mapping(source ="userId", target = "users.userId")
 
+    @Mapping(source = "userId", target = "users.userId")
     Experiences dtoToEntity(UserExperienceDTO userExperienceDTO);
 }

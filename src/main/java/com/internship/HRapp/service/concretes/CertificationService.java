@@ -6,11 +6,8 @@ import com.internship.HRapp.mapper.CertificationMapper;
 import com.internship.HRapp.repository.CertificationRepo;
 import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.CertificationServiceInterface;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,15 +17,15 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public  class CertificationService implements CertificationServiceInterface {
+public class CertificationService implements CertificationServiceInterface {
     private final CertificationRepo certificationRepo;
     private final CertificationMapper certificationMapper;
     private final UserRepo userRepo;
 
     @Override
-    public CertificationDto getCertificationById(UUID certificationID){
+    public CertificationDto getCertificationById(UUID certificationID) {
         boolean exists = certificationRepo.existsById(certificationID);
-        if (!exists){
+        if (!exists) {
             throw new IllegalStateException(
                     "Certification with id " + certificationID + " does not exist!"
             );
@@ -37,26 +34,25 @@ public  class CertificationService implements CertificationServiceInterface {
     }
 
     @Override
-    public List<CertificationDto> getCertifications(){
+    public List<CertificationDto> getCertifications() {
         return certificationMapper.toDto(certificationRepo.findAll());
     }
 
     @Override
-    public CertificationDto addNewCertification(CertificationDto certificationDto){
+    public CertificationDto addNewCertification(CertificationDto certificationDto) {
         Certification createdCertification = certificationRepo.save(certificationMapper.dtotoModel(certificationDto));
         return certificationMapper.modeltoDto(createdCertification);
     }
 
     @Override
-    public String deleteCertificationById(UUID certificationId){
+    public void deleteCertificationById(UUID certificationId) {
         boolean exists = certificationRepo.existsById(certificationId);
-        if (!exists){
+        if (!exists) {
             throw new IllegalStateException(
                     "Certification with id " + certificationId + " does not exist!"
             );
         }
         certificationRepo.deleteById(certificationId);
-        return "Certification removed {}" + certificationId;
     }
 
     @Override
@@ -71,7 +67,7 @@ public  class CertificationService implements CertificationServiceInterface {
 
     @Override
     public void editCertification(UUID certificationID, CertificationDto certificationDto) {
-        Certification certification =certificationRepo.getById(certificationID);
+        Certification certification = certificationRepo.getById(certificationID);
         certification.setCertification_name(certificationDto.getCertification_name());
         certification.setCertification_year(certificationDto.getCertification_year());
         certification.setExpiration_date(certificationDto.getExpiration_date());

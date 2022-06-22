@@ -9,11 +9,14 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CertificationMapper {
-    @Mapping(source ="users.userId", target = "userId")
+    @Mapping(source = "users.userId", target = "userId")
     CertificationDto modeltoDto(Certification certification);
-    @Mapping(source ="userId", target = "users.userId")
+
+    @Mapping(source = "userId", target = "users.userId")
     Certification dtotoModel(CertificationDto certificationDto);
+
     List<CertificationDto> toDto(List<Certification> certifications);
+
     List<Certification> toModel(List<CertificationDto> certificationDtos);
 
 }

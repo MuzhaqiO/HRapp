@@ -21,7 +21,6 @@ import java.util.UUID;
 public class AddressService implements AddressServiceInterface {
     private final AddressRepo addressRepo;
     private final AddressMapper addressMapper;
-    private final UserRepo userRepo;
 
     @Override
     public UserAddressDTO getAddressById(UUID addressID){
@@ -40,7 +39,7 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
-    public String deleteAddressById(UUID addressID){
+    public void deleteAddressById(UUID addressID){
         boolean exists = addressRepo.existsById(addressID);
         if (!exists){
             throw new IllegalStateException(
@@ -48,14 +47,11 @@ public class AddressService implements AddressServiceInterface {
             );
         }
         addressRepo.deleteById(addressID);
-        return "address removed {}" + addressID;
     }
 
     @Override
     public UserAddressDTO addNewAddress(UserAddressDTO addressDto) {
-        User user = userRepo.getById(addressDto.getUserId());
         Address createdAddress = addressRepo.save(addressMapper.dtotoModel(addressDto));
-//        createdAddress.setUsers(user);
         return addressMapper.modeltoDto(createdAddress);
     }
 

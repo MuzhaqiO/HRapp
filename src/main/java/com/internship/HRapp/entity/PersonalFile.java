@@ -1,6 +1,9 @@
 package com.internship.HRapp.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +19,7 @@ import java.util.UUID;
 public class PersonalFile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
-    @GenericGenerator(name = "uuid" , strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 
     private UUID personalFileId;
     private URL id_card;

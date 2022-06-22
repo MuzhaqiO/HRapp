@@ -36,8 +36,8 @@ public class RoleController {
     }
 
     @DeleteMapping("delete/{roleId}")
-    public String deleteRolesById(@PathVariable UUID roleId) {
-        return roleServiceInterface.deleteRolesById(roleId);
+    public void deleteRolesById(@PathVariable UUID roleId) {
+        roleServiceInterface.deleteRolesById(roleId);
     }
 
     @PutMapping("updateRole/{roleId}")

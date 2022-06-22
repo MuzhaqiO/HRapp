@@ -42,7 +42,7 @@ public class PersonalFileController {
     }
 
     @DeleteMapping("deletePersonalFile/{personalFileId}")
-    public String deleteRolesById(@PathVariable UUID personalFileId) {
-        return personalFileServiceInterface.deletePersonalFileById(personalFileId);
+    public void deleteRolesById(@PathVariable UUID personalFileId) {
+        personalFileServiceInterface.deletePersonalFileById(personalFileId);
     }
 }

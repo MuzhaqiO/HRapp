@@ -1,7 +1,6 @@
 package com.internship.HRapp.util;
 
 import com.internship.HRapp.dto.userDto.UserCreateDTO;
-import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import com.internship.HRapp.service.interfaces.UtilityInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.SendFailedException;
 import java.security.SecureRandom;
+
 @Service
 @RequiredArgsConstructor
 public class MailAndPassword implements UtilityInterface {

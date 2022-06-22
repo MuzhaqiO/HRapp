@@ -1,4 +1,4 @@
-package com.internship.HRapp.dto.userDto;
+package com.internship.HRapp.dto.loginDto;
 
 import lombok.Getter;
 import lombok.Setter;

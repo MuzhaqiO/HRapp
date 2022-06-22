@@ -1,5 +1,7 @@
 package com.internship.HRapp.service.concretes;
 
+import com.internship.HRapp.dto.loginDto.AuthResponseDTO;
+import com.internship.HRapp.dto.loginDto.UserLoginDTO;
 import com.internship.HRapp.dto.projectsDto.ProjectAssignDTO;
 import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;
@@ -29,6 +31,8 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.SendFailedException;
 import java.io.NotActiveException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -176,7 +180,8 @@ public class UserServiceImpl implements UserServiceInterface {
             final UserDetails userDetails = myUserDetails
                     .loadUserByUsername(loginDTO.getUsername());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
-            return new AuthResponseDTO(jwt, user.getUsername(), user.getPassword(), userDetails.getAuthorities());
+            final String refreshToken = jwtTokenUtil.generateRefreshToken(userDetails);
+            return new AuthResponseDTO(jwt, refreshToken);
         }
         throw new NotActiveException("This user is not active");
     }
@@ -189,7 +194,7 @@ public class UserServiceImpl implements UserServiceInterface {
                 user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
                 usersRepo.save(user);
             }
-        } else throw new IllegalStateException("Password should have 8 or more characters");
+        } else throw new IllegalStateException("Password must have 8 or more characters");
 
     }
 }

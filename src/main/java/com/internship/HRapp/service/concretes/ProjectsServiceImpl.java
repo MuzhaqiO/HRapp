@@ -1,8 +1,9 @@
 package com.internship.HRapp.service.concretes;
 
-import com.internship.HRapp.dto.userDto.AssignUserDTO;
 import com.internship.HRapp.dto.projectsDto.ProjectsDTO;
+import com.internship.HRapp.dto.userDto.AssignUserDTO;
 import com.internship.HRapp.entity.Projects;
+import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.ProjectsMapper;
 import com.internship.HRapp.mapper.UserMapper;
 import com.internship.HRapp.repository.ProjectsRepo;
@@ -26,8 +27,8 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
-        var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
-        return  test;
+        var test = projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUsersUserId(userId)));
+        return test;
     }
 
     public ProjectsDTO getProjectById(UUID projectId) {
@@ -36,7 +37,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public ProjectsDTO getProjectByProjectName(String projectName) {
-        return projectsMapper.entityToDto(projectsRepo.findByProjectsName(projectName));
+        return projectsMapper.entityToDto(projectsRepo.findProjectsByProjectName(projectName));
     }
 
     @Override
@@ -50,35 +51,29 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
         projectsRepo.deleteById(projectsId);
     }
 
-    //    @Override
-//    public void updateProject(ProjectsDTO projectsDTO) {
-//        Projects projects = projectsRepo.getProjectsByProjectId(projectsDTO.getProjectId());
-//        projects.setProjectName(projectsDTO.getProjectName());
-//        projects.setStartTime(projectsDTO.getStartTime());
-//        projects.setEndTime(projectsDTO.getEndTime());
-//        projects.setDescription(projectsDTO.getDescription());
-//        projectsRepo.save(projects);
-//
-//    }
     @Override
     public ProjectsDTO updateProject(ProjectsDTO projectsDTO) {
-        Projects projects = projectsMapper.dtoToEntity(projectsDTO);
+        Projects projects = projectsRepo.getProjectsByProjectId(projectsDTO.getProjectId());
+        projects.setProjectName(projectsDTO.getProjectName());
+        projects.setStartTime(projectsDTO.getStartTime());
+        projects.setEndTime(projectsDTO.getEndTime());
+        projects.setDescription(projectsDTO.getDescription());
         projectsRepo.save(projects);
         return projectsMapper.entityToDto(projects);
 
-//    @Override
-//    public AssignUserDTO assignUserToProject(UUID projectId, UUID userId) {
-//            Projects project = projectsRepo.getProjectsByProjectId(projectId);
-//            project.getUsers().add(userRepo.getById(userId));
-//            projectsRepo.save(project);
-//            return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
     }
 
     @Override
     public AssignUserDTO assignUserToProject(UUID projectId, String username) {
+        User user = userRepo.getByUsername(username);
         Projects project = projectsRepo.getProjectsByProjectId(projectId);
-        project.getUsers().add(userRepo.getByUsername(username));
-        projectsRepo.save(project);
+        if (project.getUsers().contains(user)
+                && user.getProjects().contains(project)) {
+            throw new IllegalStateException("This user already exists in the project");
+        } else {
+            project.getUsers().add(userRepo.getByUsername(username));
+            projectsRepo.save(project);
+        }
         return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
     }
 

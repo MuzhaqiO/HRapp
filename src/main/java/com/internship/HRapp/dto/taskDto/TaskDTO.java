@@ -12,5 +12,4 @@ public class TaskDTO {
     private UUID projectId;
     private String taskName;
     private TaskStatus taskStatus;
-    private UUID userId;
 }

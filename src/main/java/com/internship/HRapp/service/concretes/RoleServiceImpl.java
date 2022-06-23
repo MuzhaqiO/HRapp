@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,6 @@ public class RoleServiceImpl implements RoleServiceInterface {
 
     private final RoleRepo rolesRepo;
     private final RoleMapper roleMapper;
-    private final UserRepo userRepo;
 
     @Override
     public RoleDTO getRoleById(UUID roleId) {
@@ -42,6 +42,7 @@ public class RoleServiceImpl implements RoleServiceInterface {
     @Override
     public RoleDTO addNewRoles(RoleDTO roleDTO) {
         Role createdRole = roleMapper.toEntity(roleDTO);
+        createdRole.setRoleName(createdRole.getRoleName().toLowerCase());
         rolesRepo.save(createdRole);
         return roleMapper.toDTO(createdRole);
     }

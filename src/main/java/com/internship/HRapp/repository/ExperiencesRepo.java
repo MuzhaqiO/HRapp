@@ -13,6 +13,5 @@ public interface ExperiencesRepo extends JpaRepository<Experiences, UUID> {
 
     List<Experiences> findByUsersUserId(UUID userId);
     Experiences getExperiencesByExpId(UUID expId);
-    //Experiences getByUsersUserId(@Param("userId") UUID userId);
     List<Experiences> getByUsersUserId(@Param("userId") UUID userId);
 }

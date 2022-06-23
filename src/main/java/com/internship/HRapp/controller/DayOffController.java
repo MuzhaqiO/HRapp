@@ -23,9 +23,9 @@ public class DayOffController {
         return ResponseEntity.ok(dayOffService.placeDayOffRequest(requestDTO));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID id) {
-        return ResponseEntity.ok(dayOffService.getUserDayOff(id));
+    @GetMapping("getUserDayOff/{userId}")
+    public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID userId) {
+        return ResponseEntity.ok(dayOffService.getUserDayOff(userId));
     }
 
     @GetMapping("/getAllDaysOff")
@@ -39,9 +39,13 @@ public class DayOffController {
     }
 
 
-    @DeleteMapping(path = "{dayOffId}")
+    @DeleteMapping(path = "delete/{dayOffId}")
     public void deleteDayOff(@PathVariable("dayOffId") UUID dayOffId) {
         dayOffService.deleteDayOff(dayOffId);
     }
 
+    @GetMapping(path = "getDayOff/{dayOffId}")
+    public ResponseEntity<UserDayOffDTO> getDayOffById(@PathVariable UUID dayOffId){
+      return ResponseEntity.ok(dayOffService.getDayOffById(dayOffId));
+    }
 }

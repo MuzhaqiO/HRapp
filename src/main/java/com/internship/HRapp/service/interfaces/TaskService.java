@@ -10,13 +10,15 @@ public interface TaskService {
 
     TaskDTO addTask(TaskDTO newDTO);
 
-    TaskDTO assignTask(TaskAssignDTO assignDTO);
+    TaskAssignDTO assignTask(TaskAssignDTO assignDTO);
 
     void deleteTask(UUID taskId);
 
-    List<TaskDTO> getTasksByUserId(UUID userId);
+    List<TaskAssignDTO> getTasksByUserId(UUID userId);
 
     List<TaskDTO> getTasksByProjectId(UUID projectId);
+
+    String finishedTask(UUID taskId);
 
 
 }

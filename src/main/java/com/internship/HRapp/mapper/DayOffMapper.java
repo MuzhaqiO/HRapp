@@ -30,8 +30,6 @@ public interface DayOffMapper {
 
     UserDayOffDTO userToDto(User user);
 
-//    UserDayOffDTO userDayOffToDto(DayOff dayOff);
-
     User toUser(UserDayOffDTO userDayOffDTO);
 
     List<UserDayOffDTO> toDtos(List<DayOff> dayOffList);

@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class Education {
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
 
     private UUID educationId;
+    @Column(nullable = false)
     private String degree;
     private String university_name;
     private String faculty_name;

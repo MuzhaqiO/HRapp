@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
-    //        AddressMapper INSRANCE = Mappers.getMapper(AddressMapper.class);
     @Mapping(source = "users.userId", target = "userId")
     UserAddressDTO modeltoDto(Address address);
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Getter
@@ -17,6 +18,7 @@ public class Task {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID taskId;
+    @Column(nullable = false)
     private String taskName;
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus = TaskStatus.UNASSIGNED;

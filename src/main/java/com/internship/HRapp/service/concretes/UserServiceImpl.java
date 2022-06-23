@@ -31,8 +31,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.SendFailedException;
 import java.io.NotActiveException;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,7 +89,15 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserUpdateDTO updateUser(UserUpdateDTO userUpdateDTO) {
-        User user = usersMapper.toEntityUpdate(userUpdateDTO);
+        User user = usersRepo.findUserByUserId(userUpdateDTO.getUserId());
+        user.setFirstName(userUpdateDTO.getFirstName());
+        user.setLastName(userUpdateDTO.getLastName());
+        user.setUsername(userUpdateDTO.getUsername());
+        user.setUsersStatus(userUpdateDTO.getUsersStatus());
+        user.setEmail(userUpdateDTO.getEmail());
+        user.setMobile(userUpdateDTO.getMobile());
+        user.setDOB(userUpdateDTO.getDateOfBirth());
+        user.setTerminationDay(userUpdateDTO.getTerminationDay());
         usersRepo.save(user);
         return usersMapper.toDTOUpdate(user);
     }
@@ -110,13 +116,17 @@ public class UserServiceImpl implements UserServiceInterface {
         return usersMapper.toDTOUsername(usersRepo.save(user));
     }
 
-
     @Override
     public AssignRoleDTO assignRoleToUser(UUID userId, UUID roleId) {
         User user = usersRepo.getById(userId);
-        Role role = roleMapper.toEntity(roleService.getRoleById(roleId));
-        user.getRoles().add(role);
-        usersRepo.save(user);
+        Role role = roleRepo.getById(roleId);
+        if (role.getUsers().contains(user)
+                && user.getRoles().contains(role)) {
+            throw new IllegalStateException("This role has already been assigned to this user");
+        } else {
+            user.getRoles().add(role);
+            usersRepo.save(user);
+        }
         return usersMapper.toDTOAssign(usersRepo.getById(userId));
     }
 
@@ -127,6 +137,7 @@ public class UserServiceImpl implements UserServiceInterface {
         usersRepo.save(user);
         return usersMapper.toDTORole(usersRepo.getById(userId));
     }
+
     @Override
     public ProjectAssignDTO assignProjectToUser(String username, UUID projectId) {
         User user = usersRepo.getByUsername(username);
@@ -135,13 +146,20 @@ public class UserServiceImpl implements UserServiceInterface {
         usersRepo.save(user);
         return usersMapper.toDTOProject(usersRepo.getByUsername(username));
     }
+
     @Override
-    public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId){
+    public UserUpdateDTO getWholeUserById(UUID userId) {
+        return usersMapper.toDTOUpdate(usersRepo.getById(userId));
+    }
+
+    @Override
+    public ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId) {
         User user = usersRepo.getById(userId);
         user.getProjects().removeIf(project -> project.getProjectId().equals(projectId));
         usersRepo.save(user);
         return usersMapper.toDTOProject(usersRepo.getById(userId));
     }
+
     @Override
     public UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto) {
         User user = usersRepo.getById(userId);
@@ -189,12 +207,12 @@ public class UserServiceImpl implements UserServiceInterface {
     @Override
     public void changePassword(PasswordDTO passwordUpdate) {
         User user = usersRepo.getById(passwordUpdate.getUserId());
-        if (passwordUpdate.getNewPassword().length() >= 8) {
-            if (passwordEncoder.matches(passwordUpdate.getOldPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(passwordUpdate.getOldPassword(), user.getPassword())) {
+            if (passwordUpdate.getNewPassword().length() >= 8) {
                 user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
                 usersRepo.save(user);
-            }
-        } else throw new IllegalStateException("Password must have 8 or more characters");
+            } else throw new IllegalStateException("Password must have 8 or more characters");
+        } else throw new IllegalStateException("Incorrect old password");
 
     }
 }

@@ -3,7 +3,6 @@ package com.internship.HRapp.service.concretes;
 import com.internship.HRapp.dto.taskDto.TaskAssignDTO;
 import com.internship.HRapp.dto.taskDto.TaskDTO;
 import com.internship.HRapp.entity.Task;
-import com.internship.HRapp.entity.User;
 import com.internship.HRapp.enums.TaskStatus;
 import com.internship.HRapp.mapper.TaskMapper;
 import com.internship.HRapp.repository.TaskRepository;
@@ -29,12 +28,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO assignTask(TaskAssignDTO assignDTO) {
+    public TaskAssignDTO assignTask(TaskAssignDTO assignDTO) {
         Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
-        User user = userRepo.findUserByUserId(assignDTO.getUserId());
+        task.setUser(userRepo.getById(assignDTO.getUserId()));
         task.setTaskStatus(TaskStatus.ASSIGNED);
-        task.setUser(user);
-        return taskMapper.taskToDto(task);
+        taskRepo.save(task);
+        return taskMapper.taskAssignToDto(task);
     }
 
     @Override
@@ -48,12 +47,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDTO> getTasksByUserId(UUID userId) {
-        return taskMapper.taskListToDto(taskRepo.getTaskByUserUserId(userId));
+    public List<TaskAssignDTO> getTasksByUserId(UUID userId) {
+        return taskMapper.taskAssignListToDto(taskRepo.getTaskByUserUserId(userId));
     }
 
     @Override
     public List<TaskDTO> getTasksByProjectId(UUID projectId) {
         return taskMapper.taskListToDto(taskRepo.getTaskByProjectProjectId(projectId));
     }
+
+    @Override
+    public String finishedTask(UUID taskId) {
+        Task task = taskRepo.findTaskByTaskId(taskId);
+        task.setTaskStatus(TaskStatus.FINISHED);
+        taskRepo.save(task);
+        return "Task finished";
+    }
+
 }

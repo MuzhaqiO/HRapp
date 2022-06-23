@@ -2,10 +2,8 @@ package com.internship.HRapp.service.concretes;
 
 import com.internship.HRapp.dto.addressDto.UserAddressDTO;
 import com.internship.HRapp.entity.Address;
-import com.internship.HRapp.entity.User;
 import com.internship.HRapp.mapper.AddressMapper;
 import com.internship.HRapp.repository.AddressRepo;
-import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.AddressServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +21,9 @@ public class AddressService implements AddressServiceInterface {
     private final AddressMapper addressMapper;
 
     @Override
-    public UserAddressDTO getAddressById(UUID addressID){
+    public UserAddressDTO getAddressById(UUID addressID) {
         boolean exists = addressRepo.existsById(addressID);
-        if (!exists){
+        if (!exists) {
             throw new IllegalStateException(
                     "Address with id " + addressID + " does not exist!"
             );
@@ -34,14 +32,19 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
-    public List<UserAddressDTO> getAddresses(){
+    public List<UserAddressDTO> getAddressByUserId(UUID userId) {
+        return addressMapper.toDto(addressRepo.getAddressByUsersUserId(userId));
+    }
+
+    @Override
+    public List<UserAddressDTO> getAddresses() {
         return addressMapper.toDto(addressRepo.findAll());
     }
 
     @Override
-    public void deleteAddressById(UUID addressID){
+    public void deleteAddressById(UUID addressID) {
         boolean exists = addressRepo.existsById(addressID);
-        if (!exists){
+        if (!exists) {
             throw new IllegalStateException(
                     "Address with id " + addressID + " does not exist!"
             );
@@ -56,8 +59,8 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
-    public void  editAddress(@NotNull UserAddressDTO addressDto) {
-        Address address =addressRepo.getAddressByAddressID(addressDto.getAddressID());
+    public void editAddress(@NotNull UserAddressDTO addressDto) {
+        Address address = addressRepo.getAddressByAddressID(addressDto.getAddressID());
         address.setCity(addressDto.getCity());
         address.setState(addressDto.getState());
         address.setStreet(addressDto.getStreet());

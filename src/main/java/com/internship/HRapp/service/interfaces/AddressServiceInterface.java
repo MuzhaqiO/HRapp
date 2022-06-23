@@ -16,6 +16,8 @@ public interface AddressServiceInterface {
 
     UserAddressDTO getAddressById(UUID addressID);
 
+    List<UserAddressDTO> getAddressByUserId(UUID userId);
+
     void editAddress(UserAddressDTO addressDto);
 
     void deleteAddressById(UUID addressID);

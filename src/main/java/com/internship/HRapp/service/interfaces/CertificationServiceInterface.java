@@ -11,9 +11,9 @@ public interface CertificationServiceInterface {
 
     CertificationDto addNewCertification(CertificationDto certificationDto);
 
-    void editCertification(UUID certificationID, CertificationDto certificationDto);
+    void editCertification(CertificationDto certificationDto);
 
-    CertificationDto getCertificationById(UUID certificationid);
+    CertificationDto getCertificationById(UUID certificationId);
 
     void deleteCertificationById(UUID certificationID);
 

@@ -16,6 +16,8 @@ public interface UserServiceInterface {
 
     ProjectAssignDTO assignProjectToUser(String username, UUID projectId);
 
+    UserUpdateDTO getWholeUserById(UUID userId);
+
     UserDTO getUserById(UUID userId);
 
     UserDTO getUserByUsername(String username);

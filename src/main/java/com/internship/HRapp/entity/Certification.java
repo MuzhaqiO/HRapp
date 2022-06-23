@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ public class Certification {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
 
     private UUID certificationID;
+    @Column(nullable = false)
     private String certification_name;
     private Date certification_year;
     private Date expiration_date;

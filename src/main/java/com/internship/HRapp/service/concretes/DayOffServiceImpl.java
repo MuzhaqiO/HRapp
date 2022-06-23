@@ -41,13 +41,14 @@ public class DayOffServiceImpl implements DayOffService {
         thisDayOff.setRequestStatus(status.getRequestStatus());
         thisDayOff.setIdOfApprove(approver.getUserId());
         thisDayOff.setRejectReason(status.getRejectReason());
-        List<User> users = userRepo.findAllByDaysOffDayOffId(status.getDayOffId());
+        User user = userRepo.findByDaysOffDayOffId(status.getDayOffId());
         if (thisDayOff.getPermissionType().equals(DayOffPermission.DEFAULT)
                 && thisDayOff.getRequestStatus().equals(DayOffStatus.APPROVED)) {
-            for (var user2 : users) {
-                user2.setLeaveDaysLeft((user2.getLeaveDaysLeft() - thisDayOff.getDayOffAmount()));
-                userRepo.save(user2);
-            }
+            if (thisDayOff.getDayOffAmount() == 0) {
+                user.setLeaveDaysLeft(user.getLeaveDaysLeft() - 0.5);
+            } else
+                user.setLeaveDaysLeft((user.getLeaveDaysLeft() - thisDayOff.getDayOffAmount()));
+            userRepo.save(user);
         } else {
             throw new IllegalStateException("This request was rejected");
         }
@@ -85,19 +86,18 @@ public class DayOffServiceImpl implements DayOffService {
         return dayOffMapper.toDtos(dayOffRepo.findAll());
     }
 
-    public UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO) {
-        DayOff created = dayOffRepo.save(dayOffMapper.toEntity(requestDTO));
-        List<User> users = userRepo.findAllByDaysOffDayOffId(created.getDayOffId());
-        {
-            for (var user1 : users) {
-                if (requestDTO.getDayOffAmount() > user1.getLeaveDaysLeft()) {
-                    throw new RuntimeException("Can't make request, not enough days left");
-                }
-            }
-        }
-
-        return dayOffMapper.toDto(created);
+    @Override
+    public UserDayOffDTO getDayOffById(UUID dayOffId) {
+        return dayOffMapper.toDto(dayOffRepo.getById(dayOffId));
     }
 
-
+    public UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO) {
+        DayOff created = dayOffRepo.save(dayOffMapper.toEntity(requestDTO));
+        User user = userRepo.findByDaysOffDayOffId(created.getDayOffId());
+        if (requestDTO.getDayOffAmount() > user.getLeaveDaysLeft()) {
+            throw new RuntimeException("Can't make request, not enough days left");
+        }
+        return dayOffMapper.toDto(created);
+    }
 }
+

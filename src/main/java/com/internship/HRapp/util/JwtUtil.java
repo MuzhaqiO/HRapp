@@ -43,15 +43,14 @@ public class JwtUtil {
 
 
     public String generateToken(UserDetails userDetails) {
-        Set<UUID> Userroles = new HashSet<>();
+        Set<UUID> UserRoles = new HashSet<>();
         Map<String, Object> claims = new HashMap<>();
         User user = userRepo.findByUsername(userDetails.getUsername());
         for (Role role : user.getRoles()) {
-            Userroles.add(role.getRoleId());
+            UserRoles.add(role.getRoleId());
         }
-        claims.put("roles", Userroles.toArray());
+        claims.put("roles", UserRoles.toArray());
         claims.put("userId", user.getUserId());
-        //claims.put("ROLES", userDetails.getAuthorities());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -60,7 +59,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 600 * 300 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

@@ -16,12 +16,8 @@ public class UserCreateDTO {
     private String lastName;
     private String email;
     private LocalDate DOB;
-    private Integer leaveDaysLeft;
     private String mobile;
     private LocalDate startingDay;
-    private LocalDate terminationDay;
     private String secondContact;
     private Boolean usersStatus = true;
-    private List<RoleDTO> roles;
-
 }

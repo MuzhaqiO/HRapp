@@ -37,6 +37,11 @@ public class PersonalFileService implements PersonalFileInterface {
     }
 
     public void deletePersonalFileById(UUID personalFileId) {
+        boolean exists = personalFileRepository.existsById(personalFileId);
+        if (!exists) {
+            throw new IllegalStateException(
+                    "personal file with id " + personalFileId + " does not exist");
+        }
         personalFileRepository.deleteById(personalFileId);
     }
 

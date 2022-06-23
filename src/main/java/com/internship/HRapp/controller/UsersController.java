@@ -64,7 +64,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.updateUsersStatus(userId, usersStatusDTO));
     }
 
-    @PatchMapping("assignRole/{userId}")
+    @PatchMapping("assignRole/{userId}/roleId/{roleId}")
     public ResponseEntity<AssignRoleDTO> assignRoleToUser(@PathVariable UUID userId, @PathVariable UUID roleId) {
         return ResponseEntity.ok(userServiceInterface.assignRoleToUser(userId, roleId));
     }

@@ -1,5 +1,6 @@
 package com.internship.HRapp.entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Address {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID addressID;
     private String state;
+    @Column(nullable = false)
     private String city;
     private String street;
     private String postalCode;

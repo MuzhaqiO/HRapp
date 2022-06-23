@@ -12,6 +12,5 @@ import java.util.UUID;
 
 @Repository
 public interface CertificationRepo extends JpaRepository<Certification, UUID> {
-    Certification findCertificationByCertificationID(UUID certificationID);
     List<Certification> getCertificationByUsersUserId(UUID userId);
 }

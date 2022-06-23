@@ -1,13 +1,18 @@
 package com.internship.HRapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -31,8 +36,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<Role> roles = new ArrayList<>();
+
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks;
 
     @OneToMany(mappedBy = "users")
     private List<Certification> certifications = new ArrayList<>();
@@ -43,7 +49,7 @@ public class User {
     @OneToMany(mappedBy = "users")
     private List<PersonalFile> personalFiles = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     private List<Projects> projects = new ArrayList<>();
 
     @JsonIgnore
@@ -58,13 +64,14 @@ public class User {
     @OneToOne(mappedBy = "users")
     private Address address;
 
-
     @Column(unique = true)
     private String username;
     private String password;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
     private LocalDate DOB;
     private Double leaveDaysLeft;

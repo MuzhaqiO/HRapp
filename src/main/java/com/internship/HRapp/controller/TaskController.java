@@ -28,19 +28,23 @@ public class TaskController {
 
     }
 
-    @PatchMapping("assignTask")
-    public ResponseEntity<TaskDTO> assignTask(@RequestBody TaskAssignDTO assignDTO) {
+    @PatchMapping ("assignTask")
+    public ResponseEntity<TaskAssignDTO> assignTask(@RequestBody TaskAssignDTO assignDTO) {
         return ResponseEntity.ok(taskService.assignTask(assignDTO));
 
     }
 
     @GetMapping("userId")
-    public ResponseEntity<List<TaskDTO>> getTasksByUserId(@RequestParam UUID userId) {
+    public ResponseEntity<List<TaskAssignDTO>> getTasksByUserId(@RequestParam UUID userId) {
         return ResponseEntity.ok(taskService.getTasksByUserId(userId));
     }
 
     @GetMapping("projectId")
     public ResponseEntity<List<TaskDTO>> getTasksByProjectId(@RequestParam UUID projectId) {
         return ResponseEntity.ok(taskService.getTasksByProjectId(projectId));
+    }
+    @PatchMapping("finishedTask")
+    public ResponseEntity<String> finishedTask(@RequestParam UUID taskId){
+        return ResponseEntity.ok(taskService.finishedTask(taskId));
     }
 }

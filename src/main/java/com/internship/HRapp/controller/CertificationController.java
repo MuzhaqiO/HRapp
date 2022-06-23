@@ -30,8 +30,8 @@ public class CertificationController {
         return ResponseEntity.ok(certificationServiceInterface.addNewCertification(certificationDto));
     }
     @PutMapping("editCertification/{certificationID}")
-    public void editCertification(@PathVariable UUID certificationID, @RequestBody CertificationDto certificationDto){
-        certificationServiceInterface.editCertification(certificationID, certificationDto); }
+    public void editCertification(@RequestBody CertificationDto certificationDto){
+        certificationServiceInterface.editCertification(certificationDto); }
 
     @DeleteMapping("deleteCertification/{certificationID}")
     public void deleteRolesById(@PathVariable UUID certificationID) {

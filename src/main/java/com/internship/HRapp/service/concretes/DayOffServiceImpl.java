@@ -13,14 +13,10 @@ import com.internship.HRapp.repository.UserRepo;
 import com.internship.HRapp.service.interfaces.DayOffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +79,11 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public List<UserDayOffDTO> getAllDaysOff() {
         return dayOffMapper.toDtos(dayOffRepo.findAll());
+    }
+
+    @Override
+    public UserDayOffDTO getDayOffById(UUID dayOffId) {
+        return dayOffMapper.toDto(dayOffRepo.getById(dayOffId));
     }
 
     public UserDayOffDTO placeDayOffRequest(CreateDayOffDTO requestDTO) {

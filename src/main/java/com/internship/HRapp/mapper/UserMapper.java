@@ -23,6 +23,7 @@ public interface UserMapper {
     //GET USERDTO MAPPER
     GetUsersDTO toDTOGet(User user);
 
+    UserLoginDTO toLoginDTO(User user);
     List<GetUsersDTO> toDTOsGet(List<User> users);
 
     User toEntityGet(GetUsersDTO getUsersDTO);

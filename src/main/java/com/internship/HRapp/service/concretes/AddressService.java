@@ -35,6 +35,11 @@ public class AddressService implements AddressServiceInterface {
     }
 
     @Override
+    public List<UserAddressDTO> getAddressByUserId(UUID userId) {
+        return addressMapper.toDto(addressRepo.getAddressByUsersUserId(userId));
+    }
+
+    @Override
     public List<UserAddressDTO> getAddresses(){
         return addressMapper.toDto(addressRepo.findAll());
     }

@@ -5,11 +5,14 @@ import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateUsersRoleDto;
 import com.internship.HRapp.dto.userDto.*;
+import com.internship.HRapp.entity.User;
+import com.internship.HRapp.service.concretes.UserServiceImpl;
 import com.internship.HRapp.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
@@ -18,12 +21,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UsersController {
     private final UserServiceInterface userServiceInterface;
+    private final UserServiceImpl userService;
 
     @PostMapping(value = "login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO) throws Exception {
         return ResponseEntity.ok(userServiceInterface.login(loginDTO));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("getAll")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return ResponseEntity.ok(userServiceInterface.getUsers());
@@ -37,6 +42,15 @@ public class UsersController {
     @GetMapping("userId/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable UUID userId) {
         return ResponseEntity.ok(userServiceInterface.getUserById(userId));
+    }
+
+    @GetMapping("getWholeUserByUserId/{userId}")
+    public ResponseEntity<UserUpdateDTO> getWholeUserById(@PathVariable UUID userId) {
+        return ResponseEntity.ok(userServiceInterface.getWholeUserById(userId));
+    }
+    @GetMapping("getUserPassword/{userId}")
+    public ResponseEntity<PasswordDTO> getUserPassword(@PathVariable UUID userId) {
+        return ResponseEntity.ok(userServiceInterface.getUserPassword(userId));
     }
 
     @PostMapping("/addNewUser")
@@ -80,7 +94,7 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
     }
 
-    @PostMapping("updateUser/{userId}")
+    @PostMapping("updateUserRole/{userId}")
     public ResponseEntity<UpdateRoleDTO> updateUserRole(@PathVariable UUID userId, @RequestBody UpdateUsersRoleDto requestDto) {
         return ResponseEntity.ok(userServiceInterface.updateRole(userId, requestDto));
     }
@@ -98,5 +112,9 @@ public class UsersController {
     @PatchMapping("/changePassword")
     public void changePassword(@RequestBody PasswordDTO passwordDTO) {
         userServiceInterface.changePassword(passwordDTO);
+    }
+    @PostConstruct
+    public void initRoleAndUser() {
+        userService.initRoleAndUser();
     }
 }

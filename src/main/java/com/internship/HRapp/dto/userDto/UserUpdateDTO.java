@@ -13,7 +13,6 @@ public class UserUpdateDTO {
     private UUID userId;
     @Column(unique = true)
     private String username;
-    private String password;
     private String firstName;
     private String lastName;
     @Column(unique = true)

@@ -27,6 +27,10 @@ public class DayOffController {
     public ResponseEntity<List<UserDayOffDTO>> getUserDaysOff(@PathVariable UUID id) {
         return ResponseEntity.ok(dayOffService.getUserDayOff(id));
     }
+    @GetMapping("getDayOff/{dayOffId}")
+    public ResponseEntity<UserDayOffDTO> getDayOffByDayOffId(@PathVariable UUID dayOffId) {
+        return ResponseEntity.ok(dayOffService.getDayOffById(dayOffId));
+    }
 
     @GetMapping("/getAllDaysOff")
     public ResponseEntity<List<UserDayOffDTO>> getAllDaysOff(){

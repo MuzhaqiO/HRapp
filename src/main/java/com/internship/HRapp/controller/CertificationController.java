@@ -25,6 +25,10 @@ public class CertificationController {
     public ResponseEntity<CertificationDto> findCertificationById(@PathVariable UUID certificationID){
         return ResponseEntity.ok(certificationServiceInterface.getCertificationById(certificationID));
     }
+    @GetMapping("getCertificationsByUserId/{userId}")
+    public ResponseEntity<List<CertificationDto>> getCertificationsByUserId(@PathVariable UUID userId){
+        return ResponseEntity.ok(certificationServiceInterface.getCertificationByUserId(userId));
+    }
     @PostMapping("addNewCertification")
     public ResponseEntity<CertificationDto> createCertification(@RequestBody CertificationDto certificationDto){
         return ResponseEntity.ok(certificationServiceInterface.addNewCertification(certificationDto));

@@ -12,7 +12,7 @@ public interface CertificationServiceInterface {
         List<CertificationDto> getCertifications();
         CertificationDto addNewCertification(CertificationDto certificationDto);
         void editCertification(UUID certificationID, CertificationDto certificationDto);
-        CertificationDto getCertificationById(UUID certificationid);
+        CertificationDto getCertificationById(UUID certificationID);
 
         String deleteCertificationById(UUID certificationID);
         List<CertificationDto> getCertificationByUserId(UUID userId);

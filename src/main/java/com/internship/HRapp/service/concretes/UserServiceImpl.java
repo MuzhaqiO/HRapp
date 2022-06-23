@@ -29,8 +29,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.SendFailedException;
 import java.io.NotActiveException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +51,17 @@ public class UserServiceImpl implements UserServiceInterface {
     public UserDTO getUserById(UUID userId) {
         return usersMapper.entityToDTO(usersRepo.getById(userId));
     }
+
+    @Override
+    public UserUpdateDTO getWholeUserById(UUID userId) {
+        return usersMapper.toDTOUpdate(usersRepo.getById(userId));
+    }
+
+    @Override
+    public PasswordDTO getUserPassword(UUID userId) {
+        return usersMapper.toDTOPassword(usersRepo.getById(userId));
+    }
+
 
     @Override
     public UserDTO getUserByUsername(String username) {
@@ -159,7 +169,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public List<UserDTO> getUserByProjectId(UUID projectId) {
-        return usersMapper.entitiesToDTOs(usersRepo.getUserByRolesRoleId(projectId));
+        return usersMapper.entitiesToDTOs(usersRepo.getUserByProjectsProjectId(projectId));
     }
 
     @Override
@@ -176,6 +186,9 @@ public class UserServiceImpl implements UserServiceInterface {
             final UserDetails userDetails = myUserDetails
                     .loadUserByUsername(loginDTO.getUsername());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
+//            final String username = user.getUsername();
+//            final String password = user.getPassword();
+            //User user1 = usersRepo.findByUsername(loginDTO.getUsername())
             return new AuthResponseDTO(jwt);
         }
         throw new NotActiveException("This user is not active");
@@ -191,5 +204,28 @@ public class UserServiceImpl implements UserServiceInterface {
             }
         } else throw new IllegalStateException("Password should have 8 or more characters");
 
+    }
+
+    public void initRoleAndUser() {
+
+        Role adminRole = new Role();
+        adminRole.setRoleName("Admin");
+        roleRepo.save(adminRole);
+
+//        Role userRole = new Role();
+//        userRole.setRoleName("User");
+//        roleRepo.save(userRole);
+
+//        User adminUser = new User();
+//        adminUser.setUsername("admin123");
+//        adminUser.setPassword(passwordEncoder.encode("admin@pass"));
+//        adminUser.setFirstName("admin");
+//        adminUser.setLastName("admin");
+//        adminUser.setUsersStatus(true);
+//        adminUser.setEmail("ariandushi001@gmail.com");
+//        List<Role> adminRoles = new ArrayList<>();
+//        adminRoles.add(adminRole);
+//        adminUser.setRoles(adminRoles);
+//        usersRepo.save(adminUser);
     }
 }

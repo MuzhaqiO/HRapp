@@ -12,6 +12,7 @@ public interface DayOffRepository
         extends JpaRepository<DayOff, UUID> {
 
     DayOff findDayOffByDayOffId(UUID dayOffId);
+    DayOff getById(UUID dayOffId);
 
     List<DayOff> getByUsersUserId(UUID userId);
 

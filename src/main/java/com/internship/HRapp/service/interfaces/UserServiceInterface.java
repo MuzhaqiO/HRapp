@@ -6,6 +6,7 @@ import com.internship.HRapp.dto.roleDto.AssignRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateRoleDTO;
 import com.internship.HRapp.dto.roleDto.UpdateUsersRoleDto;
 import com.internship.HRapp.dto.userDto.*;
+import com.internship.HRapp.entity.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,10 @@ public interface UserServiceInterface {
     ProjectAssignDTO assignProjectToUser(String username, UUID projectId);
 
     UserDTO getUserById(UUID userId);
+    UserUpdateDTO getWholeUserById(UUID userId);
+
+    PasswordDTO getUserPassword(UUID userId);
+
 
     UserDTO getUserByUsername(String username);
 

@@ -31,11 +31,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<Role> roles = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_projects",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "projectId"))
+    @ManyToMany(mappedBy="users")
+//    @JoinTable(
+//            name = "users_projects",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "projectId"))
     private List<Projects> projects = new ArrayList<>();
 
     @JsonIgnore

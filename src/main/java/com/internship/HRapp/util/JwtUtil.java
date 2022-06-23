@@ -44,12 +44,16 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Set<UUID> Userroles = new HashSet<>();
+//        Set<String> Userroles1 = new HashSet<>();
         Map<String, Object> claims = new HashMap<>();
         User user = userRepo.findByUsername(userDetails.getUsername());
         for (Role role : user.getRoles()) {
             Userroles.add(role.getRoleId());
+//            Userroles1.add(role.getRoleName());
         }
         claims.put("Roles", Userroles.toArray());
+//        claims.put("ROLE", userDetails.getAuthorities());
+        claims.put("userId", user.getUserId());
         return createToken(claims, userDetails.getUsername());
     }
 

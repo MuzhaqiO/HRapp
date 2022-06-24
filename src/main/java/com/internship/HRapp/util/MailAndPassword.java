@@ -34,7 +34,7 @@ public class MailAndPassword implements UtilityInterface {
         email.setSubject("Welcome to 3i Solution," + userCreateDTO.getFirstName() + "!");
         email.setText(" Password for " + " '" + userCreateDTO.getUsername() + "' "
                 + " is: " + userCreateDTO.getPassword());
-        email.setFrom("solutions3i@yahoo.com");
+        email.setFrom("naziibro33@yahoo.com");
         mailSender.send(email);
     }
 }

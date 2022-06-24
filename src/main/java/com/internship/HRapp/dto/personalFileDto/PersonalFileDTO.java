@@ -15,4 +15,5 @@ public class PersonalFileDTO {
     private URL id_card;
     private URL degree;
     private String working_skills;
+    private URL profilePicture;
 }

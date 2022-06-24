@@ -36,8 +36,8 @@ public class AddressController {
         return ResponseEntity.ok(addressServiceInterface.getAddressById(addressID));
     }
     @GetMapping("getAddressByUserId/{userId}")
-    public ResponseEntity<UserAddressDTO> getAddressByUserId(@PathVariable UUID userId) {
-        return ResponseEntity.ok(addressServiceInterface.getAddressById(userId));
+    public ResponseEntity<List<UserAddressDTO>> getAddressByUserId(@PathVariable UUID userId) {
+        return ResponseEntity.ok(addressServiceInterface.getAddressByUserId(userId));
     }
 
     @DeleteMapping("deleteAddress/{addressId}")

@@ -25,6 +25,7 @@ public class PersonalFile {
     private URL id_card;
     private URL degree;
     private String working_skills;
+    private URL profilePicture;
 
     @ManyToOne
     @JoinColumn(name = "user_personalFile_id", referencedColumnName = "userId")

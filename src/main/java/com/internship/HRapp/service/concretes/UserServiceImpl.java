@@ -66,13 +66,6 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public void assignRole(AssignRoleDTO assignRoleDTO) {
-        User user = usersRepo.findUserByUserId(assignRoleDTO.getUserId());
-        Role role = roleRepo.findRoleByRoleId(assignRoleDTO.getRoleId());
-        user.getRoles().add(role);
-    }
-
-    @Override
     public UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) throws Exception {
         userCreateDTO.setPassword(utility.generateRandomPassword(10));
         System.out.println(userCreateDTO.getPassword());

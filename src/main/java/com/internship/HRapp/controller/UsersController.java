@@ -48,6 +48,10 @@ public class UsersController {
             throws Exception {
         return ResponseEntity.ok(userServiceInterface.addNewUser(userCreateDTO));
     }
+    @GetMapping("getWholeUserById")
+    public ResponseEntity<UserUpdateDTO> getWholeUserById(@RequestParam UUID userId){
+        return ResponseEntity.ok(userServiceInterface.getWholeUserById(userId));
+    }
 
     @PutMapping("updateUser/{userId}")
     public ResponseEntity<UserUpdateDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO) {
@@ -69,18 +73,18 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.assignRoleToUser(userId, roleId));
     }
 
-    @PatchMapping("removeRole/{userId}")
-    public ResponseEntity<UpdateRoleDTO> removeRoleFromUser(@PathVariable UUID userId, @RequestParam UUID roleId) {
+    @PatchMapping("removeRole/{userId}/roleId{roleId}")
+    public ResponseEntity<UpdateRoleDTO> removeRoleFromUser(@PathVariable UUID userId, @PathVariable UUID roleId) {
         return ResponseEntity.ok(userServiceInterface.removeRoleFromUser(userId, roleId));
     }
 
     @PatchMapping("assignProject/{username}/projectId/{projectId}")
-    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @RequestParam UUID projectId) {
+    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @PathVariable UUID projectId) {
         return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
     }
 
-    @PatchMapping("removeProject/{userId}")
-    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
+    @PatchMapping("removeProject/{userId}/projectId{projectId}")
+    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @PathVariable UUID projectId) {
         return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
     }
 

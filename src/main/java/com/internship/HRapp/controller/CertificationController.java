@@ -37,4 +37,7 @@ public class CertificationController {
     public void deleteRolesById(@PathVariable UUID certificationID) {
         certificationServiceInterface.deleteCertificationById(certificationID);
     }
+    @GetMapping("getCertificationByUserId")
+    public ResponseEntity<List<CertificationDto>> getCertificationByUserId(@RequestParam UUID userId) {
+        return ResponseEntity.ok(certificationServiceInterface.getCertificationByUserId(userId));}
 }

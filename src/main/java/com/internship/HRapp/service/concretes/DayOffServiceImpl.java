@@ -49,8 +49,6 @@ public class DayOffServiceImpl implements DayOffService {
             } else
                 user.setLeaveDaysLeft((user.getLeaveDaysLeft() - thisDayOff.getDayOffAmount()));
             userRepo.save(user);
-        } else {
-            throw new IllegalStateException("This request was rejected");
         }
         dayOffRepo.save(thisDayOff);
     }

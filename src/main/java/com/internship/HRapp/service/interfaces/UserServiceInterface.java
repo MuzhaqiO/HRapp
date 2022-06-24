@@ -24,7 +24,6 @@ public interface UserServiceInterface {
 
     List<UserDTO> getUsers();
 
-    void assignRole(AssignRoleDTO assignRoleDTO);
 
     UserCreateDTO addNewUser(UserCreateDTO userCreateDTO) throws Exception;
 

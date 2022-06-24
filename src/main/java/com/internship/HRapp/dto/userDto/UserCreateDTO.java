@@ -19,5 +19,6 @@ public class UserCreateDTO {
     private String mobile;
     private LocalDate startingDay;
     private String secondContact;
+    private Double leaveDaysLeft;
     private Boolean usersStatus = true;
 }

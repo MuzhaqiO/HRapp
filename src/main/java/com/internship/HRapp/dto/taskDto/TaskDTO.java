@@ -4,6 +4,8 @@ import com.internship.HRapp.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.UUID;
 @Getter
 @Setter
@@ -11,6 +13,7 @@ public class TaskDTO {
     private UUID taskId;
     private UUID projectId;
     private String taskName;
-    private TaskStatus taskStatus;
-    private UUID userId;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus = TaskStatus.UNASSIGNED;
+
 }

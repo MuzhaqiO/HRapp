@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(path = "hr_management/personalFile")
+@RequestMapping(path = "hr_management/personalFiles")
 @RequiredArgsConstructor
 public class PersonalFileController {
     private final PersonalFileInterface personalFileServiceInterface;

@@ -14,19 +14,18 @@ public interface TaskMapper {
 
     TaskNewDTO newTaskToDto(Task task);
 
-    @Mapping(target = "project.projectId", source = "projectId")
-    @Mapping(target = "user.userId", source = "userId")
-    Task newTaskToEntity(TaskNewDTO newDTO);
+//    @Mapping(target = "project.projectId", source = "projectId")
+//    @Mapping(target = "user.userId", source = "userId")
+//    Task newTaskToEntity(TaskNewDTO newDTO);
 
     TaskAssignDTO taskAssignToDto(Task task);
 
-    @Mapping(target = "user.userId", source = "userId")
+    @Mapping(target = "users.userId", source = "userId")
     Task taskAssignToEntity(TaskAssignDTO assignDTO);
 
     TaskDTO taskToDto(Task task);
 
-    @Mapping(target = "project.projectId", source = "projectId")
-    @Mapping(target = "user.userId", source = "userId")
+    @Mapping(target = "projects.projectId", source = "projectId")
     Task taskToEntity(TaskDTO taskDTO);
 
     List<TaskDTO> taskListToDto(List<Task> taskList);

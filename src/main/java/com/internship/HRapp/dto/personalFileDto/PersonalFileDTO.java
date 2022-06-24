@@ -7,12 +7,10 @@ import java.net.URL;
 import java.util.UUID;
 
 @Data
-@Getter
-
 public class PersonalFileDTO {
     private UUID userId;
     private UUID personalFileId;
-    private URL id_card;
+    private URL idCard;
     private URL degree;
-    private String working_skills;
+    private String workingSkills;
 }

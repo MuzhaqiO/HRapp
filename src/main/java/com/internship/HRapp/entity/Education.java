@@ -1,8 +1,6 @@
 package com.internship.HRapp.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +11,8 @@ import java.util.UUID;
 @Table
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
@@ -21,12 +20,12 @@ public class Education {
 
     private UUID educationId;
     private String degree;
-    private String university_name;
-    private String faculty_name;
-    private LocalDate start_time;
-    private LocalDate end_time;
+    private String universityName;
+    private String facultyName;
+    private LocalDate startTime;
+    private LocalDate endTime;
     private String average;
-    private String active_status;
+    private String activeStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_education_id", referencedColumnName = "userId")

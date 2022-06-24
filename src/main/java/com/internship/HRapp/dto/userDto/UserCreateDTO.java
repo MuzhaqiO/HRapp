@@ -21,7 +21,7 @@ public class UserCreateDTO {
     private LocalDate startingDay;
     private LocalDate terminationDay;
     private String secondContact;
-    private Boolean usersStatus;
+    private Boolean usersStatus = true;
     private List<RoleDTO> roles;
 
 }

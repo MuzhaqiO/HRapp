@@ -70,9 +70,9 @@ public class EducationService implements EducationInterface {
     public void editEducation(UUID educationId, EducationDto educationDto) {
         Education education = educationRepository.getById(educationId);
         education.setDegree(educationDto.getDegree());
-        education.setUniversity_name(educationDto.getUniversity_name());
-        education.setFaculty_name(educationDto.getFaculty_name());
-        education.setStart_time(educationDto.getStart_time());
+        education.setUniversityName(educationDto.getUniversityName());
+        education.setFacultyName(educationDto.getFacultyName());
+        education.setStartTime(educationDto.getStartTime());
         educationRepository.save(education);
     }
 }

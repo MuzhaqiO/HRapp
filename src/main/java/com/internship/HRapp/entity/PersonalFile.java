@@ -19,9 +19,9 @@ public class PersonalFile {
     @GenericGenerator(name = "uuid" , strategy = "org.hibernate.id.UUIDGenerator")
 
     private UUID personalFileId;
-    private URL id_card;
+    private URL idCard;
     private URL degree;
-    private String working_skills;
+    private String workingSkills;
 
     @ManyToOne
     @JoinColumn(name = "user_personalFile_id", referencedColumnName = "userId")

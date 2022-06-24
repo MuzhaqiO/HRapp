@@ -45,6 +45,10 @@ public class ProjectsController {
     public ResponseEntity<AssignUserDTO> assignUserToProject(@PathVariable UUID projectId, @PathVariable UUID userId){
         return ResponseEntity.ok(projectsServiceInterface.assignUserToProject(projectId, userId));
     }
+    @PatchMapping("removeUser/{projectId}/userId/{userId}")
+    public ResponseEntity<AssignUserDTO> removeUserFromProject(@PathVariable UUID projectId, @PathVariable UUID userId){
+        return ResponseEntity.ok(projectsServiceInterface.removeUserFromProject(projectId, userId));
+    }
     @DeleteMapping("deleteProject/{projectId}")
     public void deleteProject(@PathVariable UUID projectId){
         projectsServiceInterface.deleteProjectById(projectId);

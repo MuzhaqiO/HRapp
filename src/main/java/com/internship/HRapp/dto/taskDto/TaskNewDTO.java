@@ -9,7 +9,6 @@ import java.util.UUID;
 @Setter
 public class TaskNewDTO {
     private UUID taskId;
-    private UUID userId;
     private UUID projectId;
     private String taskName;
     private TaskStatus taskStatus;

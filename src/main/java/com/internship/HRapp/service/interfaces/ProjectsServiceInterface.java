@@ -9,14 +9,10 @@ import java.util.UUID;
 public interface ProjectsServiceInterface {
 
     List<ProjectsDTO> getProjectsByUserId(UUID userId);
-    // void addProjectToNewUser();
     List<ProjectsDTO> getProjects();
     ProjectsDTO getProjectById(UUID projectId);
 
     ProjectsDTO getProjectByProjectName(String projectName);
-
-
-    // List<UserProjectsDTO> getProjects(UUID expId);
 
     ProjectsDTO addNewProjects(ProjectsDTO projectsDTO);
 
@@ -25,5 +21,6 @@ public interface ProjectsServiceInterface {
     ProjectsDTO updateProject(ProjectsDTO projectsDTO);
 
     AssignUserDTO assignUserToProject(UUID projectId, UUID userId);
+    AssignUserDTO removeUserFromProject(UUID projectId, UUID userId);
 
 }

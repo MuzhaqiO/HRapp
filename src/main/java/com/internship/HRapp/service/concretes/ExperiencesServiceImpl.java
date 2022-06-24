@@ -86,9 +86,8 @@ public class ExperiencesServiceImpl implements ExperiencesService {
     }
 
     @Override
-    public String deleteExperienceByExpId(UUID expId) {
+    public void deleteExperienceByExpId(UUID expId) {
         experiencesRepo.deleteById(expId);
-        return "{expId} was deleted"+ expId;
     }
 
 }

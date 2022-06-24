@@ -10,9 +10,9 @@ import java.util.UUID;
 public class CertificationDto {
     private  UUID userId;
     private UUID certificationID;
-    private String certification_name;
-    private Date certification_year;
-    private Date expiration_date;
-    private String releasing_authority;
-    private String link_of_certification;
+    private String certificationName;
+    private Date certificationYear;
+    private Date expirationDate;
+    private String releasingAuthority;
+    private String linkOfCertification;
 }

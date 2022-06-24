@@ -71,15 +71,15 @@ public class UsersController {
         return ResponseEntity.ok(userServiceInterface.removeRoleFromUser(userId, roleId));
     }
 
-//    @PatchMapping("assignProject/{username}/projectId/{projectId}")
-//    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable String username, @RequestParam UUID projectId) {
-//        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(username, projectId));
-//    }
-//
-//    @PatchMapping("removeProject/{userId}")
-//    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
-//        return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
-//    }
+    @PatchMapping("assignProject/{userId}/projectId/{projectId}")
+    public ResponseEntity<ProjectAssignDTO> assignProjectToUser(@PathVariable UUID userId, @PathVariable UUID projectId) {
+        return ResponseEntity.ok(userServiceInterface.assignProjectToUser(userId, projectId));
+    }
+
+    @PatchMapping("removeProject/{userId}")
+    public ResponseEntity<ProjectAssignDTO> removeProjectFromUser(@PathVariable UUID userId, @RequestParam UUID projectId) {
+        return ResponseEntity.ok(userServiceInterface.removeProjectFromUser(userId, projectId));
+    }
 
     @PostMapping("updateUsersRole/{userId}")
     public ResponseEntity<UpdateRoleDTO> updateUserRole(@PathVariable UUID userId, @RequestBody UpdateUsersRoleDto requestDto) {

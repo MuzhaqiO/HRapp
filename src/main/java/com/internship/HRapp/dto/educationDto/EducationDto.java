@@ -7,16 +7,14 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Getter
-
 public class EducationDto {
     private UUID userId;
     private UUID educationId;
     private String degree;
-    private String university_name;
-    private String faculty_name;
-    private LocalDate start_time;
-    private LocalDate end_time;
+    private String universityName;
+    private String facultyName;
+    private LocalDate startTime;
+    private LocalDate endTime;
     private String average;
-    private String active_status;
+    private String activeStatus;
 }

@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public interface UserServiceInterface {
 
-//    ProjectAssignDTO assignProjectToUser(String username, UUID projectId);
-
+    ProjectAssignDTO assignProjectToUser(UUID userId, UUID projectId);
+    ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId);
     UserDTO getUserById(UUID userId);
 
     UserDTO getUserByUsername(String username);
@@ -33,8 +33,6 @@ public interface UserServiceInterface {
     UpdateRoleDTO assignRoleToUser(UUID userId, UUID roleId);
 
     UpdateRoleDTO removeRoleFromUser(UUID userId, UUID roleId);
-
-//    ProjectAssignDTO removeProjectFromUser(UUID userId, UUID projectId);
 
     UpdateRoleDTO updateRole(UUID userId, UpdateUsersRoleDto usersRoleDto);
 

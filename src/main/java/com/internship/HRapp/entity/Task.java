@@ -2,8 +2,11 @@ package com.internship.HRapp.entity;
 
 import com.internship.HRapp.enums.DayOffStatus;
 import com.internship.HRapp.enums.TaskStatus;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,6 +16,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue( generator = "uuid2")
@@ -23,10 +28,12 @@ public class Task {
     private TaskStatus taskStatus =  TaskStatus.UNASSIGNED;
 
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "user_task_id", referencedColumnName = "userId")
+    private User users;
 
     @ManyToOne
-    private Projects project;
+    @JoinColumn(name = "project_task_id", referencedColumnName = "projectId")
+    private Projects projects;
 
 
 }

@@ -32,11 +32,6 @@ public class User {
     private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
-//    @ManyToMany
-//    @JoinTable(
-//            name = "users_projects",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "projectId"))
     private List<Projects> projects = new ArrayList<>();
 
     @JsonIgnore
@@ -45,11 +40,22 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "users")
+    private List<Education> educations = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private List<PersonalFile> personalFiles = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users")
     private List<DayOff> daysOff = new ArrayList<>();
 
     @JsonIgnore
+    @OneToMany(mappedBy = "users")
+    private List<Task> tasks = new ArrayList<>();
+
+    @JsonIgnore
     @OneToOne(mappedBy = "users")
-    //@JoinColumn(name = "user_address_id", referencedColumnName = "addressID")
     private Address address;
 
 
@@ -66,6 +72,6 @@ public class User {
     private LocalDate startingDay;
     private LocalDate terminationDay;
     private String secondContact;
-    private Boolean usersStatus;
+    private Boolean usersStatus = true;
 
 }

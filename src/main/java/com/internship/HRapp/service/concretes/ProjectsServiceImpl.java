@@ -29,7 +29,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public List<ProjectsDTO> getProjectsByUserId(UUID userId) {
-        return projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUserId(userId)));
+        return projectsMapper.entitiesToDtosProjects((projectsRepo.getProjectsByUsersUserId(userId)));
     }
 
     public ProjectsDTO getProjectById(UUID projectId) {
@@ -38,7 +38,7 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
 
     @Override
     public ProjectsDTO getProjectByProjectName(String projectName) {
-        return projectsMapper.entityToDto(projectsRepo.findByProjectsName(projectName));
+        return projectsMapper.entityToDto(projectsRepo.findByProjectName(projectName));
     }
 
     @Override
@@ -73,6 +73,14 @@ public class ProjectsServiceImpl implements ProjectsServiceInterface {
     public AssignUserDTO assignUserToProject(UUID projectId, UUID userId) {
         Projects project = projectsRepo.getById(projectId);
         project.getUsers().add(userMapper.DTOtoEntity(userService.getUserById(userId)));
+        projectsRepo.save(project);
+        return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
+    }
+
+    @Override
+    public AssignUserDTO removeUserFromProject(UUID projectId, UUID userId) {
+        Projects project = projectsRepo.getById(projectId);
+        project.getUsers().removeIf(user -> user.getUserId().equals(userId));
         projectsRepo.save(project);
         return projectsMapper.toDTOAssignUser(projectsRepo.getById(projectId));
     }

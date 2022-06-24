@@ -14,10 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(path = "hr_management/experience")
 public class ExperiencesController {
-
-
     private final ExperiencesService experiencesService;
-
 
     @PostMapping("addExperiences")
     public ResponseEntity<UserExperienceDTO> save(@RequestBody UserExperienceDTO userExperienceDTO){
@@ -44,9 +41,8 @@ public class ExperiencesController {
         experiencesService.updateExperiences(userExperienceDTO);
     }
     @DeleteMapping("deleteExperience/{expId}")
-    public String deleteExperience(@PathVariable UUID expId){
-        return experiencesService.deleteExperienceByExpId(expId);
-
+    public void deleteExperience(@PathVariable UUID expId){
+        experiencesService.deleteExperienceByExpId(expId);
     }
 
 

@@ -23,18 +23,24 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final UserRepo userRepo;
 
+
     @Override
-    public TaskDTO addTask(TaskNewDTO newDTO) {
-        Task task = taskRepo.save(taskMapper.newTaskToEntity(newDTO));
+    public TaskDTO getTaskById(UUID taskId) {
+        return taskMapper.taskToDto(taskRepo.getById(taskId));
+    }
+
+    @Override
+    public TaskDTO addTask(TaskDTO taskDTO) {
+        Task task = taskRepo.save(taskMapper.taskToEntity(taskDTO));
         return taskMapper.taskToDto(task);
     }
 
     @Override
-    public TaskDTO assignTask(TaskAssignDTO assignDTO) {
-        Task task = taskRepo.findTaskByTaskId(assignDTO.getTaskId());
-        User user = userRepo.findUserByUserId(assignDTO.getUserId());
+    public TaskDTO assignTask(UUID taskId, UUID userId) {
+        Task task = taskRepo.getById(taskId);
+        User user = userRepo.getById(userId);
         task.setTaskStatus(TaskStatus.ASSIGNED);
-        task.setUser(user);
+        task.setUsers(user);
         return taskMapper.taskToDto(task);
     }
 
@@ -50,11 +56,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getTasksByUserId(UUID userId) {
-        return taskMapper.taskListToDto(taskRepo.getTaskByUserUserId(userId));
+        return taskMapper.taskListToDto(taskRepo.getTaskByUsersUserId(userId));
     }
 
     @Override
     public List<TaskDTO> getTasksByProjectId(UUID projectId) {
-        return taskMapper.taskListToDto(taskRepo.getTaskByProjectProjectId(projectId));
+        return taskMapper.taskListToDto(taskRepo.getTaskByProjectsProjectId(projectId));
     }
 }

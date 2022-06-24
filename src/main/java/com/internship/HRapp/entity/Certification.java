@@ -24,11 +24,11 @@ public class Certification {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
 
     private UUID certificationID;
-    private String certification_name;
-    private Date certification_year;
-    private Date expiration_date;
-    private String releasing_authority;
-    private String link_of_certification;
+    private String certificationName;
+    private Date certificationYear;
+    private Date expirationDate;
+    private String releasingAuthority;
+    private String linkOfCertification;
 
     @ManyToOne
     @JoinColumn(name = "user_certification_id", referencedColumnName = "userId")
